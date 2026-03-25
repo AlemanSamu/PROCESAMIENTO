@@ -1,0 +1,76 @@
+from datetime import datetime
+from enum import Enum
+
+from pydantic import BaseModel, Field
+
+
+class ProjectStatus(str, Enum):
+    CREATED = "created"
+    READY = "ready"
+    PROCESSING = "processing"
+    COMPLETED = "completed"
+    FAILED = "failed"
+
+
+class OutputFormat(str, Enum):
+    GLB = "glb"
+    OBJ = "obj"
+
+
+class ProjectMetadata(BaseModel):
+    id: str
+    name: str
+    status: ProjectStatus = ProjectStatus.CREATED
+    created_at: datetime
+    updated_at: datetime
+    image_count: int = 0
+    image_files: list[str] = Field(default_factory=list)
+    output_format: OutputFormat | None = None
+    model_filename: str | None = None
+    error_message: str | None = None
+
+
+class ProjectCreateRequest(BaseModel):
+    name: str | None = Field(default=None, max_length=120)
+
+
+class ProjectResponse(BaseModel):
+    id: str
+    name: str
+    status: ProjectStatus
+    created_at: datetime
+    updated_at: datetime
+    image_count: int
+    output_format: OutputFormat | None = None
+    model_filename: str | None = None
+    model_download_url: str | None = None
+    error_message: str | None = None
+
+
+class ImageUploadResponse(BaseModel):
+    project_id: str
+    status: ProjectStatus
+    uploaded_count: int
+    total_images: int
+    uploaded_files: list[str]
+
+
+class ProcessRequest(BaseModel):
+    output_format: OutputFormat = OutputFormat.GLB
+
+
+class ProcessStartResponse(BaseModel):
+    project_id: str
+    status: ProjectStatus
+    engine: str
+    message: str
+
+
+class ProjectStatusResponse(BaseModel):
+    project_id: str
+    status: ProjectStatus
+    image_count: int
+    output_format: OutputFormat | None = None
+    model_filename: str | None = None
+    model_download_url: str | None = None
+    error_message: str | None = None
