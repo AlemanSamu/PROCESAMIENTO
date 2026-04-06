@@ -39,7 +39,7 @@ def build_reconstruction_engines(settings) -> tuple[ReconstructionEngine, Recons
     requested_engine = str(getattr(settings, "processing_engine", "colmap")).lower().strip()
     colmap_engine = _build_colmap_engine(settings)
     mock_engine = _build_mock_engine(settings)
-    allow_fallback = bool(getattr(settings, "colmap_fallback_to_mock", True))
+    allow_fallback = bool(getattr(settings, "colmap_fallback_to_mock", False))
 
     if requested_engine not in {"colmap", "auto", "mock"}:
         logger.warning(
@@ -60,7 +60,7 @@ def build_reconstruction_engines(settings) -> tuple[ReconstructionEngine, Recons
         logger.info("COLMAP detected successfully. binary=%s", colmap_engine.detected_binary)
     else:
         logger.warning(
-            "COLMAP was not detected. configured_colmap_path=%s. MockEngine will be used when needed.",
+            "COLMAP was not detected. configured_colmap_path=%s.",
             colmap_engine.colmap_binary,
         )
 
@@ -68,12 +68,22 @@ def build_reconstruction_engines(settings) -> tuple[ReconstructionEngine, Recons
         logger.info("Selected reconstruction engine: mock (explicit configuration).")
         return mock_engine, None
 
-    if colmap_available:
-        logger.info("Selected reconstruction engine: colmap")
-        return colmap_engine, mock_engine if allow_fallback else None
+    if requested_engine == "auto":
+        if colmap_available:
+            logger.info("Selected reconstruction engine: colmap (auto mode)")
+            return colmap_engine, mock_engine if allow_fallback else None
 
-    logger.warning("Selected reconstruction engine: mock (COLMAP unavailable).")
-    return mock_engine, None
+        logger.warning("Selected reconstruction engine: mock (auto mode and COLMAP unavailable).")
+        return mock_engine, None
+
+    if colmap_available:
+        logger.info("Selected reconstruction engine: colmap (explicit configuration).")
+    else:
+        logger.warning(
+            "Selected reconstruction engine: colmap (explicit configuration), but COLMAP is unavailable. "
+            "Processing will fail instead of falling back to mock."
+        )
+    return colmap_engine, None
 
 
 def build_reconstruction_engine(settings) -> ReconstructionEngine:

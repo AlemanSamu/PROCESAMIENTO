@@ -1,16 +1,17 @@
 from __future__ import annotations
 
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
-import subprocess
 
 from PIL import Image, ImageDraw
 
 from app.algorithms.feature_matcher import FeatureMatcher
 from app.algorithms.image_preprocessor import ImagePreprocessor
 from app.algorithms.reconstruction_pipeline import ReconstructionPipeline
+from app.core.errors import ProcessingError
 from app.models.schemas import OutputFormat
 from app.services.engines.base_engine import ReconstructionResult
 from app.services.engines.colmap_engine import ColmapReconstructionEngine
@@ -143,6 +144,8 @@ class ReconstructionPipelineTests(unittest.TestCase):
             self.assertTrue((output_dir / "pipeline" / "demo_engine_pipeline_report.json").exists())
             self.assertEqual(result.metadata["engine"], "mock")
             self.assertEqual(result.metadata["reconstruction_type"], "synthetic_pipeline")
+            self.assertEqual(result.metadata["current_stage"], "completed")
+            self.assertEqual(result.metadata["progress"], 1.0)
 
 
 class EngineFactoryTests(unittest.TestCase):
@@ -155,18 +158,29 @@ class EngineFactoryTests(unittest.TestCase):
         colmap_use_gpu = False
         colmap_camera_model = "SIMPLE_RADIAL"
         colmap_single_camera = True
-        colmap_fallback_to_mock = True
+        colmap_fallback_to_mock = False
 
-    def test_factory_uses_mock_when_colmap_is_unavailable(self) -> None:
+    def test_factory_keeps_colmap_when_explicit_and_unavailable(self) -> None:
         settings = self._Settings()
+        with patch.object(ColmapReconstructionEngine, "is_available", return_value=False):
+            primary, fallback = build_reconstruction_engines(settings)
+
+        self.assertIsInstance(primary, ColmapReconstructionEngine)
+        self.assertIsNone(fallback)
+
+    def test_factory_uses_mock_in_auto_mode_when_colmap_is_unavailable(self) -> None:
+        settings = self._Settings()
+        settings.processing_engine = "auto"
         with patch.object(ColmapReconstructionEngine, "is_available", return_value=False):
             primary, fallback = build_reconstruction_engines(settings)
 
         self.assertIsInstance(primary, MockReconstructionEngine)
         self.assertIsNone(fallback)
 
-    def test_factory_uses_colmap_with_mock_fallback_when_available(self) -> None:
+    def test_factory_uses_colmap_with_mock_fallback_in_auto_mode_when_available(self) -> None:
         settings = self._Settings()
+        settings.processing_engine = "auto"
+        settings.colmap_fallback_to_mock = True
         with patch.object(ColmapReconstructionEngine, "is_available", return_value=True):
             primary, fallback = build_reconstruction_engines(settings)
 
@@ -175,8 +189,8 @@ class EngineFactoryTests(unittest.TestCase):
 
 
 class ProcessingFallbackTests(unittest.TestCase):
-    class _Settings:
-        processing_engine = "colmap"
+    class _AutoSettings:
+        processing_engine = "auto"
         simulation_delay_seconds = 0
         colmap_path = None
         colmap_binary = "colmap"
@@ -185,6 +199,17 @@ class ProcessingFallbackTests(unittest.TestCase):
         colmap_camera_model = "SIMPLE_RADIAL"
         colmap_single_camera = True
         colmap_fallback_to_mock = True
+
+    class _ExplicitColmapSettings:
+        processing_engine = "colmap"
+        simulation_delay_seconds = 0
+        colmap_path = None
+        colmap_binary = "colmap"
+        colmap_timeout_seconds = 120
+        colmap_use_gpu = False
+        colmap_camera_model = "SIMPLE_RADIAL"
+        colmap_single_camera = True
+        colmap_fallback_to_mock = False
 
     class _FailingEngine:
         name = "colmap"
@@ -198,7 +223,7 @@ class ProcessingFallbackTests(unittest.TestCase):
         def __init__(self, model_path: Path) -> None:
             self.model_path = model_path
 
-        def reconstruct(self, _project_id, _images_dir, _output_dir, output_format):
+        def reconstruct(self, _project_id, _images_dir, _output_dir, output_format, progress_callback=None):
             self.model_path.write_text("o mock", encoding="utf-8")
             return ReconstructionResult(
                 engine_name="mock",
@@ -210,7 +235,15 @@ class ProcessingFallbackTests(unittest.TestCase):
                 },
             )
 
-    def test_processing_service_falls_back_to_mock(self) -> None:
+    def _build_services(self, images_dir: Path, output_dir: Path) -> tuple[MagicMock, MagicMock]:
+        project_service = MagicMock()
+        project_service.get_project.return_value.processing_metadata = {}
+        storage_service = MagicMock()
+        storage_service.get_images_dir.return_value = images_dir
+        storage_service.get_output_dir.return_value = output_dir
+        return project_service, storage_service
+
+    def test_processing_service_falls_back_to_mock_only_in_auto_mode(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             images_dir = root / "images"
@@ -219,18 +252,14 @@ class ProcessingFallbackTests(unittest.TestCase):
             output_dir = root / "output"
             output_dir.mkdir(parents=True, exist_ok=True)
             model_path = output_dir / "fallback_model.obj"
-            model_path.write_text("o mock", encoding="utf-8")
 
-            project_service = MagicMock()
-            storage_service = MagicMock()
-            storage_service.get_images_dir.return_value = images_dir
-            storage_service.get_output_dir.return_value = output_dir
+            project_service, storage_service = self._build_services(images_dir, output_dir)
 
             with patch(
                 "app.services.processing_service.build_reconstruction_engines",
                 return_value=(self._FailingEngine(), self._SuccessfulEngine(model_path)),
             ):
-                service = ProcessingService(project_service, storage_service, self._Settings())
+                service = ProcessingService(project_service, storage_service, self._AutoSettings())
 
             service._run_reconstruction_job("demo-project", OutputFormat.OBJ)
 
@@ -241,6 +270,33 @@ class ProcessingFallbackTests(unittest.TestCase):
             self.assertTrue(metadata["fallback"]["used"])
             self.assertEqual(metadata["fallback"]["from_engine"], "colmap")
             storage_service.clear_output_files.assert_called_once_with("demo-project")
+
+    def test_processing_service_marks_failed_when_colmap_is_explicit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            images_dir = root / "images"
+            images_dir.mkdir(parents=True, exist_ok=True)
+            (images_dir / "sample.jpg").write_bytes(b"jpg")
+            output_dir = root / "output"
+            output_dir.mkdir(parents=True, exist_ok=True)
+            model_path = output_dir / "unused_fallback.obj"
+
+            project_service, storage_service = self._build_services(images_dir, output_dir)
+
+            with patch(
+                "app.services.processing_service.build_reconstruction_engines",
+                return_value=(self._FailingEngine(), self._SuccessfulEngine(model_path)),
+            ):
+                service = ProcessingService(project_service, storage_service, self._ExplicitColmapSettings())
+
+            service._run_reconstruction_job("demo-project", OutputFormat.OBJ)
+
+            project_service.mark_completed.assert_not_called()
+            project_service.mark_failed.assert_called_once()
+            metadata = project_service.mark_failed.call_args.kwargs["processing_metadata"]
+            self.assertEqual(metadata["engine"], "colmap")
+            self.assertEqual(metadata["current_stage"], "failed")
+            self.assertEqual(metadata["failure_reason"], "COLMAP mapper failed")
 
 
 class ColmapEngineTests(unittest.TestCase):
@@ -257,7 +313,7 @@ class ColmapEngineTests(unittest.TestCase):
 
         self.assertEqual(engine.detected_binary, "colmap.exe")
 
-    def test_colmap_engine_exports_sparse_glb_with_mocked_commands(self) -> None:
+    def test_colmap_engine_exports_sparse_glb_with_logs_metrics_and_progress(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             images_dir = root / "images"
@@ -270,9 +326,15 @@ class ColmapEngineTests(unittest.TestCase):
                 colmap_binary="C:/COLMAP/colmap.exe",
                 timeout_seconds=30,
             )
+            progress_updates: list[dict[str, object]] = []
 
             def fake_run(command, capture_output, text, encoding, errors, timeout, check):
                 command_name = command[1]
+                if command[-1] == "-h":
+                    if command_name == "feature_extractor":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureExtraction.use_gpu", stderr="")
+                    if command_name == "exhaustive_matcher":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureMatching.use_gpu", stderr="")
                 if command_name == "feature_extractor":
                     database_path = Path(command[command.index("--database_path") + 1])
                     database_path.parent.mkdir(parents=True, exist_ok=True)
@@ -287,7 +349,10 @@ class ColmapEngineTests(unittest.TestCase):
                     output_type = command[command.index("--output_type") + 1]
                     if output_type == "TXT":
                         output_path.mkdir(parents=True, exist_ok=True)
-                        (output_path / "cameras.txt").write_text("# cameras\n", encoding="utf-8")
+                        (output_path / "cameras.txt").write_text(
+                            "# cameras\n1 SIMPLE_RADIAL 800 600 500 400 300 0.01\n",
+                            encoding="utf-8",
+                        )
                         (output_path / "images.txt").write_text(
                             "# images\n1 1 0 0 0 0 0 0 1 img_1.jpg\n0 0 -1\n"
                             "2 1 0 0 0 0 0 0 1 img_2.jpg\n0 0 -1\n",
@@ -306,22 +371,74 @@ class ColmapEngineTests(unittest.TestCase):
 
             with patch.object(engine, "detect_binary", return_value="C:/COLMAP/colmap.exe"):
                 with patch("app.services.engines.colmap_engine.subprocess.run", side_effect=fake_run):
-                    result = engine.reconstruct("demo", images_dir, output_dir, OutputFormat.GLB)
+                    result = engine.reconstruct(
+                        "demo",
+                        images_dir,
+                        output_dir,
+                        OutputFormat.GLB,
+                        progress_callback=lambda update: progress_updates.append(dict(update)),
+                    )
 
             self.assertTrue(result.model_path.exists())
             self.assertEqual(result.model_path.read_bytes()[:4], b"glTF")
             self.assertEqual(result.metadata["engine"], "colmap")
             self.assertEqual(result.metadata["reconstruction_type"], "sparse_photogrammetry")
             self.assertEqual(result.metadata["registered_image_count"], 2)
+            self.assertEqual(result.metadata["camera_count"], 1)
             self.assertEqual(result.metadata["point_count"], 3)
+            self.assertEqual(result.metadata["metrics"]["reconstructed_camera_count"], 2)
+            self.assertEqual(result.metadata["metrics"]["point_3d_count"], 3)
+            self.assertEqual(result.metadata["current_stage"], "completed")
+            self.assertEqual(result.metadata["progress"], 1.0)
             self.assertTrue((output_dir / "demo_colmap_metadata.json").exists())
             self.assertTrue((output_dir / "demo_sparse.ply").exists())
-            self.assertEqual([item["name"] for item in result.metadata["commands"]][:4], [
-                "feature_extractor",
-                "feature_matching",
-                "mapper",
-                "model_converter_txt",
-            ])
+            self.assertTrue((output_dir / "demo_model.obj").exists())
+            self.assertTrue((output_dir / "logs" / "colmap" / "feature_extractor.stdout.log").exists())
+            self.assertEqual(
+                [item["name"] for item in result.metadata["commands"]][:4],
+                [
+                    "feature_extractor",
+                    "exhaustive_matcher",
+                    "mapper",
+                    "model_converter_txt",
+                ],
+            )
+            self.assertIn("mapper", [update.get("current_stage") for update in progress_updates])
+            self.assertEqual(progress_updates[-1].get("current_stage"), "completed")
+
+    def test_colmap_engine_fails_when_mapper_does_not_create_sparse_zero(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            images_dir = root / "images"
+            images_dir.mkdir(parents=True, exist_ok=True)
+            (images_dir / "img_1.jpg").write_bytes(b"img1")
+            (images_dir / "img_2.jpg").write_bytes(b"img2")
+            output_dir = root / "output"
+
+            engine = ColmapReconstructionEngine(
+                colmap_binary="C:/COLMAP/colmap.exe",
+                timeout_seconds=30,
+            )
+
+            def fake_run(command, capture_output, text, encoding, errors, timeout, check):
+                command_name = command[1]
+                if command[-1] == "-h":
+                    if command_name == "feature_extractor":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureExtraction.use_gpu", stderr="")
+                    if command_name == "exhaustive_matcher":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureMatching.use_gpu", stderr="")
+                if command_name == "feature_extractor":
+                    database_path = Path(command[command.index("--database_path") + 1])
+                    database_path.parent.mkdir(parents=True, exist_ok=True)
+                    database_path.write_bytes(b"db")
+                return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
+
+            with patch.object(engine, "detect_binary", return_value="C:/COLMAP/colmap.exe"):
+                with patch("app.services.engines.colmap_engine.subprocess.run", side_effect=fake_run):
+                    with self.assertRaises(ProcessingError) as context:
+                        engine.reconstruct("demo", images_dir, output_dir, OutputFormat.OBJ)
+
+            self.assertIn("sparse/0", str(context.exception))
 
 
 if __name__ == "__main__":

@@ -41,7 +41,7 @@ class ProjectCard extends StatelessWidget {
                 ),
                 Chip(
                   label: Text(project.status.label),
-                  backgroundColor: statusColor.withOpacity(0.15),
+                  backgroundColor: statusColor.withValues(alpha: 0.15),
                   side: BorderSide(color: statusColor),
                 ),
               ],

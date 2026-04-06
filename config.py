@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     colmap_use_gpu: bool = False
     colmap_camera_model: str = "SIMPLE_RADIAL"
     colmap_single_camera: bool = True
-    colmap_fallback_to_mock: bool = True
+    colmap_fallback_to_mock: bool = False
 
     model_config = SettingsConfigDict(
         env_file=".env",

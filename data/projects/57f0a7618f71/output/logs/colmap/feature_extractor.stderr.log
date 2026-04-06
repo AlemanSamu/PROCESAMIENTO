@@ -1,0 +1,49 @@
+W20260406 10:21:16.377253 10324 feature_extraction.cc:453] Your current options use the maximum number of threads on the machine to extract features. Extracting SIFT features on the CPU can consume a lot of RAM per thread for large images. Consider reducing the maximum image size and/or the first octave or manually limit the number of extraction threads. Ignore this warning, if your machine has sufficient memory for the current settings.
+I20260406 10:21:16.385747  9152 feature_extraction.cc:502] === Feature extraction ===
+I20260406 10:21:16.387289  7036 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 10:21:16.387357 12632 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 10:21:16.387485  6448 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 10:21:16.387579  7288 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 10:21:32.121022 13120 feature_extraction.cc:280] Processed file [1/7]
+I20260406 10:21:32.133548 13120 feature_extraction.cc:283]   Name:            30a3cc52c3ea481a85c33afe055e29bb.png
+I20260406 10:21:32.133635 13120 feature_extraction.cc:292]   Dimensions:      1280 x 960
+I20260406 10:21:32.133677 13120 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 10:21:32.134008 13120 feature_extraction.cc:298]   Focal Length:    1536.00px
+I20260406 10:21:32.134109 13120 feature_extraction.cc:302]   Features:        2134 (SIFT)
+I20260406 10:21:32.184205 13120 feature_extraction.cc:280] Processed file [2/7]
+I20260406 10:21:32.184315 13120 feature_extraction.cc:283]   Name:            d0e6a30475de4c599c9460d980bf3c01.png
+I20260406 10:21:32.184377 13120 feature_extraction.cc:292]   Dimensions:      1280 x 960
+I20260406 10:21:32.184428 13120 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 10:21:32.184481 13120 feature_extraction.cc:298]   Focal Length:    1536.00px
+I20260406 10:21:32.184548 13120 feature_extraction.cc:302]   Features:        2256 (SIFT)
+I20260406 10:21:32.188635 13120 feature_extraction.cc:280] Processed file [3/7]
+I20260406 10:21:32.188760 13120 feature_extraction.cc:283]   Name:            a781f58590034284b7faeac4480e454f.png
+I20260406 10:21:32.188803 13120 feature_extraction.cc:292]   Dimensions:      1280 x 960
+I20260406 10:21:32.188835 13120 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 10:21:32.188868 13120 feature_extraction.cc:298]   Focal Length:    1536.00px
+I20260406 10:21:32.188905 13120 feature_extraction.cc:302]   Features:        2145 (SIFT)
+I20260406 10:21:32.191850 13120 feature_extraction.cc:280] Processed file [4/7]
+I20260406 10:21:32.191945 13120 feature_extraction.cc:283]   Name:            66b0076a4a67452085f9d9765a27ad8f.png
+I20260406 10:21:32.191990 13120 feature_extraction.cc:292]   Dimensions:      1280 x 960
+I20260406 10:21:32.192025 13120 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 10:21:32.192058 13120 feature_extraction.cc:298]   Focal Length:    1536.00px
+I20260406 10:21:32.192102 13120 feature_extraction.cc:302]   Features:        2257 (SIFT)
+I20260406 10:21:37.431688 13120 feature_extraction.cc:280] Processed file [5/7]
+I20260406 10:21:37.431808 13120 feature_extraction.cc:283]   Name:            e0f4024275b944129d400f06eab82a1d.png
+I20260406 10:21:37.431859 13120 feature_extraction.cc:292]   Dimensions:      1280 x 960
+I20260406 10:21:37.431904 13120 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 10:21:37.431943 13120 feature_extraction.cc:298]   Focal Length:    1536.00px
+I20260406 10:21:37.432020 13120 feature_extraction.cc:302]   Features:        2259 (SIFT)
+I20260406 10:21:37.549825 13120 feature_extraction.cc:280] Processed file [6/7]
+I20260406 10:21:37.549957 13120 feature_extraction.cc:283]   Name:            e2cc7e62cfa44db3a8f64567e42efe25.png
+I20260406 10:21:37.550007 13120 feature_extraction.cc:292]   Dimensions:      1280 x 960
+I20260406 10:21:37.550060 13120 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 10:21:37.550106 13120 feature_extraction.cc:298]   Focal Length:    1536.00px
+I20260406 10:21:37.550157 13120 feature_extraction.cc:302]   Features:        2274 (SIFT)
+I20260406 10:21:37.739651 13120 feature_extraction.cc:280] Processed file [7/7]
+I20260406 10:21:37.739747 13120 feature_extraction.cc:283]   Name:            fa05b62c3ad04d6c97eb04f2ac3d00c1.png
+I20260406 10:21:37.739795 13120 feature_extraction.cc:292]   Dimensions:      1280 x 960
+I20260406 10:21:37.739836 13120 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 10:21:37.754563 13120 feature_extraction.cc:298]   Focal Length:    1536.00px
+I20260406 10:21:37.754624 13120 feature_extraction.cc:302]   Features:        2249 (SIFT)
+I20260406 10:21:37.789412  9152 timer.cc:90] Elapsed time: 0.357 [minutes]

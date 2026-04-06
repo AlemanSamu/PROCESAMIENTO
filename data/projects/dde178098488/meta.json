@@ -1,0 +1,56 @@
+{
+  "id": "dde178098488",
+  "name": "colmap-real-e2e-1775487987",
+  "status": "failed",
+  "created_at": "2026-04-06T15:06:27.780462Z",
+  "updated_at": "2026-04-06T15:06:29.102905Z",
+  "image_count": 3,
+  "image_files": [
+    "6ab16abbed044261b6953e8b6eba85fd.jpg",
+    "35aa8aaa4e84404ebe6e257cd9a7fb2e.jpg",
+    "ad020369031a4ae8a7a1724119adfed4.jpg"
+  ],
+  "output_format": "obj",
+  "model_filename": null,
+  "error_message": "COLMAP fallo en el paso 'mapper' con codigo 1. Detalle: I20260406 10:06:29.001850  3672 incremental_pipeline.cc:265] Loading database\nI20260406 10:06:29.003597  3672 database_cache.cc:72] Loading rigs...\nI20260406 10:06:29.003924  3672 database_cache.cc:82]  0 in 0.000s\nI20260406 10:06:29.003971  3672 database_cache.cc:90] Loading cameras...\nI20260406 10:06:29.004013  3672 database_cache.cc:108]  0 in 0.000s\nI20260406 10:06:29.004040  3672 database_cache.cc:116] Loading frames...\nI20260406 10:06:29.004077  3672 database_cache.cc:126]  0 in 0.000s\nI20260406 10:06:29.004102  3672 database_cache.cc:134] Loading matches...\nI20260406 10:06:29.004141  3672 database_cache.cc:139]  0 in 0.000s\nI20260406 10:06:29.004169  3672 database_cache.cc:147] Loading images...\nI20260406 10:06:29.004237  3672 database_cache.cc:241]  0 in 0.000s (connected 0, loaded 0)\nI20260406 10:06:29.004269  3672 database_cache.cc:255] Loading pose priors...\nI20260406 10:06:29.004305  3672 database_cache.cc:263]  0 in 0.000s\nI20260406 10:06:29.004329  3672 database_cache.cc:271] Building correspondence graph...\nI20260406 10:06:29.004904  3672 database_cache.cc:300]  in 0.001s (ignored 0)\nI20260406 10:06:29.004940  3672 timer.cc:90] Elapsed time: 0.000 [minutes]\nW20260406 10:06:29.004968  3672 incremental_pipeline.cc:302] No images with matches\nE20260406 10:06:29.005295  3672 sfm.cc:279] Failed to create any sparse model. Logs: stdout=data\\projects\\dde178098488\\output\\logs\\colmap\\mapper.stdout.log, stderr=data\\projects\\dde178098488\\output\\logs\\colmap\\mapper.stderr.log",
+  "processing_metadata": {
+    "engine": "colmap",
+    "engine_requested": "colmap",
+    "requested_output_format": "obj",
+    "current_stage": "failed",
+    "progress": 0.6,
+    "status_message": "Procesamiento fallido.",
+    "stage_sequence": [
+      "starting",
+      "feature_extractor",
+      "exhaustive_matcher",
+      "mapper",
+      "export",
+      "completed"
+    ],
+    "metrics": {
+      "image_count_processed": 3,
+      "total_processing_seconds": 1.212
+    },
+    "fallback": {
+      "used": false,
+      "from_engine": null,
+      "reason": null
+    },
+    "workspace": {
+      "root": "data\\projects\\dde178098488\\output\\workspace",
+      "database_path": "data\\projects\\dde178098488\\output\\workspace\\database.db",
+      "sparse_dir": "data\\projects\\dde178098488\\output\\workspace\\sparse",
+      "dense_dir": "data\\projects\\dde178098488\\output\\workspace\\dense"
+    },
+    "logs": {
+      "directory": "data\\projects\\dde178098488\\output\\logs\\colmap"
+    },
+    "stage_timings_seconds": {
+      "feature_extractor": 0.262,
+      "exhaustive_matcher": 0.24
+    },
+    "failed_stage": "mapper",
+    "failure_reason": "COLMAP fallo en el paso 'mapper' con codigo 1. Detalle: I20260406 10:06:29.001850  3672 incremental_pipeline.cc:265] Loading database\nI20260406 10:06:29.003597  3672 database_cache.cc:72] Loading rigs...\nI20260406 10:06:29.003924  3672 database_cache.cc:82]  0 in 0.000s\nI20260406 10:06:29.003971  3672 database_cache.cc:90] Loading cameras...\nI20260406 10:06:29.004013  3672 database_cache.cc:108]  0 in 0.000s\nI20260406 10:06:29.004040  3672 database_cache.cc:116] Loading frames...\nI20260406 10:06:29.004077  3672 database_cache.cc:126]  0 in 0.000s\nI20260406 10:06:29.004102  3672 database_cache.cc:134] Loading matches...\nI20260406 10:06:29.004141  3672 database_cache.cc:139]  0 in 0.000s\nI20260406 10:06:29.004169  3672 database_cache.cc:147] Loading images...\nI20260406 10:06:29.004237  3672 database_cache.cc:241]  0 in 0.000s (connected 0, loaded 0)\nI20260406 10:06:29.004269  3672 database_cache.cc:255] Loading pose priors...\nI20260406 10:06:29.004305  3672 database_cache.cc:263]  0 in 0.000s\nI20260406 10:06:29.004329  3672 database_cache.cc:271] Building correspondence graph...\nI20260406 10:06:29.004904  3672 database_cache.cc:300]  in 0.001s (ignored 0)\nI20260406 10:06:29.004940  3672 timer.cc:90] Elapsed time: 0.000 [minutes]\nW20260406 10:06:29.004968  3672 incremental_pipeline.cc:302] No images with matches\nE20260406 10:06:29.005295  3672 sfm.cc:279] Failed to create any sparse model. Logs: stdout=data\\projects\\dde178098488\\output\\logs\\colmap\\mapper.stdout.log, stderr=data\\projects\\dde178098488\\output\\logs\\colmap\\mapper.stderr.log"
+  }
+}

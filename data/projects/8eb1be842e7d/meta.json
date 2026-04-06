@@ -1,0 +1,52 @@
+{
+  "id": "8eb1be842e7d",
+  "name": "colmap-real-e2e-1775487602",
+  "status": "failed",
+  "created_at": "2026-04-06T15:00:02.140276Z",
+  "updated_at": "2026-04-06T15:00:02.474363Z",
+  "image_count": 3,
+  "image_files": [
+    "e9c6bd4f88ab46249d88f1141da29379.jpg",
+    "f2454c5ff521423d9982637f5f755620.jpg",
+    "0913c06c43214c6290c2c4f01eae47cb.jpg"
+  ],
+  "output_format": "obj",
+  "model_filename": null,
+  "error_message": "COLMAP fallo en el paso 'feature_extractor' con codigo 1. Detalle: E20260406 10:00:02.393852 11116 base_option_manager.cc:264] Failed to parse options - unrecognised option '--SiftExtraction.use_gpu'.. Logs: stdout=data\\projects\\8eb1be842e7d\\output\\logs\\colmap\\feature_extractor.stdout.log, stderr=data\\projects\\8eb1be842e7d\\output\\logs\\colmap\\feature_extractor.stderr.log",
+  "processing_metadata": {
+    "engine": "colmap",
+    "engine_requested": "colmap",
+    "requested_output_format": "obj",
+    "current_stage": "failed",
+    "progress": 0.12,
+    "status_message": "Procesamiento fallido.",
+    "stage_sequence": [
+      "starting",
+      "feature_extractor",
+      "exhaustive_matcher",
+      "mapper",
+      "export",
+      "completed"
+    ],
+    "metrics": {
+      "image_count_processed": 3,
+      "total_processing_seconds": 0.203
+    },
+    "fallback": {
+      "used": false,
+      "from_engine": null,
+      "reason": null
+    },
+    "workspace": {
+      "root": "data\\projects\\8eb1be842e7d\\output\\workspace",
+      "database_path": "data\\projects\\8eb1be842e7d\\output\\workspace\\database.db",
+      "sparse_dir": "data\\projects\\8eb1be842e7d\\output\\workspace\\sparse",
+      "dense_dir": "data\\projects\\8eb1be842e7d\\output\\workspace\\dense"
+    },
+    "logs": {
+      "directory": "data\\projects\\8eb1be842e7d\\output\\logs\\colmap"
+    },
+    "failed_stage": "feature_extractor",
+    "failure_reason": "COLMAP fallo en el paso 'feature_extractor' con codigo 1. Detalle: E20260406 10:00:02.393852 11116 base_option_manager.cc:264] Failed to parse options - unrecognised option '--SiftExtraction.use_gpu'.. Logs: stdout=data\\projects\\8eb1be842e7d\\output\\logs\\colmap\\feature_extractor.stdout.log, stderr=data\\projects\\8eb1be842e7d\\output\\logs\\colmap\\feature_extractor.stderr.log"
+  }
+}

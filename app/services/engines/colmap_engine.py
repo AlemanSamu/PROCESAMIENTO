@@ -10,7 +10,11 @@ from pathlib import Path
 
 from app.core.errors import ProcessingError
 from app.models.schemas import OutputFormat
-from app.services.engines.base_engine import ReconstructionEngine, ReconstructionResult
+from app.services.engines.base_engine import (
+    ReconstructionEngine,
+    ReconstructionProgressCallback,
+    ReconstructionResult,
+)
 
 logger = logging.getLogger(__name__)
 if not logger.handlers:
@@ -40,6 +44,8 @@ class ColmapCommandTrace:
     return_code: int
     stdout_tail: str
     stderr_tail: str
+    stdout_path: str | None = None
+    stderr_path: str | None = None
 
 
 class ColmapReconstructionEngine(ReconstructionEngine):
@@ -63,6 +69,8 @@ class ColmapReconstructionEngine(ReconstructionEngine):
         self.single_camera = single_camera
         self._detected_binary: str | None = None
         self._detection_attempted = False
+        self._feature_extraction_gpu_option: str | None = None
+        self._feature_matching_gpu_option: str | None = None
 
     @property
     def detected_binary(self) -> str | None:
@@ -103,6 +111,7 @@ class ColmapReconstructionEngine(ReconstructionEngine):
         images_dir: Path,
         output_dir: Path,
         output_format: OutputFormat,
+        progress_callback: ReconstructionProgressCallback | None = None,
     ) -> ReconstructionResult:
         started_at = time.perf_counter()
         resolved_binary = self.detect_binary()
@@ -116,124 +125,249 @@ class ColmapReconstructionEngine(ReconstructionEngine):
         if len(image_paths) < 2:
             raise ProcessingError("COLMAP requiere al menos 2 imagenes para intentar la reconstruccion sparse.")
 
+        feature_extraction_gpu_option = self._get_feature_extraction_gpu_option(resolved_binary)
+        feature_matching_gpu_option = self._get_feature_matching_gpu_option(resolved_binary)
+
         output_dir.mkdir(parents=True, exist_ok=True)
         workspace_dir = output_dir / "workspace"
         sparse_dir = workspace_dir / "sparse"
         dense_dir = workspace_dir / "dense"
+        logs_dir = output_dir / "logs" / "colmap"
         workspace_dir.mkdir(parents=True, exist_ok=True)
         sparse_dir.mkdir(parents=True, exist_ok=True)
         dense_dir.mkdir(parents=True, exist_ok=True)
+        logs_dir.mkdir(parents=True, exist_ok=True)
 
         database_path = workspace_dir / "database.db"
         txt_model_dir = output_dir / "colmap_sparse_txt"
         txt_model_dir.mkdir(parents=True, exist_ok=True)
         raw_ply_path = output_dir / f"{project_id}_sparse.ply"
+        obj_model_path = output_dir / f"{project_id}_model.obj"
+        glb_model_path = output_dir / f"{project_id}_model.glb"
+        metadata_path = output_dir / f"{project_id}_colmap_metadata.json"
+
+        logger.info(
+            "Project %s | Starting COLMAP reconstruction with %s images. output_dir=%s",
+            project_id,
+            len(image_paths),
+            output_dir,
+        )
+        self._notify_progress(
+            progress_callback,
+            {
+                "engine": self.name,
+                "current_stage": "starting",
+                "progress": 0.02,
+                "status_message": "Iniciando procesamiento con COLMAP.",
+                "workspace": {
+                    "root": str(workspace_dir),
+                    "database_path": str(database_path),
+                    "sparse_dir": str(sparse_dir),
+                    "dense_dir": str(dense_dir),
+                },
+                "logs": {
+                    "directory": str(logs_dir),
+                },
+            },
+        )
 
         command_traces: list[ColmapCommandTrace] = []
         warnings: list[str] = []
+        stage_timings: dict[str, float] = {}
 
-        command_traces.append(
-            self._run_command(
+        feature_trace = self._run_command(
+            project_id,
+            "feature_extractor",
+            [
+                resolved_binary,
                 "feature_extractor",
-                [
-                    resolved_binary,
-                    "feature_extractor",
-                    "--database_path",
-                    str(database_path),
-                    "--image_path",
-                    str(images_dir),
-                    "--ImageReader.single_camera",
-                    "1" if self.single_camera else "0",
-                    "--ImageReader.camera_model",
-                    self.camera_model,
-                    "--SiftExtraction.use_gpu",
-                    "1" if self.use_gpu else "0",
-                ],
-            )
+                "--database_path",
+                str(database_path),
+                "--image_path",
+                str(images_dir),
+                "--ImageReader.single_camera",
+                "1" if self.single_camera else "0",
+                "--ImageReader.camera_model",
+                self.camera_model,
+                f"--{feature_extraction_gpu_option}",
+                "1" if self.use_gpu else "0",
+            ],
+            logs_dir,
+            progress_callback,
+            0.12,
+            "Ejecutando feature_extractor.",
         )
-        command_traces.append(
-            self._run_command(
-                "feature_matching",
-                [
-                    resolved_binary,
-                    "exhaustive_matcher",
-                    "--database_path",
-                    str(database_path),
-                    "--SiftMatching.use_gpu",
-                    "1" if self.use_gpu else "0",
-                ],
-            )
-        )
-        command_traces.append(
-            self._run_command(
-                "mapper",
-                [
-                    resolved_binary,
-                    "mapper",
-                    "--database_path",
-                    str(database_path),
-                    "--image_path",
-                    str(images_dir),
-                    "--output_path",
-                    str(sparse_dir),
-                ],
-            )
+        command_traces.append(feature_trace)
+        stage_timings["feature_extractor"] = feature_trace.duration_seconds
+        self._notify_progress(
+            progress_callback,
+            {
+                "current_stage": "feature_extractor",
+                "progress": 0.28,
+                "status_message": "feature_extractor completado.",
+                "stage_timings_seconds": dict(stage_timings),
+            },
         )
 
-        sparse_model_dir = self._select_sparse_model_dir(sparse_dir)
-        command_traces.append(
-            self._run_command(
-                "model_converter_txt",
+        matcher_trace = self._run_command(
+            project_id,
+            "exhaustive_matcher",
+            [
+                resolved_binary,
+                "exhaustive_matcher",
+                "--database_path",
+                str(database_path),
+                f"--{feature_matching_gpu_option}",
+                "1" if self.use_gpu else "0",
+            ],
+            logs_dir,
+            progress_callback,
+            0.36,
+            "Ejecutando exhaustive_matcher.",
+        )
+        command_traces.append(matcher_trace)
+        stage_timings["exhaustive_matcher"] = matcher_trace.duration_seconds
+        self._notify_progress(
+            progress_callback,
+            {
+                "current_stage": "exhaustive_matcher",
+                "progress": 0.52,
+                "status_message": "exhaustive_matcher completado.",
+                "stage_timings_seconds": dict(stage_timings),
+            },
+        )
+
+        mapper_trace = self._run_command(
+            project_id,
+            "mapper",
+            [
+                resolved_binary,
+                "mapper",
+                "--database_path",
+                str(database_path),
+                "--image_path",
+                str(images_dir),
+                "--output_path",
+                str(sparse_dir),
+            ],
+            logs_dir,
+            progress_callback,
+            0.6,
+            "Ejecutando mapper.",
+        )
+        command_traces.append(mapper_trace)
+        stage_timings["mapper"] = mapper_trace.duration_seconds
+        sparse_model_dir = self._validate_mapper_output(sparse_dir)
+        self._notify_progress(
+            progress_callback,
+            {
+                "current_stage": "mapper",
+                "progress": 0.74,
+                "status_message": "mapper completado y modelo sparse validado.",
+                "workspace": {
+                    "selected_sparse_model_dir": str(sparse_model_dir),
+                },
+                "stage_timings_seconds": dict(stage_timings),
+            },
+        )
+
+        converter_txt_trace = self._run_command(
+            project_id,
+            "model_converter_txt",
+            [
+                resolved_binary,
+                "model_converter",
+                "--input_path",
+                str(sparse_model_dir),
+                "--output_path",
+                str(txt_model_dir),
+                "--output_type",
+                "TXT",
+            ],
+            logs_dir,
+            progress_callback,
+            0.82,
+            "Exportando modelo sparse a TXT.",
+        )
+        command_traces.append(converter_txt_trace)
+        stage_timings["model_converter_txt"] = converter_txt_trace.duration_seconds
+
+        try:
+            converter_ply_trace = self._run_command(
+                project_id,
+                "model_converter_ply",
                 [
                     resolved_binary,
                     "model_converter",
                     "--input_path",
                     str(sparse_model_dir),
                     "--output_path",
-                    str(txt_model_dir),
+                    str(raw_ply_path),
                     "--output_type",
-                    "TXT",
+                    "PLY",
                 ],
+                logs_dir,
+                progress_callback,
+                0.86,
+                "Exportando modelo sparse a PLY.",
             )
-        )
-
-        try:
-            command_traces.append(
-                self._run_command(
-                    "model_converter_ply",
-                    [
-                        resolved_binary,
-                        "model_converter",
-                        "--input_path",
-                        str(sparse_model_dir),
-                        "--output_path",
-                        str(raw_ply_path),
-                        "--output_type",
-                        "PLY",
-                    ],
-                )
-            )
+            command_traces.append(converter_ply_trace)
+            stage_timings["model_converter_ply"] = converter_ply_trace.duration_seconds
         except ProcessingError as exc:
             warning = f"No se pudo exportar el artefacto PLY de COLMAP: {exc}"
             warnings.append(warning)
-            logger.warning(warning)
+            logger.warning("Project %s | %s", project_id, warning)
 
         points = self._load_sparse_points(txt_model_dir / "points3D.txt")
         if not points:
             raise ProcessingError("COLMAP genero un modelo sparse, pero no produjo puntos 3D utilizables.")
 
         registered_image_count = self._load_registered_image_count(txt_model_dir / "images.txt")
-        if output_format == OutputFormat.OBJ:
-            model_path = output_dir / f"{project_id}_model.obj"
-            self._write_obj_point_cloud(model_path, points, project_id)
-        elif output_format == OutputFormat.GLB:
-            model_path = output_dir / f"{project_id}_model.glb"
-            self._write_glb_point_cloud(model_path, points, project_id)
-        else:
+        camera_count = self._load_camera_count(txt_model_dir / "cameras.txt")
+
+        obj_started_at = time.perf_counter()
+        self._write_obj_point_cloud(obj_model_path, points, project_id)
+        stage_timings["obj_export"] = round(time.perf_counter() - obj_started_at, 3)
+
+        model_path = obj_model_path
+        if output_format == OutputFormat.GLB:
+            glb_started_at = time.perf_counter()
+            self._write_glb_point_cloud(glb_model_path, points, project_id)
+            stage_timings["glb_export"] = round(time.perf_counter() - glb_started_at, 3)
+            model_path = glb_model_path
+        elif output_format != OutputFormat.OBJ:
             raise ProcessingError(f"Formato de salida no soportado para COLMAP: {output_format.value}.")
 
         elapsed_seconds = round(time.perf_counter() - started_at, 3)
-        metadata_path = output_dir / f"{project_id}_colmap_metadata.json"
+        metrics = {
+            "total_processing_seconds": elapsed_seconds,
+            "image_count_processed": len(image_paths),
+            "reconstructed_camera_count": registered_image_count,
+            "intrinsic_camera_count": camera_count,
+            "point_3d_count": len(points),
+        }
+        artifacts = {
+            "model_path": str(model_path),
+            "obj_model_path": str(obj_model_path),
+            "glb_model_path": str(glb_model_path) if glb_model_path.exists() else None,
+            "sparse_txt_dir": str(txt_model_dir),
+            "raw_sparse_ply": str(raw_ply_path) if raw_ply_path.exists() else None,
+            "logs_dir": str(logs_dir),
+        }
+
+        self._notify_progress(
+            progress_callback,
+            {
+                "engine": self.name,
+                "current_stage": "export",
+                "progress": 0.95,
+                "status_message": "Artefactos finales exportados.",
+                "metrics": metrics,
+                "artifacts": artifacts,
+                "stage_timings_seconds": dict(stage_timings),
+            },
+        )
+
         metadata = {
             "engine": self.name,
             "engine_requested": self.name,
@@ -244,7 +378,13 @@ class ColmapReconstructionEngine(ReconstructionEngine):
             "reconstruction_type": "sparse_photogrammetry",
             "image_count_processed": len(image_paths),
             "registered_image_count": registered_image_count,
+            "camera_count": camera_count,
             "point_count": len(points),
+            "current_stage": "completed",
+            "progress": 1.0,
+            "status_message": "Reconstruccion completada.",
+            "metrics": metrics,
+            "stage_timings_seconds": stage_timings,
             "workspace": {
                 "root": str(workspace_dir),
                 "database_path": str(database_path),
@@ -252,10 +392,9 @@ class ColmapReconstructionEngine(ReconstructionEngine):
                 "dense_dir": str(dense_dir),
                 "selected_sparse_model_dir": str(sparse_model_dir),
             },
-            "artifacts": {
-                "model_path": str(model_path),
-                "sparse_txt_dir": str(txt_model_dir),
-                "raw_sparse_ply": str(raw_ply_path) if raw_ply_path.exists() else None,
+            "artifacts": artifacts,
+            "logs": {
+                "directory": str(logs_dir),
             },
             "commands": [asdict(trace) for trace in command_traces],
             "fallback": {
@@ -268,6 +407,28 @@ class ColmapReconstructionEngine(ReconstructionEngine):
             "metadata_path": str(metadata_path),
         }
         metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
+
+        logger.info(
+            "Project %s | COLMAP reconstruction completed in %.3fs. registered_images=%s cameras=%s points=%s model=%s",
+            project_id,
+            elapsed_seconds,
+            registered_image_count,
+            camera_count,
+            len(points),
+            model_path,
+        )
+        self._notify_progress(
+            progress_callback,
+            {
+                "engine": self.name,
+                "current_stage": "completed",
+                "progress": 1.0,
+                "status_message": "Reconstruccion completada.",
+                "metrics": metrics,
+                "artifacts": artifacts,
+                "stage_timings_seconds": dict(stage_timings),
+            },
+        )
 
         return ReconstructionResult(
             engine_name=self.name,
@@ -353,6 +514,63 @@ class ColmapReconstructionEngine(ReconstructionEngine):
         )
         return False
 
+    def _probe_subcommand_help(self, binary: str, subcommand: str) -> str:
+        try:
+            completed = subprocess.run(
+                [binary, subcommand, "-h"],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=self._PROBE_TIMEOUT_SECONDS,
+                check=False,
+            )
+        except (FileNotFoundError, OSError, subprocess.TimeoutExpired) as exc:
+            logger.warning(
+                "Unable to inspect COLMAP help for subcommand=%s binary=%s error=%s",
+                subcommand,
+                binary,
+                exc,
+            )
+            return ""
+        return f"{completed.stdout}\n{completed.stderr}"
+
+    def _get_feature_extraction_gpu_option(self, binary: str) -> str:
+        if self._feature_extraction_gpu_option is not None:
+            return self._feature_extraction_gpu_option
+
+        help_text = self._probe_subcommand_help(binary, "feature_extractor")
+        if "--FeatureExtraction.use_gpu" in help_text:
+            self._feature_extraction_gpu_option = "FeatureExtraction.use_gpu"
+        elif "--SiftExtraction.use_gpu" in help_text:
+            self._feature_extraction_gpu_option = "SiftExtraction.use_gpu"
+        else:
+            self._feature_extraction_gpu_option = "FeatureExtraction.use_gpu"
+
+        logger.info(
+            "Resolved COLMAP GPU flag for feature_extractor: %s",
+            self._feature_extraction_gpu_option,
+        )
+        return self._feature_extraction_gpu_option
+
+    def _get_feature_matching_gpu_option(self, binary: str) -> str:
+        if self._feature_matching_gpu_option is not None:
+            return self._feature_matching_gpu_option
+
+        help_text = self._probe_subcommand_help(binary, "exhaustive_matcher")
+        if "--FeatureMatching.use_gpu" in help_text:
+            self._feature_matching_gpu_option = "FeatureMatching.use_gpu"
+        elif "--SiftMatching.use_gpu" in help_text:
+            self._feature_matching_gpu_option = "SiftMatching.use_gpu"
+        else:
+            self._feature_matching_gpu_option = "FeatureMatching.use_gpu"
+
+        logger.info(
+            "Resolved COLMAP GPU flag for exhaustive_matcher: %s",
+            self._feature_matching_gpu_option,
+        )
+        return self._feature_matching_gpu_option
+
     @staticmethod
     def _collect_images(images_dir: Path) -> list[Path]:
         if not images_dir.exists():
@@ -362,8 +580,31 @@ class ColmapReconstructionEngine(ReconstructionEngine):
             raise ProcessingError("No hay imagenes disponibles para reconstruir.")
         return image_paths
 
-    def _run_command(self, name: str, command: list[str]) -> ColmapCommandTrace:
-        logger.info("Running COLMAP step '%s': %s", name, subprocess.list2cmdline(command))
+    def _run_command(
+        self,
+        project_id: str,
+        name: str,
+        command: list[str],
+        logs_dir: Path,
+        progress_callback: ReconstructionProgressCallback | None,
+        progress_value: float,
+        stage_message: str,
+    ) -> ColmapCommandTrace:
+        logger.info(
+            "Project %s | Starting COLMAP stage '%s': %s",
+            project_id,
+            name,
+            subprocess.list2cmdline(command),
+        )
+        self._notify_progress(
+            progress_callback,
+            {
+                "engine": self.name,
+                "current_stage": name,
+                "progress": progress_value,
+                "status_message": stage_message,
+            },
+        )
         started_at = time.perf_counter()
         try:
             completed = subprocess.run(
@@ -382,14 +623,17 @@ class ColmapReconstructionEngine(ReconstructionEngine):
                 "o LOCAL3D_COLMAP_BINARY."
             ) from exc
         except subprocess.TimeoutExpired as exc:
+            stdout_path, stderr_path = self._write_command_logs(logs_dir, name, exc.stdout, exc.stderr)
             logger.exception("COLMAP step '%s' timed out after %s seconds", name, self.timeout_seconds, exc_info=exc)
             raise ProcessingError(
-                f"COLMAP agoto el tiempo de espera en el paso '{name}' despues de {self.timeout_seconds} segundos."
+                f"COLMAP agoto el tiempo de espera en el paso '{name}' despues de {self.timeout_seconds} segundos. "
+                f"Logs: stdout={stdout_path}, stderr={stderr_path}"
             ) from exc
 
         duration_seconds = round(time.perf_counter() - started_at, 3)
         stdout_tail = self._tail(completed.stdout)
         stderr_tail = self._tail(completed.stderr)
+        stdout_path, stderr_path = self._write_command_logs(logs_dir, name, completed.stdout, completed.stderr)
         trace = ColmapCommandTrace(
             name=name,
             command=subprocess.list2cmdline(command),
@@ -397,11 +641,14 @@ class ColmapReconstructionEngine(ReconstructionEngine):
             return_code=completed.returncode,
             stdout_tail=stdout_tail,
             stderr_tail=stderr_tail,
+            stdout_path=str(stdout_path),
+            stderr_path=str(stderr_path),
         )
 
         if completed.returncode != 0:
             logger.error(
-                "COLMAP step '%s' failed with code %s. stdout=%s stderr=%s",
+                "Project %s | COLMAP stage '%s' failed with code %s. stdout=%s stderr=%s",
+                project_id,
                 name,
                 completed.returncode,
                 stdout_tail,
@@ -409,47 +656,43 @@ class ColmapReconstructionEngine(ReconstructionEngine):
             )
             detail = stderr_tail or stdout_tail or "Sin detalle adicional."
             raise ProcessingError(
-                f"COLMAP fallo en el paso '{name}' con codigo {completed.returncode}. Detalle: {detail}"
+                f"COLMAP fallo en el paso '{name}' con codigo {completed.returncode}. Detalle: {detail}. "
+                f"Logs: stdout={stdout_path}, stderr={stderr_path}"
             )
 
-        logger.info("COLMAP step '%s' completed in %.3fs", name, duration_seconds)
+        logger.info(
+            "Project %s | COLMAP stage '%s' completed in %.3fs",
+            project_id,
+            name,
+            duration_seconds,
+        )
         return trace
 
-    @staticmethod
-    def _tail(text: str | None) -> str:
-        if not text:
-            return ""
-        normalized = text.strip()
-        if len(normalized) <= ColmapReconstructionEngine._MAX_LOG_TAIL:
-            return normalized
-        return normalized[-ColmapReconstructionEngine._MAX_LOG_TAIL :]
-
-    def _select_sparse_model_dir(self, sparse_dir: Path) -> Path:
-        candidates = [path for path in sparse_dir.iterdir() if path.is_dir()]
-        valid_models = [path for path in candidates if self._has_sparse_model_files(path)]
-        if not valid_models:
+    def _validate_mapper_output(self, sparse_dir: Path) -> Path:
+        sparse_model_dir = sparse_dir / "0"
+        if not sparse_model_dir.exists() or not sparse_model_dir.is_dir():
+            available_dirs = sorted(path.name for path in sparse_dir.iterdir() if path.is_dir()) if sparse_dir.exists() else []
             raise ProcessingError(
-                "COLMAP no genero un modelo sparse valido en el mapper. Revisa overlap entre imagenes y calibracion."
+                "COLMAP termino el paso 'mapper', pero no genero la carpeta requerida 'sparse/0'. "
+                f"Directorios encontrados: {available_dirs or 'ninguno'}."
             )
-        return max(valid_models, key=self._sparse_model_score)
+
+        missing_files = self._missing_sparse_model_files(sparse_model_dir)
+        if missing_files:
+            raise ProcessingError(
+                "COLMAP genero 'sparse/0', pero faltan archivos de reconstruccion. "
+                f"Faltantes: {', '.join(missing_files)}."
+            )
+        return sparse_model_dir
 
     @staticmethod
-    def _has_sparse_model_files(model_dir: Path) -> bool:
+    def _missing_sparse_model_files(model_dir: Path) -> list[str]:
         required_prefixes = ("cameras", "images", "points3D")
+        missing: list[str] = []
         for prefix in required_prefixes:
             if not any((model_dir / f"{prefix}{suffix}").exists() for suffix in (".bin", ".txt")):
-                return False
-        return True
-
-    @staticmethod
-    def _sparse_model_score(model_dir: Path) -> int:
-        points_bin = model_dir / "points3D.bin"
-        points_txt = model_dir / "points3D.txt"
-        if points_bin.exists():
-            return points_bin.stat().st_size
-        if points_txt.exists():
-            return points_txt.stat().st_size
-        return 0
+                missing.append(prefix)
+        return missing
 
     @staticmethod
     def _load_sparse_points(points_path: Path) -> list[SparsePoint]:
@@ -493,6 +736,18 @@ class ColmapReconstructionEngine(ReconstructionEngine):
             if line.strip() and not line.startswith("#")
         ]
         return len(non_comment_lines) // 2
+
+    @staticmethod
+    def _load_camera_count(cameras_path: Path) -> int:
+        if not cameras_path.exists():
+            return 0
+        return len(
+            [
+                line.strip()
+                for line in cameras_path.read_text(encoding="utf-8").splitlines()
+                if line.strip() and not line.startswith("#")
+            ]
+        )
 
     @staticmethod
     def _write_obj_point_cloud(model_path: Path, points: list[SparsePoint], project_id: str) -> None:
@@ -601,6 +856,44 @@ class ColmapReconstructionEngine(ReconstructionEngine):
         json_chunk = struct.pack("<I4s", len(json_bytes), b"JSON") + json_bytes
         bin_chunk = struct.pack("<I4s", len(bin_payload), b"BIN\x00") + bin_payload
         model_path.write_bytes(header + json_chunk + bin_chunk)
+
+    @staticmethod
+    def _write_command_logs(logs_dir: Path, name: str, stdout_text: str | bytes | None, stderr_text: str | bytes | None) -> tuple[Path, Path]:
+        logs_dir.mkdir(parents=True, exist_ok=True)
+        safe_name = name.replace(" ", "_")
+        stdout_path = logs_dir / f"{safe_name}.stdout.log"
+        stderr_path = logs_dir / f"{safe_name}.stderr.log"
+        stdout_value = ColmapReconstructionEngine._normalize_output(stdout_text)
+        stderr_value = ColmapReconstructionEngine._normalize_output(stderr_text)
+        stdout_path.write_text(stdout_value, encoding="utf-8")
+        stderr_path.write_text(stderr_value, encoding="utf-8")
+        return stdout_path, stderr_path
+
+    @staticmethod
+    def _normalize_output(text: str | bytes | None) -> str:
+        if text is None:
+            return ""
+        if isinstance(text, bytes):
+            return text.decode("utf-8", errors="replace")
+        return str(text)
+
+    @staticmethod
+    def _tail(text: str | None) -> str:
+        if not text:
+            return ""
+        normalized = text.strip()
+        if len(normalized) <= ColmapReconstructionEngine._MAX_LOG_TAIL:
+            return normalized
+        return normalized[-ColmapReconstructionEngine._MAX_LOG_TAIL :]
+
+    @staticmethod
+    def _notify_progress(
+        progress_callback: ReconstructionProgressCallback | None,
+        payload: dict[str, object],
+    ) -> None:
+        if progress_callback is None:
+            return
+        progress_callback({key: value for key, value in payload.items() if value is not None})
 
     @staticmethod
     def _min_bounds(points: list[SparsePoint]) -> list[float]:

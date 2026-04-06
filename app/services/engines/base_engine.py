@@ -3,9 +3,11 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from app.models.schemas import OutputFormat
+
+ReconstructionProgressCallback = Callable[[dict[str, Any]], None]
 
 
 @dataclass(frozen=True)
@@ -31,5 +33,6 @@ class ReconstructionEngine(ABC):
         images_dir: Path,
         output_dir: Path,
         output_format: OutputFormat,
+        progress_callback: ReconstructionProgressCallback | None = None,
     ) -> ReconstructionResult:
         raise NotImplementedError

@@ -69,7 +69,12 @@ class ProjectService:
         self.storage_service.save_project_metadata(metadata)
         return metadata, saved_files
 
-    def mark_processing(self, project_id: str, output_format: OutputFormat) -> ProjectMetadata:
+    def mark_processing(
+        self,
+        project_id: str,
+        output_format: OutputFormat,
+        processing_metadata: dict[str, Any] | None = None,
+    ) -> ProjectMetadata:
         metadata = self.get_project(project_id)
         if metadata.status == ProjectStatus.PROCESSING:
             raise InvalidProjectStateError("El proyecto ya se encuentra en procesamiento.")
@@ -80,9 +85,23 @@ class ProjectService:
         metadata.status = ProjectStatus.PROCESSING
         metadata.output_format = output_format
         metadata.error_message = None
-        metadata.processing_metadata = None
+        metadata.processing_metadata = processing_metadata
         metadata.updated_at = self._utc_now()
 
+        self.storage_service.save_project_metadata(metadata)
+        return metadata
+
+    def update_processing_metadata(
+        self,
+        project_id: str,
+        processing_metadata: dict[str, Any] | None,
+    ) -> ProjectMetadata:
+        metadata = self.get_project(project_id)
+        if metadata.status != ProjectStatus.PROCESSING:
+            return metadata
+
+        metadata.processing_metadata = processing_metadata
+        metadata.updated_at = self._utc_now()
         self.storage_service.save_project_metadata(metadata)
         return metadata
 

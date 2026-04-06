@@ -1,0 +1,58 @@
+{
+  "id": "d3c5418c0a4d",
+  "name": "colmap-real-e2e-1775488744",
+  "status": "failed",
+  "created_at": "2026-04-06T15:19:04.992422Z",
+  "updated_at": "2026-04-06T15:19:29.012430Z",
+  "image_count": 5,
+  "image_files": [
+    "3f28e9ec49554797abf066459f49464e.jpg",
+    "aea9699be92d4de59bf27c7e8e633157.jpg",
+    "c38f59734eaa4e2cb647c9397dc82edd.jpg",
+    "c7a6e1a464ea42298f80ee23998c1af4.jpg",
+    "49bb6c256c1f4e86a499bd8fa952061c.jpg"
+  ],
+  "output_format": "obj",
+  "model_filename": null,
+  "error_message": "COLMAP fallo en el paso 'mapper' con codigo 1. Detalle: I20260406 10:19:28.809344  9264 incremental_pipeline.cc:265] Loading database\nI20260406 10:19:28.810937  9264 database_cache.cc:72] Loading rigs...\nI20260406 10:19:28.811058  9264 database_cache.cc:82]  1 in 0.000s\nI20260406 10:19:28.811090  9264 database_cache.cc:90] Loading cameras...\nI20260406 10:19:28.811141  9264 database_cache.cc:108]  1 in 0.000s\nI20260406 10:19:28.811168  9264 database_cache.cc:116] Loading frames...\nI20260406 10:19:28.811256  9264 database_cache.cc:126]  5 in 0.000s\nI20260406 10:19:28.811284  9264 database_cache.cc:134] Loading matches...\nI20260406 10:19:28.811357  9264 database_cache.cc:139]  10 in 0.000s\nI20260406 10:19:28.811386  9264 database_cache.cc:147] Loading images...\nI20260406 10:19:28.811909  9264 database_cache.cc:241]  5 in 0.001s (connected 5, loaded 5)\nI20260406 10:19:28.811945  9264 database_cache.cc:255] Loading pose priors...\nI20260406 10:19:28.811981  9264 database_cache.cc:263]  0 in 0.000s\nI20260406 10:19:28.812005  9264 database_cache.cc:271] Building correspondence graph...\nI20260406 10:19:28.812246  9264 database_cache.cc:300]  in 0.000s (ignored 0)\nI20260406 10:19:28.812273  9264 timer.cc:90] Elapsed time: 0.000 [minutes]\nI20260406 10:19:28.813880  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.815497  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.815662  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.815846  9264 incremental_pipeline.cc:341] => Relaxing the initialization constraints.\nI20260406 10:19:28.816738  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.818403  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.818483  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.818571  9264 incremental_pipeline.cc:354] => Relaxing the initialization constraints.\nI20260406 10:19:28.818726  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.820029  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.820097  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.820190  9264 incremental_pipeline.cc:341] => Relaxing the initialization constraints.\nI20260406 10:19:28.820336  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.875749  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.875808  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.875863  9264 incremental_pipeline.cc:354] => Relaxing the initialization constraints.\nI20260406 10:19:28.875984  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.924054  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.924113  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.924159  9264 timer.cc:90] Elapsed time: 0.002 [minutes]\nE20260406 10:19:28.924195  9264 sfm.cc:279] Failed to create any sparse model. Logs: stdout=data\\projects\\d3c5418c0a4d\\output\\logs\\colmap\\mapper.stdout.log, stderr=data\\projects\\d3c5418c0a4d\\output\\logs\\colmap\\mapper.stderr.log",
+  "processing_metadata": {
+    "engine": "colmap",
+    "engine_requested": "colmap",
+    "requested_output_format": "obj",
+    "current_stage": "failed",
+    "progress": 0.6,
+    "status_message": "Procesamiento fallido.",
+    "stage_sequence": [
+      "starting",
+      "feature_extractor",
+      "exhaustive_matcher",
+      "mapper",
+      "export",
+      "completed"
+    ],
+    "metrics": {
+      "image_count_processed": 5,
+      "total_processing_seconds": 23.866
+    },
+    "fallback": {
+      "used": false,
+      "from_engine": null,
+      "reason": null
+    },
+    "workspace": {
+      "root": "data\\projects\\d3c5418c0a4d\\output\\workspace",
+      "database_path": "data\\projects\\d3c5418c0a4d\\output\\workspace\\database.db",
+      "sparse_dir": "data\\projects\\d3c5418c0a4d\\output\\workspace\\sparse",
+      "dense_dir": "data\\projects\\d3c5418c0a4d\\output\\workspace\\dense"
+    },
+    "logs": {
+      "directory": "data\\projects\\d3c5418c0a4d\\output\\logs\\colmap"
+    },
+    "stage_timings_seconds": {
+      "feature_extractor": 21.618,
+      "exhaustive_matcher": 1.866
+    },
+    "failed_stage": "mapper",
+    "failure_reason": "COLMAP fallo en el paso 'mapper' con codigo 1. Detalle: I20260406 10:19:28.809344  9264 incremental_pipeline.cc:265] Loading database\nI20260406 10:19:28.810937  9264 database_cache.cc:72] Loading rigs...\nI20260406 10:19:28.811058  9264 database_cache.cc:82]  1 in 0.000s\nI20260406 10:19:28.811090  9264 database_cache.cc:90] Loading cameras...\nI20260406 10:19:28.811141  9264 database_cache.cc:108]  1 in 0.000s\nI20260406 10:19:28.811168  9264 database_cache.cc:116] Loading frames...\nI20260406 10:19:28.811256  9264 database_cache.cc:126]  5 in 0.000s\nI20260406 10:19:28.811284  9264 database_cache.cc:134] Loading matches...\nI20260406 10:19:28.811357  9264 database_cache.cc:139]  10 in 0.000s\nI20260406 10:19:28.811386  9264 database_cache.cc:147] Loading images...\nI20260406 10:19:28.811909  9264 database_cache.cc:241]  5 in 0.001s (connected 5, loaded 5)\nI20260406 10:19:28.811945  9264 database_cache.cc:255] Loading pose priors...\nI20260406 10:19:28.811981  9264 database_cache.cc:263]  0 in 0.000s\nI20260406 10:19:28.812005  9264 database_cache.cc:271] Building correspondence graph...\nI20260406 10:19:28.812246  9264 database_cache.cc:300]  in 0.000s (ignored 0)\nI20260406 10:19:28.812273  9264 timer.cc:90] Elapsed time: 0.000 [minutes]\nI20260406 10:19:28.813880  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.815497  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.815662  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.815846  9264 incremental_pipeline.cc:341] => Relaxing the initialization constraints.\nI20260406 10:19:28.816738  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.818403  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.818483  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.818571  9264 incremental_pipeline.cc:354] => Relaxing the initialization constraints.\nI20260406 10:19:28.818726  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.820029  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.820097  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.820190  9264 incremental_pipeline.cc:341] => Relaxing the initialization constraints.\nI20260406 10:19:28.820336  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.875749  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.875808  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.875863  9264 incremental_pipeline.cc:354] => Relaxing the initialization constraints.\nI20260406 10:19:28.875984  9264 incremental_pipeline.cc:377] Finding good initial image pair\nI20260406 10:19:28.924054  9264 incremental_pipeline.cc:381] => No good initial image pair found.\nI20260406 10:19:28.924113  9264 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair\nI20260406 10:19:28.924159  9264 timer.cc:90] Elapsed time: 0.002 [minutes]\nE20260406 10:19:28.924195  9264 sfm.cc:279] Failed to create any sparse model. Logs: stdout=data\\projects\\d3c5418c0a4d\\output\\logs\\colmap\\mapper.stdout.log, stderr=data\\projects\\d3c5418c0a4d\\output\\logs\\colmap\\mapper.stderr.log"
+  }
+}

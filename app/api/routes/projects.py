@@ -1,3 +1,5 @@
+from typing import Any
+
 from fastapi import APIRouter, Depends, File, UploadFile, status
 from fastapi.responses import FileResponse
 
@@ -35,6 +37,43 @@ def _to_project_response(metadata) -> ProjectResponse:
         error_message=metadata.error_message,
         processing_metadata=metadata.processing_metadata,
     )
+
+
+def _build_status_details(metadata) -> dict[str, Any]:
+    processing_metadata = metadata.processing_metadata or {}
+    progress = processing_metadata.get("progress")
+    if isinstance(progress, (int, float)):
+        progress = max(0.0, min(1.0, float(progress)))
+    elif metadata.status == ProjectStatus.COMPLETED:
+        progress = 1.0
+    elif metadata.status in {ProjectStatus.CREATED, ProjectStatus.READY}:
+        progress = 0.0
+    else:
+        progress = None
+
+    current_stage = processing_metadata.get("current_stage")
+    if not current_stage and metadata.status == ProjectStatus.COMPLETED:
+        current_stage = "completed"
+    if not current_stage and metadata.status == ProjectStatus.FAILED:
+        current_stage = "failed"
+
+    message = processing_metadata.get("status_message") or metadata.error_message
+    if not message and metadata.status == ProjectStatus.COMPLETED:
+        message = "Reconstruccion completada."
+    if not message and metadata.status == ProjectStatus.PROCESSING:
+        message = "Procesamiento en curso."
+
+    metrics = processing_metadata.get("metrics")
+    if not isinstance(metrics, dict):
+        metrics = None
+
+    return {
+        "engine": processing_metadata.get("engine") or processing_metadata.get("engine_requested"),
+        "current_stage": current_stage,
+        "progress": progress,
+        "message": message,
+        "metrics": metrics,
+    }
 
 
 @router.get("", response_model=list[ProjectResponse])
@@ -97,6 +136,8 @@ def get_project_status(
     if metadata.status == ProjectStatus.COMPLETED and metadata.model_filename:
         model_download_url = f"/projects/{project_id}/model"
 
+    status_details = _build_status_details(metadata)
+
     return ProjectStatusResponse(
         project_id=metadata.id,
         status=metadata.status,
@@ -105,6 +146,11 @@ def get_project_status(
         model_filename=metadata.model_filename,
         model_download_url=model_download_url,
         error_message=metadata.error_message,
+        engine=status_details["engine"],
+        current_stage=status_details["current_stage"],
+        progress=status_details["progress"],
+        message=status_details["message"],
+        metrics=status_details["metrics"],
         processing_metadata=metadata.processing_metadata,
     )
 
