@@ -1,0 +1,99 @@
+{
+  "project_id": "61f882690f2f",
+  "output_format": "glb",
+  "mode_summary": {
+    "image_validation_and_preprocessing": "synthetic",
+    "feature_extraction_and_matching": "real",
+    "pose_estimation": "synthetic",
+    "point_cloud_building": "synthetic",
+    "mesh_generation": "synthetic",
+    "model_export": "real"
+  },
+  "stage_results": [
+    {
+      "name": "image_validation_and_preprocessing",
+      "status": "completed",
+      "summary": "Se validaron y normalizaron 3 imagenes.",
+      "mode": "synthetic",
+      "artifact_path": "data\\projects\\61f882690f2f\\output\\pipeline\\preprocessing_manifest.json",
+      "metrics": {
+        "image_count": 3,
+        "real_image_count": 0,
+        "synthetic_image_count": 3,
+        "mode": "synthetic"
+      }
+    },
+    {
+      "name": "feature_extraction_and_matching",
+      "status": "completed",
+      "summary": "Se extrajeron caracteristicas reales cuando fue posible y se generaron emparejamientos entre imagenes consecutivas.",
+      "mode": "real",
+      "artifact_path": "data\\projects\\61f882690f2f\\output\\pipeline\\features_and_matches.json",
+      "metrics": {
+        "feature_count": 3,
+        "match_count": 2,
+        "mode": "real",
+        "real_feature_count": 0,
+        "synthetic_feature_count": 3
+      }
+    },
+    {
+      "name": "pose_estimation",
+      "status": "completed",
+      "summary": "Se estimaron poses reales cuando hubo correspondencias suficientes y se mantuvo un fallback sintetico.",
+      "mode": "synthetic",
+      "artifact_path": "data\\projects\\61f882690f2f\\output\\pipeline\\poses.json",
+      "metrics": {
+        "pose_count": 3,
+        "real_pose_count": 0,
+        "synthetic_pose_count": 3,
+        "mode": "synthetic"
+      }
+    },
+    {
+      "name": "point_cloud_building",
+      "status": "completed",
+      "summary": "Se construyo una nube de puntos aproximada a partir de las poses y de las correspondencias reales cuando estuvieron disponibles.",
+      "mode": "synthetic",
+      "artifact_path": "data\\projects\\61f882690f2f\\output\\pipeline\\point_cloud.json",
+      "metrics": {
+        "point_count": 48,
+        "real_point_count": 0,
+        "synthetic_point_count": 48,
+        "mode": "synthetic"
+      }
+    },
+    {
+      "name": "mesh_generation",
+      "status": "completed",
+      "summary": "Se genero una malla basica a partir de la nube de puntos.",
+      "mode": "synthetic",
+      "artifact_path": "data\\projects\\61f882690f2f\\output\\pipeline\\mesh.json",
+      "metrics": {
+        "vertex_count": 48,
+        "face_count": 46
+      }
+    },
+    {
+      "name": "model_export",
+      "status": "completed",
+      "summary": "Modelo exportado como GLB.",
+      "mode": "real",
+      "artifact_path": "data\\projects\\61f882690f2f\\output\\61f882690f2f_model.glb",
+      "metrics": {
+        "model_path": "data\\projects\\61f882690f2f\\output\\61f882690f2f_model.glb",
+        "output_format": "glb",
+        "bytes_written": 1628,
+        "vertex_count": 48,
+        "face_count": 46
+      }
+    }
+  ],
+  "image_count": 3,
+  "feature_count": 3,
+  "match_count": 2,
+  "point_count": 48,
+  "vertex_count": 48,
+  "face_count": 46,
+  "model_path": "data\\projects\\61f882690f2f\\output\\61f882690f2f_model.glb"
+}

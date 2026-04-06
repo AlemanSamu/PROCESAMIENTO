@@ -1,0 +1,16 @@
+{
+  "id": "1c94bc53a58d",
+  "name": "E2E remoto",
+  "status": "ready",
+  "created_at": "2026-03-27T06:07:59.444736Z",
+  "updated_at": "2026-03-27T06:07:59.602541Z",
+  "image_count": 3,
+  "image_files": [
+    "3bb4b523d6784096add2d59364d5a8d8.jpg",
+    "b2e8830fc6b24f34902c50324ffc17ff.jpg",
+    "b24afc8d353c48c7a3d22f6ee785a705.jpg"
+  ],
+  "output_format": null,
+  "model_filename": null,
+  "error_message": null
+}

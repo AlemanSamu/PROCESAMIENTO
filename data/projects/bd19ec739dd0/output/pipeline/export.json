@@ -1,0 +1,9 @@
+{
+  "stage": "model_export",
+  "project_id": "bd19ec739dd0",
+  "output_format": "glb",
+  "model_path": "data\\projects\\bd19ec739dd0\\output\\bd19ec739dd0_model.glb",
+  "bytes_written": 1576,
+  "vertex_count": 45,
+  "face_count": 43
+}

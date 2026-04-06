@@ -1,0 +1,63 @@
+{
+  "stage": "image_validation_and_preprocessing",
+  "mode": "synthetic",
+  "image_count": 3,
+  "real_image_count": 0,
+  "synthetic_image_count": 3,
+  "images": [
+    {
+      "source": {
+        "source_path": "data\\projects\\61f882690f2f\\images\\38e55279360e48659825334d76f44bc3.jpg",
+        "normalized_name": "001_38e55279360e48659825334d76f44bc3.jpg",
+        "index": 1,
+        "size_bytes": 128,
+        "sha256": "e3c809de22da591f408c1ba36648b0e592823e468f3fe03633ec5a4d61d81716",
+        "extension": ".jpg",
+        "width": 0,
+        "height": 0,
+        "pixel_count": 0
+      },
+      "preprocessed_path": "data\\projects\\61f882690f2f\\output\\pipeline\\preprocessed_images\\001_38e55279360e48659825334d76f44bc3.jpg",
+      "brightness": 0.2249,
+      "contrast": 0.5233,
+      "sharpness": 0.5212,
+      "mode": "synthetic"
+    },
+    {
+      "source": {
+        "source_path": "data\\projects\\61f882690f2f\\images\\8bddc6651d8c4baa9372640da6095720.jpg",
+        "normalized_name": "002_8bddc6651d8c4baa9372640da6095720.jpg",
+        "index": 2,
+        "size_bytes": 128,
+        "sha256": "bafa52e3c9b5c87242b6bb2ecb23976625fe469ac15670d22fb09b5be1111115",
+        "extension": ".jpg",
+        "width": 0,
+        "height": 0,
+        "pixel_count": 0
+      },
+      "preprocessed_path": "data\\projects\\61f882690f2f\\output\\pipeline\\preprocessed_images\\002_8bddc6651d8c4baa9372640da6095720.jpg",
+      "brightness": 0.2319,
+      "contrast": 0.2455,
+      "sharpness": 0.5989,
+      "mode": "synthetic"
+    },
+    {
+      "source": {
+        "source_path": "data\\projects\\61f882690f2f\\images\\a9d829e8671a45a9b057ec6c06ae611d.jpg",
+        "normalized_name": "003_a9d829e8671a45a9b057ec6c06ae611d.jpg",
+        "index": 3,
+        "size_bytes": 128,
+        "sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+        "extension": ".jpg",
+        "width": 0,
+        "height": 0,
+        "pixel_count": 0
+      },
+      "preprocessed_path": "data\\projects\\61f882690f2f\\output\\pipeline\\preprocessed_images\\003_a9d829e8671a45a9b057ec6c06ae611d.jpg",
+      "brightness": 0.5355,
+      "contrast": 0.71,
+      "sharpness": 0.6438,
+      "mode": "synthetic"
+    }
+  ]
+}

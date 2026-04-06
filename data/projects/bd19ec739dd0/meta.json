@@ -1,0 +1,16 @@
+{
+  "id": "bd19ec739dd0",
+  "name": "E2E remoto",
+  "status": "completed",
+  "created_at": "2026-03-29T16:29:26.027299Z",
+  "updated_at": "2026-03-29T16:29:31.563136Z",
+  "image_count": 3,
+  "image_files": [
+    "12ab718319114976b6848963b9a80629.jpg",
+    "1434f17f0ada4d59bec5c16a3b53306f.jpg",
+    "f704a0080986427b99b952f023abfcd8.jpg"
+  ],
+  "output_format": "glb",
+  "model_filename": "bd19ec739dd0_model.glb",
+  "error_message": null
+}

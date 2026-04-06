@@ -1,0 +1,270 @@
+{
+  "stage": "feature_extraction_and_matching",
+  "mode": "real",
+  "feature_count": 3,
+  "match_count": 2,
+  "detectors": [
+    "hash-synthetic",
+    "hash-synthetic",
+    "hash-synthetic"
+  ],
+  "matching_backends": [
+    "pil-descriptor",
+    "pil-descriptor"
+  ],
+  "features": [
+    {
+      "image": {
+        "source": {
+          "source_path": "data\\projects\\61f882690f2f\\images\\38e55279360e48659825334d76f44bc3.jpg",
+          "normalized_name": "001_38e55279360e48659825334d76f44bc3.jpg",
+          "index": 1,
+          "size_bytes": 128,
+          "sha256": "e3c809de22da591f408c1ba36648b0e592823e468f3fe03633ec5a4d61d81716",
+          "extension": ".jpg",
+          "width": 0,
+          "height": 0,
+          "pixel_count": 0
+        },
+        "preprocessed_path": "data\\projects\\61f882690f2f\\output\\pipeline\\preprocessed_images\\001_38e55279360e48659825334d76f44bc3.jpg",
+        "brightness": 0.2249,
+        "contrast": 0.5233,
+        "sharpness": 0.5212
+      },
+      "keypoints": [
+        {
+          "x": 0.48181,
+          "y": 0.679079,
+          "score": 0.77
+        },
+        {
+          "x": 0.723312,
+          "y": 0.348237,
+          "score": 0.51
+        },
+        {
+          "x": 0.244633,
+          "y": 0.709016,
+          "score": 0.47
+        },
+        {
+          "x": 0.659684,
+          "y": 0.489954,
+          "score": 0.6
+        },
+        {
+          "x": 0.591514,
+          "y": 0.817057,
+          "score": 0.49
+        },
+        {
+          "x": 0.471849,
+          "y": 0.362859,
+          "score": 0.8
+        },
+        {
+          "x": 0.50267,
+          "y": 0.330021,
+          "score": 0.69
+        },
+        {
+          "x": 0.428513,
+          "y": 0.334804,
+          "score": 0.5
+        }
+      ],
+      "descriptor_seed": "33459c2917f31a6c",
+      "score": 0.4409,
+      "mode": "synthetic",
+      "detector": "hash-synthetic"
+    },
+    {
+      "image": {
+        "source": {
+          "source_path": "data\\projects\\61f882690f2f\\images\\8bddc6651d8c4baa9372640da6095720.jpg",
+          "normalized_name": "002_8bddc6651d8c4baa9372640da6095720.jpg",
+          "index": 2,
+          "size_bytes": 128,
+          "sha256": "bafa52e3c9b5c87242b6bb2ecb23976625fe469ac15670d22fb09b5be1111115",
+          "extension": ".jpg",
+          "width": 0,
+          "height": 0,
+          "pixel_count": 0
+        },
+        "preprocessed_path": "data\\projects\\61f882690f2f\\output\\pipeline\\preprocessed_images\\002_8bddc6651d8c4baa9372640da6095720.jpg",
+        "brightness": 0.2319,
+        "contrast": 0.2455,
+        "sharpness": 0.5989
+      },
+      "keypoints": [
+        {
+          "x": 0.573864,
+          "y": 0.369447,
+          "score": 0.71
+        },
+        {
+          "x": 0.24307,
+          "y": 0.582986,
+          "score": 0.64
+        },
+        {
+          "x": 0.696956,
+          "y": 0.777143,
+          "score": 0.82
+        },
+        {
+          "x": 0.405697,
+          "y": 0.425791,
+          "score": 0.79
+        },
+        {
+          "x": 0.56533,
+          "y": 0.343054,
+          "score": 0.83
+        },
+        {
+          "x": 0.729089,
+          "y": 0.520446,
+          "score": 0.83
+        },
+        {
+          "x": 0.190546,
+          "y": 0.518385,
+          "score": 0.48
+        },
+        {
+          "x": 0.295168,
+          "y": 0.419727,
+          "score": 0.83
+        }
+      ],
+      "descriptor_seed": "59ca2258045ae50e",
+      "score": 0.4771,
+      "mode": "synthetic",
+      "detector": "hash-synthetic"
+    },
+    {
+      "image": {
+        "source": {
+          "source_path": "data\\projects\\61f882690f2f\\images\\a9d829e8671a45a9b057ec6c06ae611d.jpg",
+          "normalized_name": "003_a9d829e8671a45a9b057ec6c06ae611d.jpg",
+          "index": 3,
+          "size_bytes": 128,
+          "sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+          "extension": ".jpg",
+          "width": 0,
+          "height": 0,
+          "pixel_count": 0
+        },
+        "preprocessed_path": "data\\projects\\61f882690f2f\\output\\pipeline\\preprocessed_images\\003_a9d829e8671a45a9b057ec6c06ae611d.jpg",
+        "brightness": 0.5355,
+        "contrast": 0.71,
+        "sharpness": 0.6438
+      },
+      "keypoints": [
+        {
+          "x": 0.360094,
+          "y": 0.50513,
+          "score": 0.52
+        },
+        {
+          "x": 0.458229,
+          "y": 0.685352,
+          "score": 0.72
+        },
+        {
+          "x": 0.382453,
+          "y": 0.423956,
+          "score": 0.8
+        },
+        {
+          "x": 0.263171,
+          "y": 0.37034,
+          "score": 0.54
+        },
+        {
+          "x": 0.716724,
+          "y": 0.462176,
+          "score": 0.68
+        },
+        {
+          "x": 0.446032,
+          "y": 0.713278,
+          "score": 0.58
+        },
+        {
+          "x": 0.446296,
+          "y": 0.381611,
+          "score": 0.79
+        },
+        {
+          "x": 0.346295,
+          "y": 0.721979,
+          "score": 0.77
+        }
+      ],
+      "descriptor_seed": "2bc63928f6fa1607",
+      "score": 0.5557,
+      "mode": "synthetic",
+      "detector": "hash-synthetic"
+    }
+  ],
+  "matches": [
+    {
+      "left_image": "001_38e55279360e48659825334d76f44bc3.jpg",
+      "right_image": "002_8bddc6651d8c4baa9372640da6095720.jpg",
+      "matched_pairs": 2,
+      "confidence": 0.5612,
+      "correspondences": [
+        {
+          "left": {
+            "x": 0.244633,
+            "y": 0.709016,
+            "score": 0.47
+          },
+          "right": {
+            "x": 0.405697,
+            "y": 0.425791,
+            "score": 0.79
+          }
+        },
+        {
+          "left": {
+            "x": 0.659684,
+            "y": 0.489954,
+            "score": 0.6
+          },
+          "right": {
+            "x": 0.56533,
+            "y": 0.343054,
+            "score": 0.83
+          }
+        }
+      ],
+      "mode": "real",
+      "backend": "pil-descriptor"
+    },
+    {
+      "left_image": "002_8bddc6651d8c4baa9372640da6095720.jpg",
+      "right_image": "003_a9d829e8671a45a9b057ec6c06ae611d.jpg",
+      "matched_pairs": 1,
+      "confidence": 0.5059,
+      "correspondences": [
+        {
+          "left": {
+            "x": 0.56533,
+            "y": 0.343054,
+            "score": 0.83
+          },
+          "right": {
+            "x": 0.382453,
+            "y": 0.423956,
+            "score": 0.8
+          }
+        }
+      ],
+      "mode": "real",
+      "backend": "pil-descriptor"
+    }
+  ]
+}

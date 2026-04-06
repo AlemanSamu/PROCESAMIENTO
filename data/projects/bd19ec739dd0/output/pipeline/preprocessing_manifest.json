@@ -1,0 +1,48 @@
+{
+  "stage": "image_validation_and_preprocessing",
+  "image_count": 3,
+  "images": [
+    {
+      "source": {
+        "source_path": "data\\projects\\bd19ec739dd0\\images\\12ab718319114976b6848963b9a80629.jpg",
+        "normalized_name": "001_12ab718319114976b6848963b9a80629.jpg",
+        "index": 1,
+        "size_bytes": 128,
+        "sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+        "extension": ".jpg"
+      },
+      "preprocessed_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\preprocessed_images\\001_12ab718319114976b6848963b9a80629.jpg",
+      "brightness": 0.5355,
+      "contrast": 0.71,
+      "sharpness": 0.6438
+    },
+    {
+      "source": {
+        "source_path": "data\\projects\\bd19ec739dd0\\images\\1434f17f0ada4d59bec5c16a3b53306f.jpg",
+        "normalized_name": "002_1434f17f0ada4d59bec5c16a3b53306f.jpg",
+        "index": 2,
+        "size_bytes": 128,
+        "sha256": "bafa52e3c9b5c87242b6bb2ecb23976625fe469ac15670d22fb09b5be1111115",
+        "extension": ".jpg"
+      },
+      "preprocessed_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\preprocessed_images\\002_1434f17f0ada4d59bec5c16a3b53306f.jpg",
+      "brightness": 0.2319,
+      "contrast": 0.2455,
+      "sharpness": 0.5989
+    },
+    {
+      "source": {
+        "source_path": "data\\projects\\bd19ec739dd0\\images\\f704a0080986427b99b952f023abfcd8.jpg",
+        "normalized_name": "003_f704a0080986427b99b952f023abfcd8.jpg",
+        "index": 3,
+        "size_bytes": 128,
+        "sha256": "e3c809de22da591f408c1ba36648b0e592823e468f3fe03633ec5a4d61d81716",
+        "extension": ".jpg"
+      },
+      "preprocessed_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\preprocessed_images\\003_f704a0080986427b99b952f023abfcd8.jpg",
+      "brightness": 0.2249,
+      "contrast": 0.5233,
+      "sharpness": 0.5212
+    }
+  ]
+}

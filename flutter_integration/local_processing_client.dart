@@ -13,7 +13,7 @@ class LocalProcessingClient {
   final http.Client _httpClient;
 
   Future<Map<String, dynamic>> createProject({String? name}) async {
-    final uri = Uri.parse('$baseUrl/api/projects');
+    final uri = Uri.parse('$baseUrl/projects');
     final response = await _httpClient.post(
       uri,
       headers: {'Content-Type': 'application/json'},
@@ -26,7 +26,7 @@ class LocalProcessingClient {
     required String projectId,
     required List<String> imagePaths,
   }) async {
-    final uri = Uri.parse('$baseUrl/api/projects/$projectId/images');
+    final uri = Uri.parse('$baseUrl/projects/$projectId/images');
     final request = http.MultipartRequest('POST', uri);
 
     for (final path in imagePaths) {
@@ -42,7 +42,7 @@ class LocalProcessingClient {
     required String projectId,
     String outputFormat = 'glb',
   }) async {
-    final uri = Uri.parse('$baseUrl/api/projects/$projectId/process');
+    final uri = Uri.parse('$baseUrl/projects/$projectId/process');
     final response = await _httpClient.post(
       uri,
       headers: {'Content-Type': 'application/json'},
@@ -52,13 +52,13 @@ class LocalProcessingClient {
   }
 
   Future<Map<String, dynamic>> getProjectStatus(String projectId) async {
-    final uri = Uri.parse('$baseUrl/api/projects/$projectId/status');
+    final uri = Uri.parse('$baseUrl/projects/$projectId/status');
     final response = await _httpClient.get(uri);
     return _decodeJson(response);
   }
 
   Uri modelDownloadUri(String projectId) {
-    return Uri.parse('$baseUrl/api/projects/$projectId/model');
+    return Uri.parse('$baseUrl/projects/$projectId/model');
   }
 
   void close() {

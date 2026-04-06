@@ -1,0 +1,73 @@
+{
+  "project_id": "bd19ec739dd0",
+  "output_format": "glb",
+  "stage_results": [
+    {
+      "name": "image_validation_and_preprocessing",
+      "status": "completed",
+      "summary": "Se validaron y normalizaron 3 imagenes.",
+      "artifact_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\preprocessing_manifest.json",
+      "metrics": {
+        "image_count": 3
+      }
+    },
+    {
+      "name": "feature_extraction_and_matching",
+      "status": "completed",
+      "summary": "Se extrajeron caracteristicas sinteticas y se generaron emparejamientos.",
+      "artifact_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\features_and_matches.json",
+      "metrics": {
+        "feature_count": 3,
+        "match_count": 2
+      }
+    },
+    {
+      "name": "pose_estimation",
+      "status": "completed",
+      "summary": "Se estimaron poses sinteticas de las camaras.",
+      "artifact_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\poses.json",
+      "metrics": {
+        "pose_count": 3
+      }
+    },
+    {
+      "name": "point_cloud_building",
+      "status": "completed",
+      "summary": "Se construyo una nube de puntos sintetica.",
+      "artifact_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\point_cloud.json",
+      "metrics": {
+        "point_count": 45
+      }
+    },
+    {
+      "name": "mesh_generation",
+      "status": "completed",
+      "summary": "Se genero una malla basica a partir de la nube de puntos.",
+      "artifact_path": "data\\projects\\bd19ec739dd0\\output\\pipeline\\mesh.json",
+      "metrics": {
+        "vertex_count": 45,
+        "face_count": 43
+      }
+    },
+    {
+      "name": "model_export",
+      "status": "completed",
+      "summary": "Modelo exportado como GLB.",
+      "artifact_path": "data\\projects\\bd19ec739dd0\\output\\bd19ec739dd0_model.glb",
+      "metrics": {
+        "model_path": "data\\projects\\bd19ec739dd0\\output\\bd19ec739dd0_model.glb",
+        "output_format": "glb",
+        "bytes_written": 1576,
+        "vertex_count": 45,
+        "face_count": 43
+      }
+    }
+  ],
+  "image_count": 3,
+  "feature_count": 3,
+  "match_count": 2,
+  "point_count": 45,
+  "vertex_count": 45,
+  "face_count": 43,
+  "model_path": "data\\projects\\bd19ec739dd0\\output\\bd19ec739dd0_model.glb"
+}
