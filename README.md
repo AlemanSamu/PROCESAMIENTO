@@ -226,13 +226,17 @@ Archivo: [app/services/engines/mock_engine.py](app/services/engines/mock_engine.
 - delega la reconstruccion a `ReconstructionPipeline`
 - genera un modelo valido en GLB u OBJ
 
-### COLMAP futuro
+### COLMAP real
 
 Archivo: [app/services/engines/colmap_engine.py](app/services/engines/colmap_engine.py)
 
-- queda como adaptador futuro
-- no ejecuta reconstruccion real todavia
-- esta preparado para integrar comandos reales de COLMAP
+- detecta el binario configurado o el que exista en `PATH`
+- crea un workspace real por proyecto dentro de `output/workspace`
+- ejecuta `feature_extractor`, `exhaustive_matcher` y `mapper` por linea de comandos
+- valida que exista un modelo sparse valido
+- exporta el modelo sparse a TXT y, cuando es posible, a PLY
+- genera un artefacto descargable en `OBJ` o `GLB` a partir de la nube sparse
+- si COLMAP falla en runtime y el fallback esta habilitado, el backend cae a `MockEngine`
 
 ### Factory de motor
 
@@ -318,17 +322,86 @@ La app Flutter:
 - consulta estado
 - descarga el modelo final
 
+## Integracion COLMAP
+
+El backend ya puede usar COLMAP como motor real de reconstruccion sparse sin cambiar las rutas HTTP ni el flujo de Flutter.
+
+### Flujo del motor COLMAP
+
+1. `ProcessingService` selecciona COLMAP cuando `processing_engine=auto|colmap` y el binario esta disponible.
+2. Se limpia `output/` del proyecto antes de cada corrida.
+3. `ColmapReconstructionEngine` crea:
+
+```text
+data/projects/{project_id}/output/
+|-- workspace/
+|   |-- database.db
+|   |-- sparse/
+|   |-- dense/
+|-- colmap_sparse_txt/
+|   |-- cameras.txt
+|   |-- images.txt
+|   |-- points3D.txt
+|-- {project_id}_sparse.ply
+|-- {project_id}_model.obj | {project_id}_model.glb
+|-- {project_id}_colmap_metadata.json
+```
+
+4. Se ejecutan estos comandos:
+
+```powershell
+colmap feature_extractor --database_path <workspace/database.db> --image_path <images> --ImageReader.single_camera 1 --ImageReader.camera_model SIMPLE_RADIAL --SiftExtraction.use_gpu 0
+colmap exhaustive_matcher --database_path <workspace/database.db> --SiftMatching.use_gpu 0
+colmap mapper --database_path <workspace/database.db> --image_path <images> --output_path <workspace/sparse>
+colmap model_converter --input_path <workspace/sparse/0> --output_path <output/colmap_sparse_txt> --output_type TXT
+colmap model_converter --input_path <workspace/sparse/0> --output_path <output/{project_id}_sparse.ply> --output_type PLY
+```
+
+5. El backend parsea `points3D.txt`, genera el artefacto final descargable y guarda metadata adicional en `meta.json` y en `{project_id}_colmap_metadata.json`.
+
+### Variables utiles
+
+Se pueden configurar por `.env` con prefijo `LOCAL3D_`:
+
+- `LOCAL3D_PROCESSING_ENGINE=auto|mock|colmap`
+- `LOCAL3D_COLMAP_BINARY=C:\\ruta\\a\\COLMAP.bat` o `C:\\ruta\\a\\colmap.exe`
+- `LOCAL3D_COLMAP_TIMEOUT_SECONDS=1800`
+- `LOCAL3D_COLMAP_USE_GPU=false`
+- `LOCAL3D_COLMAP_CAMERA_MODEL=SIMPLE_RADIAL`
+- `LOCAL3D_COLMAP_SINGLE_CAMERA=true`
+- `LOCAL3D_COLMAP_FALLBACK_TO_MOCK=true`
+
+### Windows 10
+
+- COLMAP no se instala desde este backend; debe estar instalado previamente en Windows 10.
+- Si el ejecutable no esta en `PATH`, configura `LOCAL3D_COLMAP_BINARY` con la ruta absoluta.
+- Si tu instalacion de COLMAP no tiene soporte CUDA, deja `LOCAL3D_COLMAP_USE_GPU=false`.
+- El `GLB` que genera este backend desde COLMAP representa una nube de puntos sparse en modo `POINTS`, no una malla densa.
+
 ## Que sigue siendo mock
 
 - La reconstruccion geometrica real aun no usa COLMAP ni otro motor fotogrametrico real.
 - El motor por defecto sigue siendo una simulacion bien estructurada.
 - La salida GLB/OBJ es valida y util para pruebas, pero no representa todavia una reconstruccion real de vision por computador.
 
+## Limitaciones actuales
+
+- La reconstruccion real actual llega hasta `sparse reconstruction`.
+- No hay pipeline denso ni meshing real de COLMAP todavia.
+- El artefacto `OBJ` exportado desde COLMAP es una nube de puntos, no una malla cerrada.
+- El `GLB` exportado desde COLMAP es valido, pero algunos visores renderizan mejor mallas que nubes de puntos.
+- La seleccion del mejor modelo sparse se hace por presencia de archivos y tamano aproximado; no hay ranking fotogrametrico avanzado.
+- Si COLMAP produce un modelo sparse vacio, el backend usa fallback a `MockEngine` cuando esta habilitado.
+
 ## Futuro de integracion real
 
-La arquitectura ya permite reemplazar la simulacion por una implementacion real usando COLMAP u OpenCV sin rehacer Flutter ni las rutas HTTP.
+La arquitectura ya permite seguir evolucionando la reconstruccion real usando COLMAP sin rehacer Flutter ni las rutas HTTP.
 
-Solo habria que sustituir la logica interna del engine o del pipeline, manteniendo el contrato actual.
+Los siguientes pasos naturales son:
+
+- agregar `image_undistorter` y `patch_match_stereo` para una fase densa
+- convertir el resultado real a una malla mas util
+- incorporar una conversion posterior a `GLB` de malla cuando exista ese artefacto
 
 ## Ejecucion
 

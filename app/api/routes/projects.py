@@ -33,6 +33,7 @@ def _to_project_response(metadata) -> ProjectResponse:
         model_filename=metadata.model_filename,
         model_download_url=model_download_url,
         error_message=metadata.error_message,
+        processing_metadata=metadata.processing_metadata,
     )
 
 
@@ -104,6 +105,7 @@ def get_project_status(
         model_filename=metadata.model_filename,
         model_download_url=model_download_url,
         error_message=metadata.error_message,
+        processing_metadata=metadata.processing_metadata,
     )
 
 

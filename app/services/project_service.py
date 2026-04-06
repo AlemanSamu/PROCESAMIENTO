@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime, timezone
-from typing import Iterable
+from typing import Any, Iterable
 
 from fastapi import UploadFile
 
@@ -63,6 +63,7 @@ class ProjectService:
         metadata.output_format = None
         metadata.model_filename = None
         metadata.error_message = None
+        metadata.processing_metadata = None
         metadata.updated_at = self._utc_now()
 
         self.storage_service.save_project_metadata(metadata)
@@ -79,25 +80,39 @@ class ProjectService:
         metadata.status = ProjectStatus.PROCESSING
         metadata.output_format = output_format
         metadata.error_message = None
+        metadata.processing_metadata = None
         metadata.updated_at = self._utc_now()
 
         self.storage_service.save_project_metadata(metadata)
         return metadata
 
-    def mark_completed(self, project_id: str, output_format: OutputFormat, model_filename: str) -> ProjectMetadata:
+    def mark_completed(
+        self,
+        project_id: str,
+        output_format: OutputFormat,
+        model_filename: str,
+        processing_metadata: dict[str, Any] | None = None,
+    ) -> ProjectMetadata:
         metadata = self.get_project(project_id)
         metadata.status = ProjectStatus.COMPLETED
         metadata.output_format = output_format
         metadata.model_filename = model_filename
         metadata.error_message = None
+        metadata.processing_metadata = processing_metadata
         metadata.updated_at = self._utc_now()
         self.storage_service.save_project_metadata(metadata)
         return metadata
 
-    def mark_failed(self, project_id: str, reason: str) -> ProjectMetadata:
+    def mark_failed(
+        self,
+        project_id: str,
+        reason: str,
+        processing_metadata: dict[str, Any] | None = None,
+    ) -> ProjectMetadata:
         metadata = self.get_project(project_id)
         metadata.status = ProjectStatus.FAILED
         metadata.error_message = reason
+        metadata.processing_metadata = processing_metadata
         metadata.updated_at = self._utc_now()
         self.storage_service.save_project_metadata(metadata)
         return metadata

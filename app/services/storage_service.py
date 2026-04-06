@@ -117,7 +117,9 @@ class StorageService:
             return
 
         for path in output_dir.iterdir():
-            if path.is_file():
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
                 path.unlink(missing_ok=True)
 
     def get_model_path(self, project_id: str, model_filename: str) -> Path:

@@ -1,5 +1,6 @@
 from datetime import datetime
 from enum import Enum
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -28,6 +29,7 @@ class ProjectMetadata(BaseModel):
     output_format: OutputFormat | None = None
     model_filename: str | None = None
     error_message: str | None = None
+    processing_metadata: dict[str, Any] | None = None
 
 
 class ProjectCreateRequest(BaseModel):
@@ -45,6 +47,7 @@ class ProjectResponse(BaseModel):
     model_filename: str | None = None
     model_download_url: str | None = None
     error_message: str | None = None
+    processing_metadata: dict[str, Any] | None = None
 
 
 class ImageUploadResponse(BaseModel):
@@ -74,3 +77,4 @@ class ProjectStatusResponse(BaseModel):
     model_filename: str | None = None
     model_download_url: str | None = None
     error_message: str | None = None
+    processing_metadata: dict[str, Any] | None = None
