@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../models/project_models.dart';
+import '../services/backend_url_store.dart';
 import '../services/local_api_service.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/error_state.dart';
 import '../widgets/loading_state.dart';
 import '../widgets/project_card.dart';
+import 'backend_settings_screen.dart';
 import 'project_status_screen.dart';
 
 class ProjectHistoryScreen extends StatefulWidget {
   const ProjectHistoryScreen({
     super.key,
     required this.apiService,
+    required this.currentBaseUrl,
+    required this.currentApiKey,
+    required this.onBackendConfigChanged,
   });
 
   final LocalApiService apiService;
+  final String currentBaseUrl;
+  final String? currentApiKey;
+  final Future<void> Function(BackendConnectionConfig config)
+      onBackendConfigChanged;
 
   @override
   State<ProjectHistoryScreen> createState() => _ProjectHistoryScreenState();
@@ -33,6 +42,19 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
   void initState() {
     super.initState();
     _loadProjects();
+  }
+
+  @override
+  void didUpdateWidget(covariant ProjectHistoryScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentBaseUrl != widget.currentBaseUrl ||
+        oldWidget.currentApiKey != widget.currentApiKey) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _loadProjects();
+        }
+      });
+    }
   }
 
   Future<void> _loadProjects() async {
@@ -166,7 +188,8 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
     });
 
     try {
-      final result = await widget.apiService.startProcessing(projectId: project.id);
+      final result =
+          await widget.apiService.startProcessing(projectId: project.id);
       if (!mounted) {
         return;
       }
@@ -203,12 +226,64 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
     _loadProjects();
   }
 
+  Future<void> _openBackendSettings() async {
+    final updatedConfig =
+        await Navigator.of(context).push<BackendConnectionConfig>(
+      MaterialPageRoute(
+        builder: (_) => BackendSettingsScreen(
+          currentConfig: BackendConnectionConfig(
+            baseUrl: widget.currentBaseUrl,
+            apiKey: widget.currentApiKey,
+          ),
+        ),
+      ),
+    );
+    if (!mounted || updatedConfig == null) {
+      return;
+    }
+    if (updatedConfig.baseUrl == widget.currentBaseUrl &&
+        updatedConfig.apiKey == widget.currentApiKey) {
+      return;
+    }
+
+    await widget.onBackendConfigChanged(updatedConfig);
+    if (!mounted) {
+      return;
+    }
+    _showInfo('Backend actualizado: ${updatedConfig.baseUrl}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Historial de proyectos'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(40),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: Row(
+              children: [
+                const Icon(Icons.dns_outlined, size: 18),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    widget.currentBaseUrl,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         actions: [
+          IconButton(
+            onPressed: _openBackendSettings,
+            icon: const Icon(Icons.settings),
+            tooltip: 'Configurar backend',
+          ),
           IconButton(
             onPressed: _loadProjects,
             icon: const Icon(Icons.refresh),
@@ -265,7 +340,8 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
   }
 
   void _showInfo(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _showError(String message) {

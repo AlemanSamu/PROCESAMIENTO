@@ -1,0 +1,440 @@
+I20260406 21:49:57.270602 10184 incremental_pipeline.cc:265] Loading database
+I20260406 21:49:57.272016 10184 database_cache.cc:72] Loading rigs...
+I20260406 21:49:57.272142 10184 database_cache.cc:82]  1 in 0.000s
+I20260406 21:49:57.272193 10184 database_cache.cc:90] Loading cameras...
+I20260406 21:49:57.272274 10184 database_cache.cc:108]  1 in 0.000s
+I20260406 21:49:57.272319 10184 database_cache.cc:116] Loading frames...
+I20260406 21:49:57.272501 10184 database_cache.cc:126]  24 in 0.000s
+I20260406 21:49:57.272550 10184 database_cache.cc:134] Loading matches...
+I20260406 21:49:57.273915 10184 database_cache.cc:139]  246 in 0.001s
+I20260406 21:49:57.273977 10184 database_cache.cc:147] Loading images...
+I20260406 21:49:57.277731 10184 database_cache.cc:241]  24 in 0.004s (connected 24, loaded 24)
+I20260406 21:49:57.277860 10184 database_cache.cc:255] Loading pose priors...
+I20260406 21:49:57.277949 10184 database_cache.cc:263]  0 in 0.000s
+I20260406 21:49:57.278007 10184 database_cache.cc:271] Building correspondence graph...
+I20260406 21:49:57.292507 10184 database_cache.cc:300]  in 0.015s (ignored 0)
+I20260406 21:49:57.292623 10184 timer.cc:90] Elapsed time: 0.000 [minutes]
+I20260406 21:49:57.294264 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:57.317354 10184 incremental_pipeline.cc:401] Registering initial image pair #4 and #3
+I20260406 21:49:57.319981 10184 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 21:49:57.511723 10184 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=2)
+I20260406 21:49:57.511808 10184 incremental_pipeline.cc:527] => Image sees 142 / 532 points
+I20260406 21:49:57.511956 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.512001 10184 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=2)
+I20260406 21:49:57.512046 10184 incremental_pipeline.cc:527] => Image sees 87 / 610 points
+I20260406 21:49:57.512167 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.512211 10184 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=2)
+I20260406 21:49:57.512257 10184 incremental_pipeline.cc:527] => Image sees 117 / 636 points
+I20260406 21:49:57.512379 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.512423 10184 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=2)
+I20260406 21:49:57.512468 10184 incremental_pipeline.cc:527] => Image sees 63 / 564 points
+I20260406 21:49:57.512580 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.512625 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:57.512671 10184 incremental_pipeline.cc:527] => Image sees 49 / 493 points
+I20260406 21:49:57.512770 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.512821 10184 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=2)
+I20260406 21:49:57.512866 10184 incremental_pipeline.cc:527] => Image sees 142 / 532 points
+I20260406 21:49:57.512911 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.512956 10184 incremental_pipeline.cc:535] => Image sees 517 / 1875 correspondences
+I20260406 21:49:57.513071 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.513115 10184 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=2)
+I20260406 21:49:57.513160 10184 incremental_pipeline.cc:527] => Image sees 117 / 636 points
+I20260406 21:49:57.513204 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.513249 10184 incremental_pipeline.cc:535] => Image sees 472 / 2540 correspondences
+I20260406 21:49:57.513366 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.513410 10184 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=2)
+I20260406 21:49:57.513455 10184 incremental_pipeline.cc:527] => Image sees 87 / 610 points
+I20260406 21:49:57.516646 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.516680 10184 incremental_pipeline.cc:535] => Image sees 314 / 2126 correspondences
+I20260406 21:49:57.516769 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.516790 10184 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=2)
+I20260406 21:49:57.516813 10184 incremental_pipeline.cc:527] => Image sees 63 / 564 points
+I20260406 21:49:57.516833 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.516853 10184 incremental_pipeline.cc:535] => Image sees 243 / 2209 correspondences
+I20260406 21:49:57.516933 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.516953 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:57.516973 10184 incremental_pipeline.cc:527] => Image sees 49 / 493 points
+I20260406 21:49:57.516992 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.517011 10184 incremental_pipeline.cc:535] => Image sees 110 / 1485 correspondences
+I20260406 21:49:57.517077 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.517097 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:49:57.599364 10184 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=2)
+I20260406 21:49:57.599441 10184 incremental_pipeline.cc:527] => Image sees 142 / 532 points
+I20260406 21:49:57.599580 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.599616 10184 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=2)
+I20260406 21:49:57.599646 10184 incremental_pipeline.cc:527] => Image sees 87 / 610 points
+I20260406 21:49:57.599772 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.599805 10184 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=2)
+I20260406 21:49:57.599834 10184 incremental_pipeline.cc:527] => Image sees 117 / 636 points
+I20260406 21:49:57.599966 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.599998 10184 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=2)
+I20260406 21:49:57.600027 10184 incremental_pipeline.cc:527] => Image sees 63 / 564 points
+I20260406 21:49:57.600146 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.600177 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:57.600205 10184 incremental_pipeline.cc:527] => Image sees 49 / 493 points
+I20260406 21:49:57.600303 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.600338 10184 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=2)
+I20260406 21:49:57.600366 10184 incremental_pipeline.cc:527] => Image sees 142 / 532 points
+I20260406 21:49:57.600395 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.600422 10184 incremental_pipeline.cc:535] => Image sees 517 / 1875 correspondences
+I20260406 21:49:57.600544 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.600574 10184 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=2)
+I20260406 21:49:57.600603 10184 incremental_pipeline.cc:527] => Image sees 117 / 636 points
+I20260406 21:49:57.600631 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.600658 10184 incremental_pipeline.cc:535] => Image sees 472 / 2540 correspondences
+I20260406 21:49:57.600784 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.600816 10184 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=2)
+I20260406 21:49:57.600844 10184 incremental_pipeline.cc:527] => Image sees 87 / 610 points
+I20260406 21:49:57.600985 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.601017 10184 incremental_pipeline.cc:535] => Image sees 314 / 2126 correspondences
+I20260406 21:49:57.601145 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.601176 10184 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=2)
+I20260406 21:49:57.601203 10184 incremental_pipeline.cc:527] => Image sees 63 / 564 points
+I20260406 21:49:57.601232 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.601261 10184 incremental_pipeline.cc:535] => Image sees 243 / 2209 correspondences
+I20260406 21:49:57.601376 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.601406 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:57.601433 10184 incremental_pipeline.cc:527] => Image sees 49 / 493 points
+I20260406 21:49:57.601462 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.601489 10184 incremental_pipeline.cc:535] => Image sees 110 / 1485 correspondences
+I20260406 21:49:57.601584 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.601661 10184 incremental_pipeline.cc:710] Keeping successful reconstruction
+I20260406 21:49:57.610035 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:57.642759 10184 incremental_pipeline.cc:401] Registering initial image pair #11 and #10
+I20260406 21:49:57.646557 10184 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 21:49:57.709661 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=2)
+I20260406 21:49:57.709744 10184 incremental_pipeline.cc:527] => Image sees 67 / 577 points
+I20260406 21:49:57.709872 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.709916 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:57.709960 10184 incremental_pipeline.cc:527] => Image sees 50 / 493 points
+I20260406 21:49:57.710057 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.710102 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=2)
+I20260406 21:49:57.710145 10184 incremental_pipeline.cc:527] => Image sees 67 / 577 points
+I20260406 21:49:57.710188 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.710231 10184 incremental_pipeline.cc:535] => Image sees 480 / 2351 correspondences
+I20260406 21:49:57.710344 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.710386 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:57.710430 10184 incremental_pipeline.cc:527] => Image sees 50 / 493 points
+I20260406 21:49:57.710472 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:57.710515 10184 incremental_pipeline.cc:535] => Image sees 138 / 1485 correspondences
+I20260406 21:49:57.710606 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:57.710649 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 21:49:57.764313 10184 incremental_pipeline.cc:705] Discarding reconstruction due to insufficient size
+I20260406 21:49:57.768617 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:57.922607 10184 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 21:49:57.922684 10184 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 21:49:57.923228 10184 incremental_pipeline.cc:341] => Relaxing the initialization constraints.
+I20260406 21:49:57.924427 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:57.955768 10184 incremental_pipeline.cc:401] Registering initial image pair #11 and #10
+I20260406 21:49:57.958490 10184 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 21:49:58.017094 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=2)
+I20260406 21:49:58.017185 10184 incremental_pipeline.cc:527] => Image sees 67 / 577 points
+I20260406 21:49:58.017347 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.017400 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:58.017438 10184 incremental_pipeline.cc:527] => Image sees 50 / 493 points
+I20260406 21:49:58.017557 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.017605 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=2)
+I20260406 21:49:58.017656 10184 incremental_pipeline.cc:527] => Image sees 67 / 577 points
+I20260406 21:49:58.017713 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:58.017753 10184 incremental_pipeline.cc:535] => Image sees 480 / 2351 correspondences
+I20260406 21:49:58.017896 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.017931 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:58.017963 10184 incremental_pipeline.cc:527] => Image sees 50 / 493 points
+I20260406 21:49:58.017995 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:58.018027 10184 incremental_pipeline.cc:535] => Image sees 138 / 1485 correspondences
+I20260406 21:49:58.018131 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.018166 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 21:49:58.060453 10184 incremental_pipeline.cc:705] Discarding reconstruction due to insufficient size
+I20260406 21:49:58.061211 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:58.364703 10184 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 21:49:58.364790 10184 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 21:49:58.367578 10184 incremental_pipeline.cc:354] => Relaxing the initialization constraints.
+I20260406 21:49:58.369393 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:58.413229 10184 incremental_pipeline.cc:401] Registering initial image pair #11 and #10
+I20260406 21:49:58.417881 10184 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 21:49:58.476501 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=2)
+I20260406 21:49:58.476578 10184 incremental_pipeline.cc:527] => Image sees 67 / 577 points
+I20260406 21:49:58.476730 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.476765 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:58.476795 10184 incremental_pipeline.cc:527] => Image sees 50 / 493 points
+I20260406 21:49:58.476899 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.476935 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=2)
+I20260406 21:49:58.476964 10184 incremental_pipeline.cc:527] => Image sees 67 / 577 points
+I20260406 21:49:58.476996 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:58.477026 10184 incremental_pipeline.cc:535] => Image sees 480 / 2351 correspondences
+I20260406 21:49:58.477156 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.477187 10184 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 21:49:58.477216 10184 incremental_pipeline.cc:527] => Image sees 50 / 493 points
+I20260406 21:49:58.477246 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:58.477409 10184 incremental_pipeline.cc:535] => Image sees 138 / 1485 correspondences
+I20260406 21:49:58.477512 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:58.477545 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 21:49:58.524950 10184 incremental_pipeline.cc:705] Discarding reconstruction due to insufficient size
+I20260406 21:49:58.527313 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:58.574447 10184 incremental_pipeline.cc:401] Registering initial image pair #20 and #8
+I20260406 21:49:58.575428 10184 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 21:49:58.616339 10184 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=2)
+I20260406 21:49:58.616417 10184 incremental_pipeline.cc:527] => Image sees 50 / 610 points
+I20260406 21:49:58.663786 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:49:58.749295 10184 incremental_pipeline.cc:524] Registering image #11 (num_reg_frames=3)
+I20260406 21:49:58.749409 10184 incremental_pipeline.cc:527] => Image sees 58 / 673 points
+I20260406 21:49:58.897641 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:49:59.243677 10184 incremental_pipeline.cc:524] Registering image #4 (num_reg_frames=4)
+I20260406 21:49:59.243804 10184 incremental_pipeline.cc:527] => Image sees 73 / 667 points
+I20260406 21:49:59.244034 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.244075 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=4)
+I20260406 21:49:59.244109 10184 incremental_pipeline.cc:527] => Image sees 69 / 577 points
+I20260406 21:49:59.244273 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.244305 10184 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=4)
+I20260406 21:49:59.244342 10184 incremental_pipeline.cc:527] => Image sees 67 / 614 points
+I20260406 21:49:59.244500 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.244551 10184 incremental_pipeline.cc:524] Registering image #3 (num_reg_frames=4)
+I20260406 21:49:59.244587 10184 incremental_pipeline.cc:527] => Image sees 57 / 485 points
+I20260406 21:49:59.244711 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.244741 10184 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=4)
+I20260406 21:49:59.244769 10184 incremental_pipeline.cc:527] => Image sees 52 / 636 points
+I20260406 21:49:59.244917 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.244953 10184 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=4)
+I20260406 21:49:59.245032 10184 incremental_pipeline.cc:527] => Image sees 32 / 532 points
+I20260406 21:49:59.245173 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.245258 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=4)
+I20260406 21:49:59.245310 10184 incremental_pipeline.cc:527] => Image sees 69 / 577 points
+I20260406 21:49:59.245347 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.245382 10184 incremental_pipeline.cc:535] => Image sees 720 / 2351 correspondences
+I20260406 21:49:59.245524 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.245566 10184 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=4)
+I20260406 21:49:59.245601 10184 incremental_pipeline.cc:527] => Image sees 67 / 614 points
+I20260406 21:49:59.245672 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.245754 10184 incremental_pipeline.cc:535] => Image sees 677 / 2160 correspondences
+I20260406 21:49:59.245909 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.245999 10184 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=4)
+I20260406 21:49:59.246032 10184 incremental_pipeline.cc:527] => Image sees 52 / 636 points
+I20260406 21:49:59.246067 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.246111 10184 incremental_pipeline.cc:535] => Image sees 629 / 2540 correspondences
+I20260406 21:49:59.246296 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.246341 10184 incremental_pipeline.cc:524] Registering image #4 (num_reg_frames=4)
+I20260406 21:49:59.246387 10184 incremental_pipeline.cc:527] => Image sees 73 / 667 points
+I20260406 21:49:59.246433 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.246480 10184 incremental_pipeline.cc:535] => Image sees 597 / 2420 correspondences
+I20260406 21:49:59.246666 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.246713 10184 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=4)
+I20260406 21:49:59.246760 10184 incremental_pipeline.cc:527] => Image sees 32 / 532 points
+I20260406 21:49:59.246803 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.246848 10184 incremental_pipeline.cc:535] => Image sees 398 / 1875 correspondences
+I20260406 21:49:59.247014 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.247062 10184 incremental_pipeline.cc:524] Registering image #3 (num_reg_frames=4)
+I20260406 21:49:59.247108 10184 incremental_pipeline.cc:527] => Image sees 57 / 485 points
+I20260406 21:49:59.247153 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.247203 10184 incremental_pipeline.cc:535] => Image sees 281 / 1495 correspondences
+I20260406 21:49:59.247352 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.247396 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:49:59.807437 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=4)
+I20260406 21:49:59.807524 10184 incremental_pipeline.cc:527] => Image sees 40 / 577 points
+I20260406 21:49:59.807656 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.807699 10184 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=4)
+I20260406 21:49:59.807742 10184 incremental_pipeline.cc:527] => Image sees 39 / 614 points
+I20260406 21:49:59.807866 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.807910 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=4)
+I20260406 21:49:59.807953 10184 incremental_pipeline.cc:527] => Image sees 40 / 577 points
+I20260406 21:49:59.807994 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.808035 10184 incremental_pipeline.cc:535] => Image sees 720 / 2351 correspondences
+I20260406 21:49:59.808153 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+I20260406 21:49:59.808198 10184 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=4)
+I20260406 21:49:59.808238 10184 incremental_pipeline.cc:527] => Image sees 39 / 614 points
+I20260406 21:49:59.808282 10184 incremental_pipeline.cc:533] Registering image with structure-less fallback
+I20260406 21:49:59.808323 10184 incremental_pipeline.cc:535] => Image sees 677 / 2160 correspondences
+I20260406 21:49:59.808442 10184 incremental_pipeline.cc:550] => Could not register, trying another image.
+W20260406 21:49:59.808485 10184 incremental_pipeline.cc:705] Discarding reconstruction due to insufficient size
+I20260406 21:49:59.813752 10184 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:49:59.926692 10184 incremental_pipeline.cc:401] Registering initial image pair #10 and #8
+I20260406 21:49:59.929123 10184 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 21:49:59.986354 10184 incremental_pipeline.cc:524] Registering image #11 (num_reg_frames=2)
+I20260406 21:49:59.986446 10184 incremental_pipeline.cc:527] => Image sees 33 / 673 points
+I20260406 21:50:00.106069 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:00.506278 10184 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=3)
+I20260406 21:50:00.506437 10184 incremental_pipeline.cc:527] => Image sees 160 / 577 points
+I20260406 21:50:00.760212 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:01.198965 10184 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=4)
+I20260406 21:50:01.199054 10184 incremental_pipeline.cc:527] => Image sees 151 / 610 points
+I20260406 21:50:01.311299 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:02.073055 10184 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=5)
+I20260406 21:50:02.073137 10184 incremental_pipeline.cc:527] => Image sees 134 / 564 points
+I20260406 21:50:02.217054 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:03.888065 10184 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=6)
+I20260406 21:50:03.888149 10184 incremental_pipeline.cc:527] => Image sees 142 / 636 points
+I20260406 21:50:04.108467 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:04.759277 10184 incremental_pipeline.cc:524] Registering image #20 (num_reg_frames=7)
+I20260406 21:50:04.759483 10184 incremental_pipeline.cc:527] => Image sees 175 / 618 points
+W20260406 21:50:04.849806 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:04.851178 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:04.852505 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 21:50:04.910186 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:05.775015 10184 incremental_pipeline.cc:524] Registering image #4 (num_reg_frames=8)
+I20260406 21:50:05.775094 10184 incremental_pipeline.cc:527] => Image sees 144 / 667 points
+I20260406 21:50:05.938879 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:06.654981 10184 incremental_pipeline.cc:524] Registering image #17 (num_reg_frames=9)
+I20260406 21:50:06.655070 10184 incremental_pipeline.cc:527] => Image sees 144 / 437 points
+I20260406 21:50:06.818630 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:07.149855 10184 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=10)
+I20260406 21:50:07.149943 10184 incremental_pipeline.cc:527] => Image sees 161 / 532 points
+I20260406 21:50:07.329488 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 21:50:07.614820 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:07.625528 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:07.701981 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.022182 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.031866 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.045531 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.054321 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.057640 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.069791 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.079485 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.090754 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.094239 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.435897 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.494574 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.516019 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.523329 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.546165 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.562293 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.567044 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.591040 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.674299 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.684862 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.688752 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.706548 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.709142 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.719007 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.728344 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.731748 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.756379 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.759410 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.768503 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.778249 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.782005 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.801383 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.810608 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.813113 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.830805 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.834159 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.844587 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.848033 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.863977 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.866527 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.968551 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.971478 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:08.990209 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.002745 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.006561 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.016845 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.028507 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.033629 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.052679 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.065834 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.068725 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.078928 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.090302 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.104973 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.116829 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.119483 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.128976 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.140740 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.143294 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.167039 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.169934 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.188199 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.190720 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 21:50:09.212521 10184 incremental_pipeline.cc:524] Registering image #7 (num_reg_frames=11)
+I20260406 21:50:09.212617 10184 incremental_pipeline.cc:527] => Image sees 128 / 309 points
+I20260406 21:50:09.409260 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 21:50:09.538726 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.552918 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.555777 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.576594 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.581417 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.593121 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.610451 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.615826 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.639728 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.652919 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.657201 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.677912 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.683387 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.695212 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.707752 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.711604 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.738091 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.742088 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.764135 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.774890 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.777687 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.789011 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.892632 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.907009 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.910730 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.930741 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.934189 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.946568 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.959221 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.972233 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.975964 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:09.998085 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.001378 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.019929 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.024542 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.044798 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.048503 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.059447 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.084988 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.098008 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.101306 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.112708 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.126026 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:10.139711 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 21:50:10.697169 10184 incremental_pipeline.cc:524] Registering image #3 (num_reg_frames=12)
+I20260406 21:50:10.697267 10184 incremental_pipeline.cc:527] => Image sees 127 / 485 points
+I20260406 21:50:10.877506 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:12.762297 10184 incremental_pipeline.cc:524] Registering image #14 (num_reg_frames=13)
+I20260406 21:50:12.762385 10184 incremental_pipeline.cc:527] => Image sees 106 / 345 points
+I20260406 21:50:12.900687 10184 incremental_pipeline.cc:524] Registering image #18 (num_reg_frames=14)
+I20260406 21:50:12.900767 10184 incremental_pipeline.cc:527] => Image sees 112 / 302 points
+I20260406 21:50:13.034619 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:13.662896 10184 incremental_pipeline.cc:524] Registering image #2 (num_reg_frames=15)
+I20260406 21:50:13.662976 10184 incremental_pipeline.cc:527] => Image sees 64 / 439 points
+I20260406 21:50:13.785123 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:15.000693 10184 incremental_pipeline.cc:524] Registering image #16 (num_reg_frames=16)
+I20260406 21:50:15.000785 10184 incremental_pipeline.cc:527] => Image sees 131 / 464 points
+I20260406 21:50:15.168100 10184 incremental_pipeline.cc:524] Registering image #23 (num_reg_frames=17)
+I20260406 21:50:15.168216 10184 incremental_pipeline.cc:527] => Image sees 113 / 428 points
+I20260406 21:50:15.274764 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:50:17.473193 10184 incremental_pipeline.cc:524] Registering image #9 (num_reg_frames=18)
+I20260406 21:50:17.473300 10184 incremental_pipeline.cc:527] => Image sees 111 / 408 points
+I20260406 21:50:17.745130 10184 incremental_pipeline.cc:524] Registering image #21 (num_reg_frames=19)
+I20260406 21:50:17.745216 10184 incremental_pipeline.cc:527] => Image sees 124 / 302 points
+I20260406 21:50:17.883959 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 21:50:20.714895 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:20.720647 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:20.726525 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:20.744120 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:20.761992 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:50:21.464081 10184 reconstruction.cc:667] Ignoring de-registration of frame 10, which is not registered.
+W20260406 21:50:21.464271 10184 reconstruction.cc:667] Ignoring de-registration of frame 8, which is not registered.
+W20260406 21:50:21.464402 10184 reconstruction.cc:667] Ignoring de-registration of frame 11, which is not registered.
+W20260406 21:50:21.464524 10184 reconstruction.cc:667] Ignoring de-registration of frame 24, which is not registered.
+W20260406 21:50:21.464661 10184 reconstruction.cc:667] Ignoring de-registration of frame 12, which is not registered.
+W20260406 21:50:21.464774 10184 reconstruction.cc:667] Ignoring de-registration of frame 19, which is not registered.
+W20260406 21:50:21.464890 10184 reconstruction.cc:667] Ignoring de-registration of frame 15, which is not registered.
+W20260406 21:50:21.465005 10184 reconstruction.cc:667] Ignoring de-registration of frame 20, which is not registered.
+W20260406 21:50:21.465126 10184 reconstruction.cc:667] Ignoring de-registration of frame 4, which is not registered.
+W20260406 21:50:21.465238 10184 reconstruction.cc:667] Ignoring de-registration of frame 17, which is not registered.
+W20260406 21:50:21.465348 10184 reconstruction.cc:667] Ignoring de-registration of frame 6, which is not registered.
+W20260406 21:50:21.465444 10184 reconstruction.cc:667] Ignoring de-registration of frame 7, which is not registered.
+W20260406 21:50:21.465548 10184 reconstruction.cc:667] Ignoring de-registration of frame 3, which is not registered.
+W20260406 21:50:21.465639 10184 reconstruction.cc:667] Ignoring de-registration of frame 14, which is not registered.
+W20260406 21:50:21.465732 10184 reconstruction.cc:667] Ignoring de-registration of frame 18, which is not registered.
+W20260406 21:50:21.465836 10184 reconstruction.cc:667] Ignoring de-registration of frame 2, which is not registered.
+W20260406 21:50:21.465940 10184 reconstruction.cc:667] Ignoring de-registration of frame 16, which is not registered.
+W20260406 21:50:21.466040 10184 reconstruction.cc:667] Ignoring de-registration of frame 23, which is not registered.
+W20260406 21:50:21.466159 10184 reconstruction.cc:667] Ignoring de-registration of frame 9, which is not registered.
+W20260406 21:50:21.466251 10184 reconstruction.cc:667] Ignoring de-registration of frame 21, which is not registered.
+I20260406 21:50:21.476858 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+E20260406 21:50:21.477082 10184 incremental_mapper.cc:1080] Check failed: ba_config.NumImages() >= 2 (0 vs. 2) At least two images must be registered for global bundle-adjustment

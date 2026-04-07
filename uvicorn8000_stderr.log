@@ -1,0 +1,68 @@
+INFO:     Started server process [6540]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:app.services.engines.factory:Selecting reconstruction engine. requested=colmap configured_colmap_path=C:\Tools\COLMAP\COLMAP.bat fallback_to_mock=False
+INFO:app.services.engines.colmap_engine:Checking COLMAP availability. configured_path=C:\Tools\COLMAP\COLMAP.bat candidates=['C:\\Tools\\COLMAP\\COLMAP.bat', 'C:\\Tools\\COLMAP\\COLMAP.exe', 'colmap', 'colmap.exe', 'colmap.bat']
+INFO:app.services.engines.colmap_engine:Probing COLMAP candidate with '-h': C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.colmap_engine:COLMAP probe succeeded for candidate=C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.colmap_engine:COLMAP detected successfully using candidate=C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.factory:COLMAP detected successfully. binary=C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.factory:Selected reconstruction engine: colmap (explicit configuration).
+INFO:app.services.engines.colmap_engine:Resolved COLMAP GPU flag for feature_extractor: FeatureExtraction.use_gpu
+INFO:app.services.engines.colmap_engine:Resolved COLMAP GPU flag for exhaustive_matcher: FeatureMatching.use_gpu
+INFO:app.services.engines.colmap_engine:Project 1c94bc53a58d | Starting COLMAP reconstruction with 3 images. output_dir=data\projects\1c94bc53a58d\output
+INFO:app.services.engines.colmap_engine:Project 1c94bc53a58d | Starting COLMAP stage 'feature_extractor': C:\Tools\COLMAP\COLMAP.bat feature_extractor --database_path data\projects\1c94bc53a58d\output\workspace\database.db --image_path data\projects\1c94bc53a58d\images --ImageReader.single_camera 1 --ImageReader.camera_model SIMPLE_RADIAL --FeatureExtraction.use_gpu 0
+INFO:app.services.engines.colmap_engine:Project 1c94bc53a58d | COLMAP stage 'feature_extractor' completed in 0.242s
+INFO:app.services.engines.colmap_engine:Project 1c94bc53a58d | Starting COLMAP stage 'exhaustive_matcher': C:\Tools\COLMAP\COLMAP.bat exhaustive_matcher --database_path data\projects\1c94bc53a58d\output\workspace\database.db --FeatureMatching.use_gpu 0
+INFO:app.services.engines.colmap_engine:Project 1c94bc53a58d | COLMAP stage 'exhaustive_matcher' completed in 0.188s
+INFO:app.services.engines.colmap_engine:Project 1c94bc53a58d | Starting COLMAP stage 'mapper': C:\Tools\COLMAP\COLMAP.bat mapper --database_path data\projects\1c94bc53a58d\output\workspace\database.db --image_path data\projects\1c94bc53a58d\images --output_path data\projects\1c94bc53a58d\output\workspace\sparse
+ERROR:app.services.engines.colmap_engine:Project 1c94bc53a58d | COLMAP stage 'mapper' failed with code 1. stdout= stderr=I20260406 11:18:19.557206 10528 incremental_pipeline.cc:265] Loading database
+I20260406 11:18:19.558988 10528 database_cache.cc:72] Loading rigs...
+I20260406 11:18:19.559566 10528 database_cache.cc:82]  0 in 0.001s
+I20260406 11:18:19.559620 10528 database_cache.cc:90] Loading cameras...
+I20260406 11:18:19.559687 10528 database_cache.cc:108]  0 in 0.000s
+I20260406 11:18:19.559733 10528 database_cache.cc:116] Loading frames...
+I20260406 11:18:19.559795 10528 database_cache.cc:126]  0 in 0.000s
+I20260406 11:18:19.559841 10528 database_cache.cc:134] Loading matches...
+I20260406 11:18:19.559909 10528 database_cache.cc:139]  0 in 0.000s
+I20260406 11:18:19.559956 10528 database_cache.cc:147] Loading images...
+I20260406 11:18:19.560054 10528 database_cache.cc:241]  0 in 0.000s (connected 0, loaded 0)
+I20260406 11:18:19.560104 10528 database_cache.cc:255] Loading pose priors...
+I20260406 11:18:19.560175 10528 database_cache.cc:263]  0 in 0.000s
+I20260406 11:18:19.560224 10528 database_cache.cc:271] Building correspondence graph...
+I20260406 11:18:19.560794 10528 database_cache.cc:300]  in 0.001s (ignored 0)
+I20260406 11:18:19.560844 10528 timer.cc:90] Elapsed time: 0.000 [minutes]
+W20260406 11:18:19.560894 10528 incremental_pipeline.cc:302] No images with matches
+E20260406 11:18:19.561275 10528 sfm.cc:279] Failed to create any sparse model
+Reconstruction job failed for project 1c94bc53a58d
+Traceback (most recent call last):
+  File "C:\PROYECTO\PROCESAMIENTO\app\services\processing_service.py", line 84, in _run_reconstruction_job
+    result = self._reconstruct_with_fallback(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\PROYECTO\PROCESAMIENTO\app\services\processing_service.py", line 144, in _reconstruct_with_fallback
+    return self._engine.reconstruct(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\PROYECTO\PROCESAMIENTO\app\services\engines\colmap_engine.py", line 240, in reconstruct
+    mapper_trace = self._run_command(
+                   ^^^^^^^^^^^^^^^^^^
+  File "C:\PROYECTO\PROCESAMIENTO\app\services\engines\colmap_engine.py", line 658, in _run_command
+    raise ProcessingError(
+app.core.errors.ProcessingError: COLMAP fallo en el paso 'mapper' con codigo 1. Detalle: I20260406 11:18:19.557206 10528 incremental_pipeline.cc:265] Loading database
+I20260406 11:18:19.558988 10528 database_cache.cc:72] Loading rigs...
+I20260406 11:18:19.559566 10528 database_cache.cc:82]  0 in 0.001s
+I20260406 11:18:19.559620 10528 database_cache.cc:90] Loading cameras...
+I20260406 11:18:19.559687 10528 database_cache.cc:108]  0 in 0.000s
+I20260406 11:18:19.559733 10528 database_cache.cc:116] Loading frames...
+I20260406 11:18:19.559795 10528 database_cache.cc:126]  0 in 0.000s
+I20260406 11:18:19.559841 10528 database_cache.cc:134] Loading matches...
+I20260406 11:18:19.559909 10528 database_cache.cc:139]  0 in 0.000s
+I20260406 11:18:19.559956 10528 database_cache.cc:147] Loading images...
+I20260406 11:18:19.560054 10528 database_cache.cc:241]  0 in 0.000s (connected 0, loaded 0)
+I20260406 11:18:19.560104 10528 database_cache.cc:255] Loading pose priors...
+I20260406 11:18:19.560175 10528 database_cache.cc:263]  0 in 0.000s
+I20260406 11:18:19.560224 10528 database_cache.cc:271] Building correspondence graph...
+I20260406 11:18:19.560794 10528 database_cache.cc:300]  in 0.001s (ignored 0)
+I20260406 11:18:19.560844 10528 timer.cc:90] Elapsed time: 0.000 [minutes]
+W20260406 11:18:19.560894 10528 incremental_pipeline.cc:302] No images with matches
+E20260406 11:18:19.561275 10528 sfm.cc:279] Failed to create any sparse model. Logs: stdout=data\projects\1c94bc53a58d\output\logs\colmap\mapper.stdout.log, stderr=data\projects\1c94bc53a58d\output\logs\colmap\mapper.stderr.log

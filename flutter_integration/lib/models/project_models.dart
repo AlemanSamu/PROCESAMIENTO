@@ -62,6 +62,15 @@ class ProjectModel {
     this.modelFilename,
     this.modelDownloadUrl,
     this.errorMessage,
+    this.currentStage,
+    this.progress,
+    this.message,
+    this.metrics,
+    this.fallbackUsed = false,
+    this.finalModelType,
+    this.finalModelPath,
+    this.methodUsed,
+    this.processingMetadata,
     this.createdAt,
     this.updatedAt,
   });
@@ -74,8 +83,24 @@ class ProjectModel {
   final String? modelFilename;
   final String? modelDownloadUrl;
   final String? errorMessage;
+  final String? currentStage;
+  final double? progress;
+  final String? message;
+  final Map<String, dynamic>? metrics;
+  final bool fallbackUsed;
+  final String? finalModelType;
+  final String? finalModelPath;
+  final String? methodUsed;
+  final Map<String, dynamic>? processingMetadata;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+
+  int? get meshVertexCount => _toNullableInt(metrics?['mesh_vertex_count']);
+
+  int? get meshFaceCount => _toNullableInt(metrics?['mesh_face_count']);
+
+  Map<String, dynamic>? get sparseFallback =>
+      _toStringKeyedMap(processingMetadata?['sparse_fallback']);
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) {
     return ProjectModel(
@@ -87,6 +112,15 @@ class ProjectModel {
       modelFilename: json['model_filename']?.toString(),
       modelDownloadUrl: json['model_download_url']?.toString(),
       errorMessage: json['error_message']?.toString(),
+      currentStage: json['current_stage']?.toString(),
+      progress: _toDouble(json['progress']),
+      message: json['message']?.toString(),
+      metrics: _toStringKeyedMap(json['metrics']),
+      fallbackUsed: _toBool(json['fallback_used']),
+      finalModelType: json['final_model_type']?.toString(),
+      finalModelPath: json['final_model_path']?.toString(),
+      methodUsed: json['method_used']?.toString(),
+      processingMetadata: _toStringKeyedMap(json['processing_metadata']),
       createdAt: _toDateTime(json['created_at']),
       updatedAt: _toDateTime(json['updated_at']),
     );
@@ -150,9 +184,52 @@ int _toInt(dynamic value) {
   return int.tryParse(value?.toString() ?? '') ?? 0;
 }
 
+int? _toNullableInt(dynamic value) {
+  if (value == null) {
+    return null;
+  }
+  if (value is int) {
+    return value;
+  }
+  return int.tryParse(value.toString());
+}
+
+double? _toDouble(dynamic value) {
+  if (value == null) {
+    return null;
+  }
+  if (value is double) {
+    return value;
+  }
+  if (value is int) {
+    return value.toDouble();
+  }
+  return double.tryParse(value.toString());
+}
+
+bool _toBool(dynamic value) {
+  if (value is bool) {
+    return value;
+  }
+  final normalized = value?.toString().toLowerCase();
+  return normalized == 'true' || normalized == '1' || normalized == 'yes';
+}
+
 DateTime? _toDateTime(dynamic value) {
   if (value == null) {
     return null;
   }
   return DateTime.tryParse(value.toString());
+}
+
+Map<String, dynamic>? _toStringKeyedMap(dynamic value) {
+  if (value is Map<String, dynamic>) {
+    return value;
+  }
+  if (value is Map) {
+    return value.map(
+      (key, item) => MapEntry(key.toString(), item),
+    );
+  }
+  return null;
 }

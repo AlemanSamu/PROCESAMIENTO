@@ -1,0 +1,111 @@
+I20260406 21:15:09.036936  7856 incremental_pipeline.cc:265] Loading database
+I20260406 21:15:09.039447  7856 database_cache.cc:72] Loading rigs...
+I20260406 21:15:09.039616  7856 database_cache.cc:82]  1 in 0.000s
+I20260406 21:15:09.039676  7856 database_cache.cc:90] Loading cameras...
+I20260406 21:15:09.039767  7856 database_cache.cc:108]  1 in 0.000s
+I20260406 21:15:09.039817  7856 database_cache.cc:116] Loading frames...
+I20260406 21:15:09.040120  7856 database_cache.cc:126]  24 in 0.000s
+I20260406 21:15:09.040183  7856 database_cache.cc:134] Loading matches...
+I20260406 21:15:09.047017  7856 database_cache.cc:139]  214 in 0.007s
+I20260406 21:15:09.047157  7856 database_cache.cc:147] Loading images...
+I20260406 21:15:09.052492  7856 database_cache.cc:241]  24 in 0.005s (connected 24, loaded 24)
+I20260406 21:15:09.052654  7856 database_cache.cc:255] Loading pose priors...
+I20260406 21:15:09.052796  7856 database_cache.cc:263]  0 in 0.000s
+I20260406 21:15:09.052868  7856 database_cache.cc:271] Building correspondence graph...
+I20260406 21:15:09.128098  7856 database_cache.cc:300]  in 0.075s (ignored 0)
+I20260406 21:15:09.128235  7856 timer.cc:90] Elapsed time: 0.001 [minutes]
+I20260406 21:15:09.129594  7856 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:15:09.687580  7856 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 21:15:09.687693  7856 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 21:15:09.688451  7856 incremental_pipeline.cc:341] => Relaxing the initialization constraints.
+I20260406 21:15:09.689916  7856 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:15:10.229420  7856 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 21:15:10.229504  7856 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 21:15:10.230176  7856 incremental_pipeline.cc:354] => Relaxing the initialization constraints.
+I20260406 21:15:10.231037  7856 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:15:10.863271  7856 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 21:15:10.863357  7856 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 21:15:10.864256  7856 incremental_pipeline.cc:341] => Relaxing the initialization constraints.
+I20260406 21:15:10.865575  7856 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 21:15:11.358049  7856 incremental_pipeline.cc:401] Registering initial image pair #20 and #3
+I20260406 21:15:11.361116  7856 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 21:15:11.548128  7856 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=2)
+I20260406 21:15:11.548227  7856 incremental_pipeline.cc:527] => Image sees 33 / 553 points
+I20260406 21:15:11.686021  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:11.912212  7856 incremental_pipeline.cc:524] Registering image #17 (num_reg_frames=3)
+I20260406 21:15:11.912310  7856 incremental_pipeline.cc:527] => Image sees 82 / 589 points
+I20260406 21:15:12.043388  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:12.086437  7856 incremental_pipeline.cc:524] Registering image #7 (num_reg_frames=4)
+I20260406 21:15:12.086561  7856 incremental_pipeline.cc:527] => Image sees 150 / 611 points
+I20260406 21:15:12.470571  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:12.597701  7856 incremental_pipeline.cc:524] Registering image #9 (num_reg_frames=5)
+I20260406 21:15:12.597788  7856 incremental_pipeline.cc:527] => Image sees 180 / 604 points
+I20260406 21:15:13.146115  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:14.222853  7856 incremental_pipeline.cc:524] Registering image #18 (num_reg_frames=6)
+I20260406 21:15:14.222942  7856 incremental_pipeline.cc:527] => Image sees 195 / 544 points
+W20260406 21:15:14.324754  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.328489  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.351977  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.353638  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.359819  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.362140  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.367198  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.369287  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:14.376360  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 21:15:14.467919  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:16.828219  7856 incremental_pipeline.cc:524] Registering image #4 (num_reg_frames=7)
+I20260406 21:15:16.828904  7856 incremental_pipeline.cc:527] => Image sees 84 / 551 points
+W20260406 21:15:16.950195  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:16.953158  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:16.971259  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:16.973254  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:16.975915  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:16.998772  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:17.014702  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 21:15:17.017242  7856 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 21:15:17.063297  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:17.641312  7856 incremental_pipeline.cc:524] Registering image #23 (num_reg_frames=8)
+I20260406 21:15:17.641401  7856 incremental_pipeline.cc:527] => Image sees 95 / 573 points
+I20260406 21:15:17.806043  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:18.060447  7856 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=9)
+I20260406 21:15:18.060527  7856 incremental_pipeline.cc:527] => Image sees 138 / 529 points
+I20260406 21:15:18.156120  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:18.812856  7856 incremental_pipeline.cc:524] Registering image #5 (num_reg_frames=10)
+I20260406 21:15:18.812943  7856 incremental_pipeline.cc:527] => Image sees 174 / 540 points
+I20260406 21:15:19.146953  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:19.563395  7856 incremental_pipeline.cc:524] Registering image #22 (num_reg_frames=11)
+I20260406 21:15:19.563490  7856 incremental_pipeline.cc:527] => Image sees 162 / 582 points
+I20260406 21:15:19.875421  7856 incremental_pipeline.cc:524] Registering image #13 (num_reg_frames=12)
+I20260406 21:15:19.875509  7856 incremental_pipeline.cc:527] => Image sees 153 / 575 points
+I20260406 21:15:20.169558  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:20.928133  7856 incremental_pipeline.cc:524] Registering image #11 (num_reg_frames=13)
+I20260406 21:15:20.928305  7856 incremental_pipeline.cc:527] => Image sees 149 / 574 points
+I20260406 21:15:21.181324  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:21.313296  7856 incremental_pipeline.cc:524] Registering image #14 (num_reg_frames=14)
+I20260406 21:15:21.313406  7856 incremental_pipeline.cc:527] => Image sees 198 / 573 points
+I20260406 21:15:21.515465  7856 incremental_pipeline.cc:524] Registering image #1 (num_reg_frames=15)
+I20260406 21:15:21.515564  7856 incremental_pipeline.cc:527] => Image sees 187 / 572 points
+I20260406 21:15:21.697978  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:21.997263  7856 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=16)
+I20260406 21:15:21.997351  7856 incremental_pipeline.cc:527] => Image sees 209 / 540 points
+I20260406 21:15:22.219380  7856 incremental_pipeline.cc:524] Registering image #2 (num_reg_frames=17)
+I20260406 21:15:22.219479  7856 incremental_pipeline.cc:527] => Image sees 213 / 546 points
+I20260406 21:15:22.535501  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:23.319592  7856 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=18)
+I20260406 21:15:23.319721  7856 incremental_pipeline.cc:527] => Image sees 214 / 532 points
+I20260406 21:15:23.721093  7856 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=19)
+I20260406 21:15:23.721185  7856 incremental_pipeline.cc:527] => Image sees 58 / 333 points
+I20260406 21:15:23.897970  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:24.498563  7856 incremental_pipeline.cc:524] Registering image #21 (num_reg_frames=20)
+I20260406 21:15:24.498653  7856 incremental_pipeline.cc:527] => Image sees 44 / 338 points
+I20260406 21:15:24.561931  7856 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=21)
+I20260406 21:15:24.562030  7856 incremental_pipeline.cc:527] => Image sees 58 / 271 points
+I20260406 21:15:24.615903  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:25.275575  7856 incremental_pipeline.cc:524] Registering image #16 (num_reg_frames=22)
+I20260406 21:15:25.275717  7856 incremental_pipeline.cc:527] => Image sees 70 / 285 points
+I20260406 21:15:25.631020  7856 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=23)
+I20260406 21:15:25.631263  7856 incremental_pipeline.cc:527] => Image sees 41 / 155 points
+I20260406 21:15:25.739871  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:26.293945  7856 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 21:15:26.369317  7856 incremental_pipeline.cc:710] Keeping successful reconstruction
+I20260406 21:15:26.425931  7856 timer.cc:90] Elapsed time: 0.288 [minutes]

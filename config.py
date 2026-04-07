@@ -23,6 +23,7 @@ class Settings(BaseSettings):
         ".tiff",
         ".webp",
     )
+    api_key: str | None = None
     colmap_path: str | None = None
     colmap_binary: str = "colmap"
     colmap_timeout_seconds: int = 1800

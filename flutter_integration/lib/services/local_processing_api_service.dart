@@ -6,10 +6,16 @@ import 'local_api_service.dart';
 class LocalProcessingApiService {
   LocalProcessingApiService({
     required this.baseUrl,
+    this.apiKey,
     http.Client? httpClient,
-  }) : _delegate = LocalApiService(baseUrl: baseUrl, client: httpClient);
+  }) : _delegate = LocalApiService(
+          baseUrl: baseUrl,
+          apiKey: apiKey,
+          client: httpClient,
+        );
 
   final String baseUrl;
+  final String? apiKey;
   final LocalApiService _delegate;
 
   Future<List<ProjectItem>> listProjects() {

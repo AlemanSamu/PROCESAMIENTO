@@ -12,6 +12,7 @@ dependencies:
   http: ^1.2.2
   image_picker: ^1.1.2
   model_viewer_plus: ^1.9.3
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:

@@ -47,6 +47,11 @@ class ProjectResponse(BaseModel):
     model_filename: str | None = None
     model_download_url: str | None = None
     error_message: str | None = None
+    current_stage: str | None = None
+    fallback_used: bool | None = None
+    final_model_type: str | None = None
+    final_model_path: str | None = None
+    method_used: str | None = None
     processing_metadata: dict[str, Any] | None = None
 
 
@@ -54,8 +59,10 @@ class ImageUploadResponse(BaseModel):
     project_id: str
     status: ProjectStatus
     uploaded_count: int
+    skipped_count: int = 0
     total_images: int
     uploaded_files: list[str]
+    message: str | None = None
 
 
 class ProcessRequest(BaseModel):
@@ -82,4 +89,8 @@ class ProjectStatusResponse(BaseModel):
     progress: float | None = None
     message: str | None = None
     metrics: dict[str, Any] | None = None
+    fallback_used: bool | None = None
+    final_model_type: str | None = None
+    final_model_path: str | None = None
+    method_used: str | None = None
     processing_metadata: dict[str, Any] | None = None

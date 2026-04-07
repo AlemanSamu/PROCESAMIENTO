@@ -1,0 +1,151 @@
+W20260406 21:42:32.112774  1896 feature_extraction.cc:453] Your current options use the maximum number of threads on the machine to extract features. Extracting SIFT features on the CPU can consume a lot of RAM per thread for large images. Consider reducing the maximum image size and/or the first octave or manually limit the number of extraction threads. Ignore this warning, if your machine has sufficient memory for the current settings.
+I20260406 21:42:32.178617 13116 feature_extraction.cc:502] === Feature extraction ===
+I20260406 21:42:32.428012 12864 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 21:42:32.428254 10804 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 21:42:32.460879 12504 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 21:42:32.524713  8424 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 21:42:41.143537  3820 feature_extraction.cc:280] Processed file [1/24]
+I20260406 21:42:41.143674  3820 feature_extraction.cc:283]   Name:            01ec345bfbaa4e48af2f676e50a4a617.jpg
+I20260406 21:42:41.143713  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:41.143746  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:41.143781  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:41.143830  3820 feature_extraction.cc:302]   Features:        939 (SIFT)
+I20260406 21:42:41.333826  3820 feature_extraction.cc:280] Processed file [2/24]
+I20260406 21:42:41.333919  3820 feature_extraction.cc:283]   Name:            0f0e881866104880a50e25487c652058.jpg
+I20260406 21:42:41.333961  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:41.333995  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:41.334033  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:41.334073  3820 feature_extraction.cc:302]   Features:        736 (SIFT)
+I20260406 21:42:41.458826  3820 feature_extraction.cc:280] Processed file [3/24]
+I20260406 21:42:41.458920  3820 feature_extraction.cc:283]   Name:            1a813c49f04649c0a46b553a5ac471da.jpg
+I20260406 21:42:41.458956  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:41.458987  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:41.459028  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:41.459067  3820 feature_extraction.cc:302]   Features:        762 (SIFT)
+I20260406 21:42:41.579021  3820 feature_extraction.cc:280] Processed file [4/24]
+I20260406 21:42:41.579115  3820 feature_extraction.cc:283]   Name:            1ab29e0bb39d475c8361a164cc6a613c.jpg
+I20260406 21:42:41.579153  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:41.579184  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:41.579214  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:41.579249  3820 feature_extraction.cc:302]   Features:        713 (SIFT)
+I20260406 21:42:46.636905  3820 feature_extraction.cc:280] Processed file [5/24]
+I20260406 21:42:46.636992  3820 feature_extraction.cc:283]   Name:            1b6cba57f1a54d51bb1f6ea0b4f7a659.jpg
+I20260406 21:42:46.637030  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:46.637063  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:46.637096  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:46.637133  3820 feature_extraction.cc:302]   Features:        712 (SIFT)
+I20260406 21:42:46.999214  3820 feature_extraction.cc:280] Processed file [6/24]
+I20260406 21:42:46.999297  3820 feature_extraction.cc:283]   Name:            2b5ef2a74cca4c1281566089b5f746b9.jpg
+I20260406 21:42:46.999331  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:46.999358  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:46.999385  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:46.999419  3820 feature_extraction.cc:302]   Features:        786 (SIFT)
+I20260406 21:42:47.112519  3820 feature_extraction.cc:280] Processed file [7/24]
+I20260406 21:42:47.112609  3820 feature_extraction.cc:283]   Name:            2ab1f01e9b614c27977a7e30b478466b.jpg
+I20260406 21:42:47.112665  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:47.112716  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:47.116398  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:47.116461  3820 feature_extraction.cc:302]   Features:        741 (SIFT)
+I20260406 21:42:47.260035  3820 feature_extraction.cc:280] Processed file [8/24]
+I20260406 21:42:47.260156  3820 feature_extraction.cc:283]   Name:            3304ade98f434c49a574c8fafa2f0415.jpg
+I20260406 21:42:47.260196  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:47.260230  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:47.260263  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:47.260302  3820 feature_extraction.cc:302]   Features:        754 (SIFT)
+I20260406 21:42:54.008843  3820 feature_extraction.cc:280] Processed file [9/24]
+I20260406 21:42:54.008956  3820 feature_extraction.cc:283]   Name:            351b8ac99ec5425cad0166cac4e5a211.jpg
+I20260406 21:42:54.008992  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:54.009023  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:54.009055  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:54.009093  3820 feature_extraction.cc:302]   Features:        980 (SIFT)
+I20260406 21:42:54.657565  3820 feature_extraction.cc:280] Processed file [10/24]
+I20260406 21:42:54.657674  3820 feature_extraction.cc:283]   Name:            6c332ba21730491eb68eab92a8615205.jpg
+I20260406 21:42:54.657720  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:54.657759  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:54.657800  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:54.657848  3820 feature_extraction.cc:302]   Features:        939 (SIFT)
+I20260406 21:42:54.911895  3820 feature_extraction.cc:280] Processed file [11/24]
+I20260406 21:42:54.913414  3820 feature_extraction.cc:283]   Name:            828b3ce43a4d4e33839c299658eee1fa.jpg
+I20260406 21:42:54.913490  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:54.913543  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:54.913602  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:54.913658  3820 feature_extraction.cc:302]   Features:        752 (SIFT)
+I20260406 21:42:55.592876  3820 feature_extraction.cc:280] Processed file [12/24]
+I20260406 21:42:55.592965  3820 feature_extraction.cc:283]   Name:            78385986a4ba48eb80fb6c66c0a0e5c7.jpg
+I20260406 21:42:55.593010  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:42:55.593045  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:42:55.593082  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:42:55.593126  3820 feature_extraction.cc:302]   Features:        1644 (SIFT)
+I20260406 21:43:00.531277  3820 feature_extraction.cc:280] Processed file [13/24]
+I20260406 21:43:00.531368  3820 feature_extraction.cc:283]   Name:            938145fd321440fe973fb159f1628f53.jpg
+I20260406 21:43:00.531412  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:00.531446  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:00.531479  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:00.531519  3820 feature_extraction.cc:302]   Features:        812 (SIFT)
+I20260406 21:43:01.178798  3820 feature_extraction.cc:280] Processed file [14/24]
+I20260406 21:43:01.178888  3820 feature_extraction.cc:283]   Name:            aebccf8d0870461c8644fb3c171857b4.jpg
+I20260406 21:43:01.178930  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:01.178965  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:01.179001  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:01.179175  3820 feature_extraction.cc:302]   Features:        701 (SIFT)
+I20260406 21:43:01.687952  3820 feature_extraction.cc:280] Processed file [15/24]
+I20260406 21:43:01.688056  3820 feature_extraction.cc:283]   Name:            9b295f6673844c5893e3d9636831b54b.jpg
+I20260406 21:43:01.688103  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:01.688147  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:01.688192  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:01.688240  3820 feature_extraction.cc:302]   Features:        1763 (SIFT)
+I20260406 21:43:01.944703  3820 feature_extraction.cc:280] Processed file [16/24]
+I20260406 21:43:01.944789  3820 feature_extraction.cc:283]   Name:            b4fa17f8d0494e029b1f67e78465fa09.jpg
+I20260406 21:43:01.944829  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:01.944862  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:01.944900  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:01.944938  3820 feature_extraction.cc:302]   Features:        1504 (SIFT)
+I20260406 21:43:07.070264  3820 feature_extraction.cc:280] Processed file [17/24]
+I20260406 21:43:07.070383  3820 feature_extraction.cc:283]   Name:            baac18e31d6d43d58acb8fe1bf28d6ba.jpg
+I20260406 21:43:07.070423  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:07.070455  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:07.070492  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:07.070530  3820 feature_extraction.cc:302]   Features:        1270 (SIFT)
+I20260406 21:43:07.743229  3820 feature_extraction.cc:280] Processed file [18/24]
+I20260406 21:43:07.743322  3820 feature_extraction.cc:283]   Name:            c5ef32612cbf47cc948bcc21c2cf875d.jpg
+I20260406 21:43:07.743364  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:07.743424  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:07.743477  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:07.743540  3820 feature_extraction.cc:302]   Features:        1041 (SIFT)
+I20260406 21:43:08.301741  3820 feature_extraction.cc:280] Processed file [19/24]
+I20260406 21:43:08.301849  3820 feature_extraction.cc:283]   Name:            c8d73685b11f4c0c94f30f57b4bb176d.jpg
+I20260406 21:43:08.301889  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:08.301947  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:08.302000  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:08.302052  3820 feature_extraction.cc:302]   Features:        838 (SIFT)
+I20260406 21:43:08.600750  3820 feature_extraction.cc:280] Processed file [20/24]
+I20260406 21:43:08.600838  3820 feature_extraction.cc:283]   Name:            cb2427d6441b40fe92d888fc126ac0ee.jpg
+I20260406 21:43:08.600884  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:08.600925  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:08.600964  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:08.601009  3820 feature_extraction.cc:302]   Features:        879 (SIFT)
+I20260406 21:43:11.511393  3820 feature_extraction.cc:280] Processed file [21/24]
+I20260406 21:43:11.511483  3820 feature_extraction.cc:283]   Name:            ec4e7328ecf643809c4429d134ff44c6.jpg
+I20260406 21:43:11.511522  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:11.511555  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:11.511590  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:11.511646  3820 feature_extraction.cc:302]   Features:        828 (SIFT)
+I20260406 21:43:11.710777  3820 feature_extraction.cc:280] Processed file [22/24]
+I20260406 21:43:11.710868  3820 feature_extraction.cc:283]   Name:            fc333af738ef469fa84009b54bd07204.jpg
+I20260406 21:43:11.710912  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:11.710946  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:11.710981  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:11.711025  3820 feature_extraction.cc:302]   Features:        759 (SIFT)
+I20260406 21:43:11.963660  3820 feature_extraction.cc:280] Processed file [23/24]
+I20260406 21:43:11.963754  3820 feature_extraction.cc:283]   Name:            feb8e470997c41a3a0cc9aa1e28cc395.jpg
+I20260406 21:43:11.963797  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:11.963835  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:11.963880  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:11.963921  3820 feature_extraction.cc:302]   Features:        1004 (SIFT)
+I20260406 21:43:11.979043  3820 feature_extraction.cc:280] Processed file [24/24]
+I20260406 21:43:11.979147  3820 feature_extraction.cc:283]   Name:            ffa9fc60ec13441d9259028d7c537024.jpg
+I20260406 21:43:11.979193  3820 feature_extraction.cc:292]   Dimensions:      720 x 1280
+I20260406 21:43:11.979298  3820 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL
+I20260406 21:43:11.979340  3820 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)
+I20260406 21:43:11.979404  3820 feature_extraction.cc:302]   Features:        746 (SIFT)
+I20260406 21:43:12.115729 13116 timer.cc:90] Elapsed time: 0.666 [minutes]

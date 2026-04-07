@@ -1,0 +1,16 @@
+W20260406 11:18:19.134337  8424 feature_extraction.cc:453] Your current options use the maximum number of threads on the machine to extract features. Extracting SIFT features on the CPU can consume a lot of RAM per thread for large images. Consider reducing the maximum image size and/or the first octave or manually limit the number of extraction threads. Ignore this warning, if your machine has sufficient memory for the current settings.
+I20260406 11:18:19.136831 10748 feature_extraction.cc:502] === Feature extraction ===
+I20260406 11:18:19.138673  8704 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 11:18:19.138673 12148 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 11:18:19.138673 10524 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 11:18:19.138673   236 sift.cc:760] Creating SIFT CPU feature extractor
+I20260406 11:18:19.170688 10640 feature_extraction.cc:280] Processed file [1/3]
+I20260406 11:18:19.170784 10640 feature_extraction.cc:283]   Name:            3bb4b523d6784096add2d59364d5a8d8.jpg
+W20260406 11:18:19.170835 10640 feature_extraction.cc:287] 3bb4b523d6784096add2d59364d5a8d8.jpg BITMAP_ERROR: Failed to read the image file format.
+I20260406 11:18:19.172167 10640 feature_extraction.cc:280] Processed file [2/3]
+I20260406 11:18:19.172230 10640 feature_extraction.cc:283]   Name:            b24afc8d353c48c7a3d22f6ee785a705.jpg
+W20260406 11:18:19.172274 10640 feature_extraction.cc:287] b24afc8d353c48c7a3d22f6ee785a705.jpg BITMAP_ERROR: Failed to read the image file format.
+I20260406 11:18:19.173557 10640 feature_extraction.cc:280] Processed file [3/3]
+I20260406 11:18:19.173609 10640 feature_extraction.cc:283]   Name:            b2e8830fc6b24f34902c50324ffc17ff.jpg
+W20260406 11:18:19.173641 10640 feature_extraction.cc:287] b2e8830fc6b24f34902c50324ffc17ff.jpg BITMAP_ERROR: Failed to read the image file format.
+I20260406 11:18:19.174271 10748 timer.cc:90] Elapsed time: 0.001 [minutes]

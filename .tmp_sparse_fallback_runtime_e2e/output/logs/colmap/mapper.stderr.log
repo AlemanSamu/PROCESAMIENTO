@@ -1,0 +1,65 @@
+I20260406 17:55:03.180402  1572 incremental_pipeline.cc:265] Loading database
+I20260406 17:55:03.182176  1572 database_cache.cc:72] Loading rigs...
+I20260406 17:55:03.182342  1572 database_cache.cc:82]  1 in 0.000s
+I20260406 17:55:03.182394  1572 database_cache.cc:90] Loading cameras...
+I20260406 17:55:03.182473  1572 database_cache.cc:108]  1 in 0.000s
+I20260406 17:55:03.182515  1572 database_cache.cc:116] Loading frames...
+I20260406 17:55:03.182701  1572 database_cache.cc:126]  12 in 0.000s
+I20260406 17:55:03.182748  1572 database_cache.cc:134] Loading matches...
+I20260406 17:55:03.183571  1572 database_cache.cc:139]  53 in 0.001s
+I20260406 17:55:03.183635  1572 database_cache.cc:147] Loading images...
+I20260406 17:55:03.185193  1572 database_cache.cc:241]  12 in 0.002s (connected 12, loaded 12)
+I20260406 17:55:03.185274  1572 database_cache.cc:255] Loading pose priors...
+I20260406 17:55:03.185339  1572 database_cache.cc:263]  0 in 0.000s
+I20260406 17:55:03.185380  1572 database_cache.cc:271] Building correspondence graph...
+I20260406 17:55:03.192253  1572 database_cache.cc:300]  in 0.007s (ignored 0)
+I20260406 17:55:03.192423  1572 timer.cc:90] Elapsed time: 0.000 [minutes]
+I20260406 17:55:03.193449  1572 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 17:55:03.405959  1572 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 17:55:03.406048  1572 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 17:55:03.406170  1572 incremental_pipeline.cc:341] => Relaxing the initialization constraints.
+I20260406 17:55:03.406648  1572 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 17:55:03.680414  1572 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 17:55:03.680684  1572 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 17:55:03.680992  1572 incremental_pipeline.cc:354] => Relaxing the initialization constraints.
+I20260406 17:55:03.683033  1572 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 17:55:03.956225  1572 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 17:55:03.956296  1572 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 17:55:03.956380  1572 incremental_pipeline.cc:341] => Relaxing the initialization constraints.
+I20260406 17:55:03.956603  1572 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 17:55:04.239288  1572 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 17:55:04.239362  1572 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 17:55:04.239451  1572 incremental_pipeline.cc:354] => Relaxing the initialization constraints.
+I20260406 17:55:04.239709  1572 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 17:55:04.555833  1572 incremental_pipeline.cc:401] Registering initial image pair #11 and #2
+I20260406 17:55:04.556909  1572 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 17:55:04.783930  1572 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=2)
+I20260406 17:55:04.784048  1572 incremental_pipeline.cc:527] => Image sees 30 / 498 points
+I20260406 17:55:04.972890  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:05.187308  1572 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=3)
+I20260406 17:55:05.187394  1572 incremental_pipeline.cc:527] => Image sees 73 / 504 points
+I20260406 17:55:05.303104  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:05.353322  1572 incremental_pipeline.cc:524] Registering image #5 (num_reg_frames=4)
+I20260406 17:55:05.353418  1572 incremental_pipeline.cc:527] => Image sees 76 / 517 points
+I20260406 17:55:05.510578  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:05.588889  1572 incremental_pipeline.cc:524] Registering image #7 (num_reg_frames=5)
+I20260406 17:55:05.588983  1572 incremental_pipeline.cc:527] => Image sees 89 / 528 points
+I20260406 17:55:05.840208  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:05.917231  1572 incremental_pipeline.cc:524] Registering image #4 (num_reg_frames=6)
+I20260406 17:55:05.917332  1572 incremental_pipeline.cc:527] => Image sees 129 / 451 points
+I20260406 17:55:05.999529  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:06.084002  1572 incremental_pipeline.cc:524] Registering image #9 (num_reg_frames=7)
+I20260406 17:55:06.084094  1572 incremental_pipeline.cc:527] => Image sees 129 / 506 points
+I20260406 17:55:06.195910  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:06.428468  1572 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=8)
+I20260406 17:55:06.428575  1572 incremental_pipeline.cc:527] => Image sees 162 / 509 points
+I20260406 17:55:06.562088  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:06.696455  1572 incremental_pipeline.cc:524] Registering image #3 (num_reg_frames=9)
+I20260406 17:55:06.696539  1572 incremental_pipeline.cc:527] => Image sees 184 / 514 points
+I20260406 17:55:06.844375  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:07.053785  1572 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 17:55:07.203878  1572 incremental_pipeline.cc:710] Keeping successful reconstruction
+I20260406 17:55:07.230112  1572 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 17:55:07.246506  1572 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 17:55:07.246631  1572 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 17:55:07.246759  1572 timer.cc:90] Elapsed time: 0.068 [minutes]

@@ -1,0 +1,9 @@
+I20260406 22:05:36.920915  2064 feature_matching.cc:195] === Feature matching & geometric verification ===
+I20260406 22:05:36.923187 14944 sift.cc:1553] Creating SIFT CPU feature matcher
+I20260406 22:05:36.923190   516 sift.cc:1553] Creating SIFT CPU feature matcher
+I20260406 22:05:36.923207 12152 sift.cc:1553] Creating SIFT CPU feature matcher
+I20260406 22:05:36.923226  9676 sift.cc:1553] Creating SIFT CPU feature matcher
+I20260406 22:05:36.923972  2064 pairing.cc:180] Generating exhaustive image pairs...
+I20260406 22:05:36.924016  2064 pairing.cc:213] Processing block [1/1, 1/1]
+I20260406 22:06:14.250372  2064 feature_matching.cc:217] in 37.326s
+I20260406 22:06:14.250749  2064 timer.cc:90] Elapsed time: 0.622 [minutes]

@@ -298,8 +298,175 @@ class ProcessingFallbackTests(unittest.TestCase):
             self.assertEqual(metadata["current_stage"], "failed")
             self.assertEqual(metadata["failure_reason"], "COLMAP mapper failed")
 
+    def test_processing_service_does_not_fallback_when_registered_images_are_insufficient(self) -> None:
+        class _InsufficientRegisteredImagesEngine:
+            name = "colmap"
+
+            def reconstruct(self, _project_id, _images_dir, _output_dir, _output_format, progress_callback=None):
+                raise ProcessingError(
+                    "COLMAP no logro registrar suficientes imagenes para reconstruir el modelo. "
+                    "Intenta capturar mas fotos con mejor traslape, buena iluminacion y mas textura visual.",
+                    reason_code="insufficient_registered_images",
+                    current_stage="mapper_failed_insufficient_registered_images",
+                    metadata={
+                        "current_stage": "mapper_failed_insufficient_registered_images",
+                        "reason_code": "insufficient_registered_images",
+                        "registered_image_count": 0,
+                        "status_message": (
+                            "COLMAP no logro registrar suficientes imagenes para reconstruir el modelo. "
+                            "Intenta capturar mas fotos con mejor traslape, buena iluminacion y mas textura visual."
+                        ),
+                    },
+                    allow_fallback=False,
+                )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            images_dir = root / "images"
+            images_dir.mkdir(parents=True, exist_ok=True)
+            (images_dir / "sample_1.jpg").write_bytes(b"jpg")
+            (images_dir / "sample_2.jpg").write_bytes(b"jpg")
+            output_dir = root / "output"
+            output_dir.mkdir(parents=True, exist_ok=True)
+            model_path = output_dir / "fallback_model.obj"
+
+            project_service, storage_service = self._build_services(images_dir, output_dir)
+
+            with patch(
+                "app.services.processing_service.build_reconstruction_engines",
+                return_value=(_InsufficientRegisteredImagesEngine(), self._SuccessfulEngine(model_path)),
+            ):
+                service = ProcessingService(project_service, storage_service, self._AutoSettings())
+
+            service._run_reconstruction_job("demo-project", OutputFormat.OBJ)
+
+            project_service.mark_completed.assert_not_called()
+            project_service.mark_failed.assert_called_once()
+            metadata = project_service.mark_failed.call_args.kwargs["processing_metadata"]
+            self.assertEqual(metadata["current_stage"], "mapper_failed_insufficient_registered_images")
+            self.assertEqual(metadata["failed_stage"], "mapper_failed_insufficient_registered_images")
+            self.assertEqual(metadata["reason_code"], "insufficient_registered_images")
+            self.assertEqual(metadata["registered_image_count"], 0)
+            self.assertEqual(metadata["metrics"]["registered_image_count"], 0)
+            self.assertIn("traslape", metadata["status_message"])
+            self.assertFalse(metadata["fallback"]["used"])
+            storage_service.clear_output_files.assert_called_once_with("demo-project")
+
+
+    def test_processing_service_preserves_completed_with_fallback_stage(self) -> None:
+        class _CompletedWithFallbackEngine:
+            name = "colmap"
+
+            def __init__(self, model_path: Path) -> None:
+                self.model_path = model_path
+
+            def reconstruct(self, _project_id, _images_dir, _output_dir, output_format, progress_callback=None):
+                self.model_path.write_bytes(b"glTFfake")
+                return ReconstructionResult(
+                    engine_name="colmap",
+                    requested_output_format=output_format,
+                    model_path=self.model_path,
+                    metadata={
+                        "engine": "colmap",
+                        "current_stage": "completed_with_fallback",
+                        "status_message": "Reconstruccion completada con fallback sparse.",
+                        "metrics": {"mesh_face_count": 12},
+                    },
+                )
+
+        class _FakeMesh:
+            def __init__(self) -> None:
+                self.vertices = [(0.0, 0.0, 0.0)] * 8
+                self.faces = [(0, 1, 2)] * 12
+
+        class _FakeScene:
+            def __init__(self) -> None:
+                self.geometry = {"mesh_0": _FakeMesh()}
+
+        class _FakeTrimeshModule:
+            @staticmethod
+            def load(_path, file_type=None, force=None):
+                if file_type == "glb" and force == "scene":
+                    return _FakeScene()
+                raise ValueError(file_type)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            images_dir = root / "images"
+            images_dir.mkdir(parents=True, exist_ok=True)
+            (images_dir / "sample.jpg").write_bytes(b"jpg")
+            output_dir = root / "output"
+            output_dir.mkdir(parents=True, exist_ok=True)
+            model_path = output_dir / "fallback_model.glb"
+
+            project_service, storage_service = self._build_services(images_dir, output_dir)
+
+            with patch(
+                "app.services.processing_service.build_reconstruction_engines",
+                return_value=(_CompletedWithFallbackEngine(model_path), None),
+            ):
+                service = ProcessingService(project_service, storage_service, self._ExplicitColmapSettings())
+
+            with patch("app.services.processing_service.importlib.import_module", return_value=_FakeTrimeshModule()):
+                service._run_reconstruction_job("demo-project", OutputFormat.GLB)
+
+            metadata = project_service.mark_completed.call_args.kwargs["processing_metadata"]
+            self.assertEqual(metadata["current_stage"], "completed_with_fallback")
+            self.assertEqual(metadata["status_message"], "Reconstruccion completada con fallback sparse.")
+
 
 class ColmapEngineTests(unittest.TestCase):
+    @staticmethod
+    def _build_fake_trimesh(convex_hull_fails: bool = False):
+        class _FakeMesh:
+            def __init__(self, vertex_count: int = 8, face_count: int = 12) -> None:
+                self.vertices = [(0.0, 0.0, 0.0)] * vertex_count
+                self.faces = [(0, 1, 2)] * face_count
+
+            def export(self, file_type=None):
+                if file_type == "glb":
+                    return b"glTFfake-mesh"
+                if file_type == "obj":
+                    return "# OBJ generado por fake trimesh\nv 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n"
+                raise ValueError(file_type)
+
+        class _FakePointCloud:
+            def __init__(self) -> None:
+                self.vertices = [
+                    (0.0, 0.0, 0.0),
+                    (1.0, 0.0, 0.0),
+                    (0.0, 1.0, 0.0),
+                    (0.0, 0.0, 1.0),
+                ]
+
+            @property
+            def convex_hull(self):
+                if convex_hull_fails:
+                    raise RuntimeError("scipy/qhull missing")
+                return _FakeMesh(vertex_count=6, face_count=8)
+
+            @property
+            def bounding_box(self):
+                return _FakeMesh(vertex_count=8, face_count=12)
+
+        class _FakeScene:
+            def __init__(self, vertex_count: int = 8, face_count: int = 12) -> None:
+                self.geometry = {"mesh_0": _FakeMesh(vertex_count=vertex_count, face_count=face_count)}
+
+        class _FakeTrimeshModule:
+            @staticmethod
+            def load(path, file_type=None, force=None):
+                suffix = Path(path).suffix.lower()
+                if suffix == ".ply":
+                    return _FakePointCloud()
+                if suffix == ".glb":
+                    if convex_hull_fails:
+                        return _FakeScene(vertex_count=8, face_count=12)
+                    return _FakeScene(vertex_count=6, face_count=8)
+                raise ValueError(f"Unexpected asset requested from fake trimesh: {path}")
+
+        return _FakeTrimeshModule()
+
     def test_colmap_engine_detects_windows_candidates_via_help_command(self) -> None:
         engine = ColmapReconstructionEngine(colmap_binary="colmap")
 
@@ -313,7 +480,7 @@ class ColmapEngineTests(unittest.TestCase):
 
         self.assertEqual(engine.detected_binary, "colmap.exe")
 
-    def test_colmap_engine_exports_sparse_glb_with_logs_metrics_and_progress(self) -> None:
+    def test_colmap_engine_uses_sparse_fallback_glb_when_cuda_is_unavailable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             images_dir = root / "images"
@@ -330,11 +497,17 @@ class ColmapEngineTests(unittest.TestCase):
 
             def fake_run(command, capture_output, text, encoding, errors, timeout, check):
                 command_name = command[1]
+                if command_name == "-h":
+                    return subprocess.CompletedProcess(command, 0, stdout="COLMAP 4.0 without CUDA", stderr="")
                 if command[-1] == "-h":
                     if command_name == "feature_extractor":
                         return subprocess.CompletedProcess(command, 0, stdout="--FeatureExtraction.use_gpu", stderr="")
                     if command_name == "exhaustive_matcher":
                         return subprocess.CompletedProcess(command, 0, stdout="--FeatureMatching.use_gpu", stderr="")
+                    if command_name == "patch_match_stereo":
+                        return subprocess.CompletedProcess(command, 0, stdout="COLMAP without CUDA", stderr="")
+                if command_name in {"image_undistorter", "patch_match_stereo", "stereo_fusion", "poisson_mesher"}:
+                    raise AssertionError(f"Dense stage should not run in sparse fallback mode: {command_name}")
                 if command_name == "feature_extractor":
                     database_path = Path(command[command.index("--database_path") + 1])
                     database_path.parent.mkdir(parents=True, exist_ok=True)
@@ -366,45 +539,253 @@ class ColmapEngineTests(unittest.TestCase):
                             encoding="utf-8",
                         )
                     elif output_type == "PLY":
+                        output_path.parent.mkdir(parents=True, exist_ok=True)
                         output_path.write_text("ply\n", encoding="utf-8")
                 return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
 
             with patch.object(engine, "detect_binary", return_value="C:/COLMAP/colmap.exe"):
                 with patch("app.services.engines.colmap_engine.subprocess.run", side_effect=fake_run):
-                    result = engine.reconstruct(
-                        "demo",
-                        images_dir,
-                        output_dir,
-                        OutputFormat.GLB,
-                        progress_callback=lambda update: progress_updates.append(dict(update)),
-                    )
+                    with patch(
+                        "app.services.engines.colmap_engine.importlib.import_module",
+                        return_value=self._build_fake_trimesh(),
+                    ):
+                        result = engine.reconstruct(
+                            "demo",
+                            images_dir,
+                            output_dir,
+                            OutputFormat.GLB,
+                            progress_callback=lambda update: progress_updates.append(dict(update)),
+                        )
 
             self.assertTrue(result.model_path.exists())
             self.assertEqual(result.model_path.read_bytes()[:4], b"glTF")
             self.assertEqual(result.metadata["engine"], "colmap")
-            self.assertEqual(result.metadata["reconstruction_type"], "sparse_photogrammetry")
-            self.assertEqual(result.metadata["registered_image_count"], 2)
-            self.assertEqual(result.metadata["camera_count"], 1)
-            self.assertEqual(result.metadata["point_count"], 3)
-            self.assertEqual(result.metadata["metrics"]["reconstructed_camera_count"], 2)
-            self.assertEqual(result.metadata["metrics"]["point_3d_count"], 3)
-            self.assertEqual(result.metadata["current_stage"], "completed")
-            self.assertEqual(result.metadata["progress"], 1.0)
-            self.assertTrue((output_dir / "demo_colmap_metadata.json").exists())
-            self.assertTrue((output_dir / "demo_sparse.ply").exists())
+            self.assertEqual(result.metadata["reconstruction_type"], "sparse_photogrammetry_mesh_fallback")
+            self.assertEqual(result.metadata["current_stage"], "completed_with_fallback")
+            self.assertEqual(result.metadata["sparse_fallback"]["used"], True)
+            self.assertEqual(result.metadata["sparse_fallback"]["mesh_method"], "convex_hull")
+            self.assertEqual(result.metadata["mesh_face_count"], 8)
+            self.assertIn("CUDA", result.metadata["warnings"][0])
             self.assertTrue((output_dir / "demo_model.obj").exists())
-            self.assertTrue((output_dir / "logs" / "colmap" / "feature_extractor.stdout.log").exists())
+            self.assertTrue((output_dir / "workspace" / "sparse" / "0" / "points3D.ply").exists())
             self.assertEqual(
-                [item["name"] for item in result.metadata["commands"]][:4],
+                [item["name"] for item in result.metadata["commands"]],
                 [
                     "feature_extractor",
                     "exhaustive_matcher",
                     "mapper",
                     "model_converter_txt",
+                    "model_converter_ply",
+                    "model_converter_sparse_ply",
                 ],
             )
-            self.assertIn("mapper", [update.get("current_stage") for update in progress_updates])
-            self.assertEqual(progress_updates[-1].get("current_stage"), "completed")
+            self.assertIn("sparse_mesh_fallback", [update.get("current_stage") for update in progress_updates])
+            self.assertEqual(progress_updates[-1].get("current_stage"), "completed_with_fallback")
+
+    def test_colmap_engine_uses_bounding_box_when_convex_hull_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            images_dir = root / "images"
+            images_dir.mkdir(parents=True, exist_ok=True)
+            (images_dir / "img_1.jpg").write_bytes(b"img1")
+            (images_dir / "img_2.jpg").write_bytes(b"img2")
+            output_dir = root / "output"
+
+            engine = ColmapReconstructionEngine(
+                colmap_binary="C:/COLMAP/colmap.exe",
+                timeout_seconds=30,
+            )
+
+            def fake_run(command, capture_output, text, encoding, errors, timeout, check):
+                command_name = command[1]
+                if command_name == "-h":
+                    return subprocess.CompletedProcess(command, 0, stdout="COLMAP 4.0 without CUDA", stderr="")
+                if command[-1] == "-h":
+                    if command_name == "feature_extractor":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureExtraction.use_gpu", stderr="")
+                    if command_name == "exhaustive_matcher":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureMatching.use_gpu", stderr="")
+                    if command_name == "patch_match_stereo":
+                        return subprocess.CompletedProcess(command, 0, stdout="COLMAP without CUDA", stderr="")
+                if command_name in {"image_undistorter", "patch_match_stereo", "stereo_fusion", "poisson_mesher"}:
+                    raise AssertionError(f"Dense stage should not run in sparse fallback mode: {command_name}")
+                if command_name == "feature_extractor":
+                    database_path = Path(command[command.index("--database_path") + 1])
+                    database_path.parent.mkdir(parents=True, exist_ok=True)
+                    database_path.write_bytes(b"db")
+                elif command_name == "mapper":
+                    sparse_dir = Path(command[command.index("--output_path") + 1]) / "0"
+                    sparse_dir.mkdir(parents=True, exist_ok=True)
+                    for name in ("cameras.bin", "images.bin", "points3D.bin"):
+                        (sparse_dir / name).write_bytes(b"bin")
+                elif command_name == "model_converter":
+                    output_path = Path(command[command.index("--output_path") + 1])
+                    output_type = command[command.index("--output_type") + 1]
+                    if output_type == "TXT":
+                        output_path.mkdir(parents=True, exist_ok=True)
+                        (output_path / "cameras.txt").write_text(
+                            "# cameras\n1 SIMPLE_RADIAL 800 600 500 400 300 0.01\n",
+                            encoding="utf-8",
+                        )
+                        (output_path / "images.txt").write_text(
+                            "# images\n1 1 0 0 0 0 0 0 1 img_1.jpg\n0 0 -1\n"
+                            "2 1 0 0 0 0 0 0 1 img_2.jpg\n0 0 -1\n",
+                            encoding="utf-8",
+                        )
+                        (output_path / "points3D.txt").write_text(
+                            "# points\n"
+                            "1 0.0 0.0 0.0 255 0 0 0.1 1 1\n"
+                            "2 1.0 0.0 0.0 0 255 0 0.2 1 2\n"
+                            "3 0.0 1.0 0.0 0 0 255 0.3 2 3\n",
+                            encoding="utf-8",
+                        )
+                    elif output_type == "PLY":
+                        output_path.parent.mkdir(parents=True, exist_ok=True)
+                        output_path.write_text("ply\n", encoding="utf-8")
+                return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
+
+            with patch.object(engine, "detect_binary", return_value="C:/COLMAP/colmap.exe"):
+                with patch("app.services.engines.colmap_engine.subprocess.run", side_effect=fake_run):
+                    with patch(
+                        "app.services.engines.colmap_engine.importlib.import_module",
+                        return_value=self._build_fake_trimesh(convex_hull_fails=True),
+                    ):
+                        result = engine.reconstruct("demo", images_dir, output_dir, OutputFormat.GLB)
+
+            self.assertEqual(result.metadata["current_stage"], "completed_with_fallback")
+            self.assertEqual(result.metadata["sparse_fallback"]["mesh_method"], "bounding_box")
+            self.assertEqual(result.metadata["mesh_face_count"], 12)
+            self.assertTrue(result.model_path.exists())
+
+    def test_colmap_engine_reports_friendly_mapper_error_when_registered_images_are_insufficient(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            images_dir = root / "images"
+            images_dir.mkdir(parents=True, exist_ok=True)
+            (images_dir / "img_1.jpg").write_bytes(b"img1")
+            (images_dir / "img_2.jpg").write_bytes(b"img2")
+            output_dir = root / "output"
+
+            engine = ColmapReconstructionEngine(
+                colmap_binary="C:/COLMAP/colmap.exe",
+                timeout_seconds=30,
+            )
+
+            def fake_run(command, capture_output, text, encoding, errors, timeout, check):
+                command_name = command[1]
+                if command_name == "-h":
+                    return subprocess.CompletedProcess(command, 0, stdout="COLMAP 4.0 without CUDA", stderr="")
+                if command[-1] == "-h":
+                    if command_name == "feature_extractor":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureExtraction.use_gpu", stderr="")
+                    if command_name == "exhaustive_matcher":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureMatching.use_gpu", stderr="")
+                    if command_name == "patch_match_stereo":
+                        return subprocess.CompletedProcess(command, 0, stdout="COLMAP without CUDA", stderr="")
+                if command_name == "feature_extractor":
+                    database_path = Path(command[command.index("--database_path") + 1])
+                    database_path.parent.mkdir(parents=True, exist_ok=True)
+                    database_path.write_bytes(b"db")
+                    return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
+                if command_name == "mapper":
+                    return subprocess.CompletedProcess(
+                        command,
+                        1,
+                        stdout="",
+                        stderr=(
+                            "E20260406 incremental_mapper.cc:1080] Check failed: ba_config.NumImages() >= 2 "
+                            "(0 vs. 2) At least two images must be registered for global bundle-adjustment"
+                        ),
+                    )
+                return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
+
+            with patch.object(engine, "detect_binary", return_value="C:/COLMAP/colmap.exe"):
+                with patch("app.services.engines.colmap_engine.subprocess.run", side_effect=fake_run):
+                    with patch(
+                        "app.services.engines.colmap_engine.importlib.import_module",
+                        return_value=self._build_fake_trimesh(),
+                    ):
+                        with self.assertRaises(ProcessingError) as context:
+                            engine.reconstruct("demo", images_dir, output_dir, OutputFormat.OBJ)
+
+            error = context.exception
+            self.assertIn("no logro registrar suficientes imagenes", str(error).lower())
+            self.assertEqual(error.reason_code, "insufficient_registered_images")
+            self.assertEqual(error.current_stage, "mapper_failed_insufficient_registered_images")
+            self.assertEqual(error.metadata["registered_image_count"], 0)
+            self.assertFalse(error.allow_fallback)
+
+    def test_colmap_engine_fails_when_sparse_model_has_fewer_than_two_registered_images(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            images_dir = root / "images"
+            images_dir.mkdir(parents=True, exist_ok=True)
+            (images_dir / "img_1.jpg").write_bytes(b"img1")
+            (images_dir / "img_2.jpg").write_bytes(b"img2")
+            output_dir = root / "output"
+
+            engine = ColmapReconstructionEngine(
+                colmap_binary="C:/COLMAP/colmap.exe",
+                timeout_seconds=30,
+            )
+
+            def fake_run(command, capture_output, text, encoding, errors, timeout, check):
+                command_name = command[1]
+                if command_name == "-h":
+                    return subprocess.CompletedProcess(command, 0, stdout="COLMAP 4.0 without CUDA", stderr="")
+                if command[-1] == "-h":
+                    if command_name == "feature_extractor":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureExtraction.use_gpu", stderr="")
+                    if command_name == "exhaustive_matcher":
+                        return subprocess.CompletedProcess(command, 0, stdout="--FeatureMatching.use_gpu", stderr="")
+                    if command_name == "patch_match_stereo":
+                        return subprocess.CompletedProcess(command, 0, stdout="COLMAP without CUDA", stderr="")
+                if command_name == "feature_extractor":
+                    database_path = Path(command[command.index("--database_path") + 1])
+                    database_path.parent.mkdir(parents=True, exist_ok=True)
+                    database_path.write_bytes(b"db")
+                elif command_name == "mapper":
+                    sparse_dir = Path(command[command.index("--output_path") + 1]) / "0"
+                    sparse_dir.mkdir(parents=True, exist_ok=True)
+                    for name in ("cameras.bin", "images.bin", "points3D.bin"):
+                        (sparse_dir / name).write_bytes(b"bin")
+                elif command_name == "model_converter":
+                    output_path = Path(command[command.index("--output_path") + 1])
+                    output_type = command[command.index("--output_type") + 1]
+                    if output_type == "TXT":
+                        output_path.mkdir(parents=True, exist_ok=True)
+                        (output_path / "cameras.txt").write_text(
+                            "# cameras\n1 SIMPLE_RADIAL 800 600 500 400 300 0.01\n",
+                            encoding="utf-8",
+                        )
+                        (output_path / "images.txt").write_text(
+                            "# images\n1 1 0 0 0 0 0 0 1 img_1.jpg\n0 0 -1\n",
+                            encoding="utf-8",
+                        )
+                        (output_path / "points3D.txt").write_text(
+                            "# points\n1 0.0 0.0 0.0 255 0 0 0.1 1 1\n",
+                            encoding="utf-8",
+                        )
+                    elif output_type == "PLY":
+                        output_path.parent.mkdir(parents=True, exist_ok=True)
+                        output_path.write_text("ply\n", encoding="utf-8")
+                return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
+
+            with patch.object(engine, "detect_binary", return_value="C:/COLMAP/colmap.exe"):
+                with patch("app.services.engines.colmap_engine.subprocess.run", side_effect=fake_run):
+                    with patch(
+                        "app.services.engines.colmap_engine.importlib.import_module",
+                        return_value=self._build_fake_trimesh(),
+                    ):
+                        with self.assertRaises(ProcessingError) as context:
+                            engine.reconstruct("demo", images_dir, output_dir, OutputFormat.OBJ)
+
+            error = context.exception
+            self.assertIn("no logro registrar suficientes imagenes", str(error).lower())
+            self.assertEqual(error.reason_code, "insufficient_registered_images")
+            self.assertEqual(error.current_stage, "mapper_failed_insufficient_registered_images")
+            self.assertEqual(error.metadata["registered_image_count"], 1)
+            self.assertFalse(error.allow_fallback)
 
     def test_colmap_engine_fails_when_mapper_does_not_create_sparse_zero(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -422,11 +803,15 @@ class ColmapEngineTests(unittest.TestCase):
 
             def fake_run(command, capture_output, text, encoding, errors, timeout, check):
                 command_name = command[1]
+                if command_name == "-h":
+                    return subprocess.CompletedProcess(command, 0, stdout="COLMAP 4.0 without CUDA", stderr="")
                 if command[-1] == "-h":
                     if command_name == "feature_extractor":
                         return subprocess.CompletedProcess(command, 0, stdout="--FeatureExtraction.use_gpu", stderr="")
                     if command_name == "exhaustive_matcher":
                         return subprocess.CompletedProcess(command, 0, stdout="--FeatureMatching.use_gpu", stderr="")
+                    if command_name == "patch_match_stereo":
+                        return subprocess.CompletedProcess(command, 0, stdout="COLMAP without CUDA", stderr="")
                 if command_name == "feature_extractor":
                     database_path = Path(command[command.index("--database_path") + 1])
                     database_path.parent.mkdir(parents=True, exist_ok=True)
@@ -435,8 +820,12 @@ class ColmapEngineTests(unittest.TestCase):
 
             with patch.object(engine, "detect_binary", return_value="C:/COLMAP/colmap.exe"):
                 with patch("app.services.engines.colmap_engine.subprocess.run", side_effect=fake_run):
-                    with self.assertRaises(ProcessingError) as context:
-                        engine.reconstruct("demo", images_dir, output_dir, OutputFormat.OBJ)
+                    with patch(
+                        "app.services.engines.colmap_engine.importlib.import_module",
+                        return_value=self._build_fake_trimesh(),
+                    ):
+                        with self.assertRaises(ProcessingError) as context:
+                            engine.reconstruct("demo", images_dir, output_dir, OutputFormat.OBJ)
 
             self.assertIn("sparse/0", str(context.exception))
 

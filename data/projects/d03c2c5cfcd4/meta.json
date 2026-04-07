@@ -1,0 +1,85 @@
+{
+  "id": "d03c2c5cfcd4",
+  "name": "Hilo",
+  "status": "failed",
+  "created_at": "2026-04-07T02:48:55.270047Z",
+  "updated_at": "2026-04-07T02:50:23.814171Z",
+  "image_count": 24,
+  "image_files": [
+    "0e1da48f363247018f4ee5bdd15d76f2.jpg",
+    "22de2d1c13f747619e9c74c483178460.jpg",
+    "2670f9e60f604939b78184e119de7d3c.jpg",
+    "3592a17e68db4e8da567f4a67a3f85d8.jpg",
+    "461bab1bfe994987b803c81aff1e81c4.jpg",
+    "47048624b782437e86b2eff03aeaff64.jpg",
+    "517a264cb7a4474db4704df14665054f.jpg",
+    "58b1028f485b4cbb8477f4f18f435bba.jpg",
+    "5ea6a888417f4fd89af2374b22fa9b28.jpg",
+    "6eadf2e8131048058a370aa03e21af21.jpg",
+    "701001ce5fa14644a26fd05e67435f60.jpg",
+    "7a90749cf8cb4082a3fe3ec6ac9916ef.jpg",
+    "91a335acd7cd43098b5c33876968acf5.jpg",
+    "9eaeeec3ea4845988aad9f081cdf8afc.jpg",
+    "a305cffde60d4511b6ef7fee1f29f164.jpg",
+    "d2bb142ca9fe4cb7bedf482fc12a804d.jpg",
+    "d4d5261865594d3a9e308194c6030fce.jpg",
+    "d83c090e4ba94243adad4e96b713b2fa.jpg",
+    "dbce1323b280436d83051df8fef201c7.jpg",
+    "dc4445f8ce834b7c8d9b2d9183ee45aa.jpg",
+    "f3cf843d68db40ef9398501be57ac242.jpg",
+    "f81afd59fd1547deba4cf1093334e0ce.jpg",
+    "f950d2e520534adeba503a7670a5e073.jpg",
+    "fda386b65c334b239d0bc12009ef5f7b.jpg"
+  ],
+  "output_format": "glb",
+  "model_filename": null,
+  "error_message": "COLMAP fallo en el paso 'mapper' con codigo 3221226505. Detalle: remental_pipeline.cc:524] Registering image #9 (num_reg_frames=18)\nI20260406 21:50:17.473300 10184 incremental_pipeline.cc:527] => Image sees 111 / 408 points\nI20260406 21:50:17.745130 10184 incremental_pipeline.cc:524] Registering image #21 (num_reg_frames=19)\nI20260406 21:50:17.745216 10184 incremental_pipeline.cc:527] => Image sees 124 / 302 points\nI20260406 21:50:17.883959 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nW20260406 21:50:20.714895 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.720647 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.726525 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.744120 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.761992 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:21.464081 10184 reconstruction.cc:667] Ignoring de-registration of frame 10, which is not registered.\nW20260406 21:50:21.464271 10184 reconstruction.cc:667] Ignoring de-registration of frame 8, which is not registered.\nW20260406 21:50:21.464402 10184 reconstruction.cc:667] Ignoring de-registration of frame 11, which is not registered.\nW20260406 21:50:21.464524 10184 reconstruction.cc:667] Ignoring de-registration of frame 24, which is not registered.\nW20260406 21:50:21.464661 10184 reconstruction.cc:667] Ignoring de-registration of frame 12, which is not registered.\nW20260406 21:50:21.464774 10184 reconstruction.cc:667] Ignoring de-registration of frame 19, which is not registered.\nW20260406 21:50:21.464890 10184 reconstruction.cc:667] Ignoring de-registration of frame 15, which is not registered.\nW20260406 21:50:21.465005 10184 reconstruction.cc:667] Ignoring de-registration of frame 20, which is not registered.\nW20260406 21:50:21.465126 10184 reconstruction.cc:667] Ignoring de-registration of frame 4, which is not registered.\nW20260406 21:50:21.465238 10184 reconstruction.cc:667] Ignoring de-registration of frame 17, which is not registered.\nW20260406 21:50:21.465348 10184 reconstruction.cc:667] Ignoring de-registration of frame 6, which is not registered.\nW20260406 21:50:21.465444 10184 reconstruction.cc:667] Ignoring de-registration of frame 7, which is not registered.\nW20260406 21:50:21.465548 10184 reconstruction.cc:667] Ignoring de-registration of frame 3, which is not registered.\nW20260406 21:50:21.465639 10184 reconstruction.cc:667] Ignoring de-registration of frame 14, which is not registered.\nW20260406 21:50:21.465732 10184 reconstruction.cc:667] Ignoring de-registration of frame 18, which is not registered.\nW20260406 21:50:21.465836 10184 reconstruction.cc:667] Ignoring de-registration of frame 2, which is not registered.\nW20260406 21:50:21.465940 10184 reconstruction.cc:667] Ignoring de-registration of frame 16, which is not registered.\nW20260406 21:50:21.466040 10184 reconstruction.cc:667] Ignoring de-registration of frame 23, which is not registered.\nW20260406 21:50:21.466159 10184 reconstruction.cc:667] Ignoring de-registration of frame 9, which is not registered.\nW20260406 21:50:21.466251 10184 reconstruction.cc:667] Ignoring de-registration of frame 21, which is not registered.\nI20260406 21:50:21.476858 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nE20260406 21:50:21.477082 10184 incremental_mapper.cc:1080] Check failed: ba_config.NumImages() >= 2 (0 vs. 2) At least two images must be registered for global bundle-adjustment. Logs: stdout=data\\projects\\d03c2c5cfcd4\\output\\logs\\colmap\\mapper.stdout.log, stderr=data\\projects\\d03c2c5cfcd4\\output\\logs\\colmap\\mapper.stderr.log",
+  "processing_metadata": {
+    "engine": "colmap",
+    "engine_requested": "colmap",
+    "requested_output_format": "glb",
+    "current_stage": "failed",
+    "progress": 0.36,
+    "status_message": "Procesamiento fallido.",
+    "stage_sequence": [
+      "starting",
+      "feature_extractor",
+      "exhaustive_matcher",
+      "mapper",
+      "model_converter_txt",
+      "model_converter_sparse_ply",
+      "sparse_mesh_fallback",
+      "image_undistorter",
+      "patch_match_stereo",
+      "stereo_fusion",
+      "poisson_mesher",
+      "export",
+      "completed_with_fallback",
+      "completed"
+    ],
+    "metrics": {
+      "image_count_processed": 24,
+      "total_processing_seconds": 75.5
+    },
+    "fallback": {
+      "used": false,
+      "from_engine": null,
+      "reason": null
+    },
+    "workspace": {
+      "root": "data\\projects\\d03c2c5cfcd4\\output\\workspace",
+      "database_path": "data\\projects\\d03c2c5cfcd4\\output\\workspace\\database.db",
+      "sparse_dir": "data\\projects\\d03c2c5cfcd4\\output\\workspace\\sparse",
+      "dense_dir": "data\\projects\\d03c2c5cfcd4\\output\\workspace\\dense"
+    },
+    "logs": {
+      "directory": "data\\projects\\d03c2c5cfcd4\\output\\logs\\colmap"
+    },
+    "stage_timings_seconds": {
+      "feature_extractor": 26.507,
+      "exhaustive_matcher": 22.299
+    },
+    "failed_stage": "mapper",
+    "failure_reason": "COLMAP fallo en el paso 'mapper' con codigo 3221226505. Detalle: remental_pipeline.cc:524] Registering image #9 (num_reg_frames=18)\nI20260406 21:50:17.473300 10184 incremental_pipeline.cc:527] => Image sees 111 / 408 points\nI20260406 21:50:17.745130 10184 incremental_pipeline.cc:524] Registering image #21 (num_reg_frames=19)\nI20260406 21:50:17.745216 10184 incremental_pipeline.cc:527] => Image sees 124 / 302 points\nI20260406 21:50:17.883959 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nW20260406 21:50:20.714895 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.720647 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.726525 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.744120 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:20.761992 10184 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 21:50:21.464081 10184 reconstruction.cc:667] Ignoring de-registration of frame 10, which is not registered.\nW20260406 21:50:21.464271 10184 reconstruction.cc:667] Ignoring de-registration of frame 8, which is not registered.\nW20260406 21:50:21.464402 10184 reconstruction.cc:667] Ignoring de-registration of frame 11, which is not registered.\nW20260406 21:50:21.464524 10184 reconstruction.cc:667] Ignoring de-registration of frame 24, which is not registered.\nW20260406 21:50:21.464661 10184 reconstruction.cc:667] Ignoring de-registration of frame 12, which is not registered.\nW20260406 21:50:21.464774 10184 reconstruction.cc:667] Ignoring de-registration of frame 19, which is not registered.\nW20260406 21:50:21.464890 10184 reconstruction.cc:667] Ignoring de-registration of frame 15, which is not registered.\nW20260406 21:50:21.465005 10184 reconstruction.cc:667] Ignoring de-registration of frame 20, which is not registered.\nW20260406 21:50:21.465126 10184 reconstruction.cc:667] Ignoring de-registration of frame 4, which is not registered.\nW20260406 21:50:21.465238 10184 reconstruction.cc:667] Ignoring de-registration of frame 17, which is not registered.\nW20260406 21:50:21.465348 10184 reconstruction.cc:667] Ignoring de-registration of frame 6, which is not registered.\nW20260406 21:50:21.465444 10184 reconstruction.cc:667] Ignoring de-registration of frame 7, which is not registered.\nW20260406 21:50:21.465548 10184 reconstruction.cc:667] Ignoring de-registration of frame 3, which is not registered.\nW20260406 21:50:21.465639 10184 reconstruction.cc:667] Ignoring de-registration of frame 14, which is not registered.\nW20260406 21:50:21.465732 10184 reconstruction.cc:667] Ignoring de-registration of frame 18, which is not registered.\nW20260406 21:50:21.465836 10184 reconstruction.cc:667] Ignoring de-registration of frame 2, which is not registered.\nW20260406 21:50:21.465940 10184 reconstruction.cc:667] Ignoring de-registration of frame 16, which is not registered.\nW20260406 21:50:21.466040 10184 reconstruction.cc:667] Ignoring de-registration of frame 23, which is not registered.\nW20260406 21:50:21.466159 10184 reconstruction.cc:667] Ignoring de-registration of frame 9, which is not registered.\nW20260406 21:50:21.466251 10184 reconstruction.cc:667] Ignoring de-registration of frame 21, which is not registered.\nI20260406 21:50:21.476858 10184 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nE20260406 21:50:21.477082 10184 incremental_mapper.cc:1080] Check failed: ba_config.NumImages() >= 2 (0 vs. 2) At least two images must be registered for global bundle-adjustment. Logs: stdout=data\\projects\\d03c2c5cfcd4\\output\\logs\\colmap\\mapper.stdout.log, stderr=data\\projects\\d03c2c5cfcd4\\output\\logs\\colmap\\mapper.stderr.log"
+  }
+}

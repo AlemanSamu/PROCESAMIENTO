@@ -1,0 +1,141 @@
+{
+  "engine": "colmap",
+  "engine_requested": "colmap",
+  "processing_seconds": 100.017,
+  "output_path": "data\\projects\\e39a224a2f23\\output\\e39a224a2f23_model.glb",
+  "requested_output_format": "glb",
+  "actual_output_format": "glb",
+  "reconstruction_type": "sparse_photogrammetry_mesh_fallback",
+  "image_count_processed": 48,
+  "registered_image_count": 4,
+  "camera_count": 1,
+  "point_count": 32,
+  "mesh_vertex_count": 10,
+  "mesh_face_count": 16,
+  "current_stage": "completed_with_fallback",
+  "progress": 1.0,
+  "status_message": "Reconstruccion completada con fallback sparse.",
+  "metrics": {
+    "total_processing_seconds": 100.017,
+    "image_count_processed": 48,
+    "reconstructed_camera_count": 4,
+    "intrinsic_camera_count": 1,
+    "point_3d_count": 32,
+    "sparse_point_cloud_count": 32,
+    "mesh_vertex_count": 10,
+    "mesh_face_count": 16
+  },
+  "stage_timings_seconds": {
+    "feature_extractor": 28.686,
+    "exhaustive_matcher": 37.603,
+    "mapper": 31.417,
+    "model_converter_txt": 0.186,
+    "model_converter_ply": 0.152,
+    "model_converter_sparse_ply": 0.149,
+    "sparse_mesh_fallback": 0.007,
+    "obj_export": 0.002,
+    "glb_export": 0.007
+  },
+  "workspace": {
+    "root": "data\\projects\\e39a224a2f23\\output\\workspace",
+    "database_path": "data\\projects\\e39a224a2f23\\output\\workspace\\database.db",
+    "sparse_dir": "data\\projects\\e39a224a2f23\\output\\workspace\\sparse",
+    "dense_dir": "data\\projects\\e39a224a2f23\\output\\workspace\\dense",
+    "selected_sparse_model_dir": "data\\projects\\e39a224a2f23\\output\\workspace\\sparse\\0"
+  },
+  "artifacts": {
+    "model_path": "data\\projects\\e39a224a2f23\\output\\e39a224a2f23_model.glb",
+    "obj_model_path": "data\\projects\\e39a224a2f23\\output\\e39a224a2f23_model.obj",
+    "glb_model_path": "data\\projects\\e39a224a2f23\\output\\e39a224a2f23_model.glb",
+    "sparse_txt_dir": "data\\projects\\e39a224a2f23\\output\\colmap_sparse_txt",
+    "raw_sparse_ply": "data\\projects\\e39a224a2f23\\output\\workspace\\sparse\\0\\points3D.ply",
+    "fused_ply_path": null,
+    "poisson_mesh_ply": null,
+    "logs_dir": "data\\projects\\e39a224a2f23\\output\\logs\\colmap"
+  },
+  "logs": {
+    "directory": "data\\projects\\e39a224a2f23\\output\\logs\\colmap"
+  },
+  "commands": [
+    {
+      "name": "feature_extractor",
+      "command": "C:\\Tools\\COLMAP\\COLMAP.bat feature_extractor --database_path data\\projects\\e39a224a2f23\\output\\workspace\\database.db --image_path data\\projects\\e39a224a2f23\\images --ImageReader.single_camera 1 --ImageReader.camera_model SIMPLE_RADIAL --FeatureExtraction.use_gpu 0",
+      "duration_seconds": 28.686,
+      "return_code": 0,
+      "stdout_tail": "",
+      "stderr_tail": "action.cc:280] Processed file [42/48]\nI20260406 22:05:34.418576  3184 feature_extraction.cc:283]   Name:            d449a13178ca451a85164e3d8a3c1f7a.jpg\nI20260406 22:05:34.418612  3184 feature_extraction.cc:292]   Dimensions:      720 x 1280\nI20260406 22:05:34.418644  3184 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL\nI20260406 22:05:34.418702  3184 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)\nI20260406 22:05:34.418751  3184 feature_extraction.cc:302]   Features:        1008 (SIFT)\nI20260406 22:05:34.445175  3184 feature_extraction.cc:280] Processed file [43/48]\nI20260406 22:05:34.445266  3184 feature_extraction.cc:283]   Name:            d99a7c49d0f648d3aabdd9da2d39b699.jpg\nI20260406 22:05:34.445300  3184 feature_extraction.cc:292]   Dimensions:      720 x 1280\nI20260406 22:05:34.445331  3184 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL\nI20260406 22:05:34.445400  3184 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)\nI20260406 22:05:34.445437  3184 feature_extraction.cc:302]   Features:        660 (SIFT)\nI20260406 22:05:34.679341  3184 feature_extraction.cc:280] Processed file [44/48]\nI20260406 22:05:34.679426  3184 feature_extraction.cc:283]   Name:            f4d2d16410284793a95746f2dd148f07.jpg\nI20260406 22:05:34.679460  3184 feature_extraction.cc:292]   Dimensions:      720 x 1280\nI20260406 22:05:34.679490  3184 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL\nI20260406 22:05:34.679521  3184 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)\nI20260406 22:05:34.679557  3184 feature_extraction.cc:302]   Features:        785 (SIFT)\nI20260406 22:05:36.185488  3184 feature_extraction.cc:280] Processed file [45/48]\nI20260406 22:05:36.185617  3184 feature_extraction.cc:283]   Name:            fac29eb70511412ea9cfc6ff0d58eff7.jpg\nI20260406 22:05:36.185652  3184 feature_extraction.cc:292]   Dimensions:      720 x 1280\nI20260406 22:05:36.185686  3184 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL\nI20260406 22:05:36.185718  3184 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)\nI20260406 22:05:36.185753  3184 feature_extraction.cc:302]   Features:        880 (SIFT)\nI20260406 22:05:36.432333  3184 feature_extraction.cc:280] Processed file [46/48]\nI20260406 22:05:36.432426  3184 feature_extraction.cc:283]   Name:            fcbeee8678324d7fb3478facacea4f1c.jpg\nI20260406 22:05:36.432476  3184 feature_extraction.cc:292]   Dimensions:      720 x 1280\nI20260406 22:05:36.432528  3184 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL\nI20260406 22:05:36.432600  3184 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)\nI20260406 22:05:36.432669  3184 feature_extraction.cc:302]   Features:        666 (SIFT)\nI20260406 22:05:36.494108  3184 feature_extraction.cc:280] Processed file [47/48]\nI20260406 22:05:36.494199  3184 feature_extraction.cc:283]   Name:            ff43ad29b32041feaa24a6d255accdef.jpg\nI20260406 22:05:36.494254  3184 feature_extraction.cc:292]   Dimensions:      720 x 1280\nI20260406 22:05:36.494299  3184 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL\nI20260406 22:05:36.494347  3184 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)\nI20260406 22:05:36.494398  3184 feature_extraction.cc:302]   Features:        772 (SIFT)\nI20260406 22:05:36.626540  3184 feature_extraction.cc:280] Processed file [48/48]\nI20260406 22:05:36.626643  3184 feature_extraction.cc:283]   Name:            ff57aabe63cc4ef4a8c090c9852dc6c1.jpg\nI20260406 22:05:36.626720  3184 feature_extraction.cc:292]   Dimensions:      720 x 1280\nI20260406 22:05:36.626800  3184 feature_extraction.cc:295]   Camera:          #1 - SIMPLE_RADIAL\nI20260406 22:05:36.626878  3184 feature_extraction.cc:298]   Focal Length:    780.63px (Prior)\nI20260406 22:05:36.626922  3184 feature_extraction.cc:302]   Features:        733 (SIFT)\nI20260406 22:05:36.654734 11712 timer.cc:90] Elapsed time: 0.474 [minutes]",
+      "stdout_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\feature_extractor.stdout.log",
+      "stderr_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\feature_extractor.stderr.log"
+    },
+    {
+      "name": "exhaustive_matcher",
+      "command": "C:\\Tools\\COLMAP\\COLMAP.bat exhaustive_matcher --database_path data\\projects\\e39a224a2f23\\output\\workspace\\database.db --FeatureMatching.use_gpu 0",
+      "duration_seconds": 37.603,
+      "return_code": 0,
+      "stdout_tail": "",
+      "stderr_tail": "I20260406 22:05:36.920915  2064 feature_matching.cc:195] === Feature matching & geometric verification ===\nI20260406 22:05:36.923187 14944 sift.cc:1553] Creating SIFT CPU feature matcher\nI20260406 22:05:36.923190   516 sift.cc:1553] Creating SIFT CPU feature matcher\nI20260406 22:05:36.923207 12152 sift.cc:1553] Creating SIFT CPU feature matcher\nI20260406 22:05:36.923226  9676 sift.cc:1553] Creating SIFT CPU feature matcher\nI20260406 22:05:36.923972  2064 pairing.cc:180] Generating exhaustive image pairs...\nI20260406 22:05:36.924016  2064 pairing.cc:213] Processing block [1/1, 1/1]\nI20260406 22:06:14.250372  2064 feature_matching.cc:217] in 37.326s\nI20260406 22:06:14.250749  2064 timer.cc:90] Elapsed time: 0.622 [minutes]",
+      "stdout_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\exhaustive_matcher.stdout.log",
+      "stderr_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\exhaustive_matcher.stderr.log"
+    },
+    {
+      "name": "mapper",
+      "command": "C:\\Tools\\COLMAP\\COLMAP.bat mapper --database_path data\\projects\\e39a224a2f23\\output\\workspace\\database.db --image_path data\\projects\\e39a224a2f23\\images --output_path data\\projects\\e39a224a2f23\\output\\workspace\\sparse",
+      "duration_seconds": 31.417,
+      "return_code": 0,
+      "stdout_tail": "",
+      "stderr_tail": "es=37)\nI20260406 22:06:39.027053  9696 incremental_pipeline.cc:527] => Image sees 254 / 877 points\nI20260406 22:06:39.701751  9696 incremental_pipeline.cc:524] Registering image #5 (num_reg_frames=38)\nI20260406 22:06:39.701812  9696 incremental_pipeline.cc:527] => Image sees 64 / 727 points\nI20260406 22:06:39.749072  9696 incremental_pipeline.cc:524] Registering image #25 (num_reg_frames=39)\nI20260406 22:06:39.749152  9696 incremental_pipeline.cc:527] => Image sees 70 / 727 points\nI20260406 22:06:39.802360  9696 incremental_pipeline.cc:524] Registering image #34 (num_reg_frames=40)\nI20260406 22:06:39.802444  9696 incremental_pipeline.cc:527] => Image sees 50 / 808 points\nI20260406 22:06:39.841382  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nW20260406 22:06:40.817195  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 22:06:40.842985  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 22:06:40.957434  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 22:06:41.152653  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 22:06:41.241732  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 22:06:41.266900  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nW20260406 22:06:41.292356  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.\nI20260406 22:06:42.396840  9696 incremental_pipeline.cc:524] Registering image #11 (num_reg_frames=41)\nI20260406 22:06:42.396901  9696 incremental_pipeline.cc:527] => Image sees 90 / 808 points\nI20260406 22:06:42.445728  9696 incremental_pipeline.cc:524] Registering image #30 (num_reg_frames=42)\nI20260406 22:06:42.445787  9696 incremental_pipeline.cc:527] => Image sees 59 / 660 points\nI20260406 22:06:42.490145  9696 incremental_pipeline.cc:524] Registering image #43 (num_reg_frames=43)\nI20260406 22:06:42.490205  9696 incremental_pipeline.cc:527] => Image sees 79 / 660 points\nI20260406 22:06:42.535110  9696 incremental_pipeline.cc:524] Registering image #46 (num_reg_frames=44)\nI20260406 22:06:42.535186  9696 incremental_pipeline.cc:527] => Image sees 69 / 664 points\nI20260406 22:06:42.583823  9696 incremental_pipeline.cc:524] Registering image #7 (num_reg_frames=45)\nI20260406 22:06:42.583896  9696 incremental_pipeline.cc:527] => Image sees 101 / 664 points\nI20260406 22:06:42.638601  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nI20260406 22:06:44.061185  9696 incremental_pipeline.cc:524] Registering image #29 (num_reg_frames=46)\nI20260406 22:06:44.061244  9696 incremental_pipeline.cc:527] => Image sees 38 / 529 points\nI20260406 22:06:44.099044  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nI20260406 22:06:44.809030  9696 incremental_pipeline.cc:524] Registering image #26 (num_reg_frames=47)\nI20260406 22:06:44.809128  9696 incremental_pipeline.cc:527] => Image sees 131 / 529 points\nI20260406 22:06:44.866631  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nI20260406 22:06:45.609264  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment\nI20260406 22:06:45.675366  9696 incremental_pipeline.cc:710] Keeping successful reconstruction\nI20260406 22:06:45.699212  9696 timer.cc:90] Elapsed time: 0.519 [minutes]",
+      "stdout_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\mapper.stdout.log",
+      "stderr_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\mapper.stderr.log"
+    },
+    {
+      "name": "model_converter_txt",
+      "command": "C:\\Tools\\COLMAP\\COLMAP.bat model_converter --input_path data\\projects\\e39a224a2f23\\output\\workspace\\sparse\\0 --output_path data\\projects\\e39a224a2f23\\output\\colmap_sparse_txt --output_type TXT",
+      "duration_seconds": 0.186,
+      "return_code": 0,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "stdout_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\model_converter_txt.stdout.log",
+      "stderr_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\model_converter_txt.stderr.log"
+    },
+    {
+      "name": "model_converter_ply",
+      "command": "C:\\Tools\\COLMAP\\COLMAP.bat model_converter --input_path data\\projects\\e39a224a2f23\\output\\workspace\\sparse\\0 --output_path data\\projects\\e39a224a2f23\\output\\e39a224a2f23_sparse.ply --output_type PLY",
+      "duration_seconds": 0.152,
+      "return_code": 0,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "stdout_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\model_converter_ply.stdout.log",
+      "stderr_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\model_converter_ply.stderr.log"
+    },
+    {
+      "name": "model_converter_sparse_ply",
+      "command": "C:\\Tools\\COLMAP\\COLMAP.bat model_converter --input_path data\\projects\\e39a224a2f23\\output\\workspace\\sparse\\0 --output_path data\\projects\\e39a224a2f23\\output\\workspace\\sparse\\0\\points3D.ply --output_type PLY",
+      "duration_seconds": 0.149,
+      "return_code": 0,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "stdout_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\model_converter_sparse_ply.stdout.log",
+      "stderr_path": "data\\projects\\e39a224a2f23\\output\\logs\\colmap\\model_converter_sparse_ply.stderr.log"
+    }
+  ],
+  "fallback": {
+    "used": false,
+    "from_engine": null,
+    "reason": null
+  },
+  "sparse_fallback": {
+    "used": true,
+    "reason": "COLMAP no tiene soporte CUDA. Se omitio la reconstruccion densa y se genero una malla aproximada usando solo la reconstruccion sparse.",
+    "mesh_method": "convex_hull",
+    "source_ply_path": "data\\projects\\e39a224a2f23\\output\\workspace\\sparse\\0\\points3D.ply",
+    "scipy_available": true,
+    "attempted_mesh_method": "convex_hull",
+    "final_mesh_method": "convex_hull",
+    "convex_hull_exception": null
+  },
+  "warnings": [
+    "COLMAP no tiene soporte CUDA. Se omitio la reconstruccion densa y se genero una malla aproximada usando solo la reconstruccion sparse."
+  ],
+  "colmap_binary": "C:\\Tools\\COLMAP\\COLMAP.bat",
+  "metadata_path": "data\\projects\\e39a224a2f23\\output\\e39a224a2f23_colmap_metadata.json"
+}

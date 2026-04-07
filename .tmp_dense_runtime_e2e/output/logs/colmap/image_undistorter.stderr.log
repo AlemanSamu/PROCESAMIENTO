@@ -1,0 +1,17 @@
+I20260406 17:31:01.986107  4608 image.cc:379] === Reading reconstruction ===
+I20260406 17:31:01.992049  4608 image.cc:382] => Reconstruction with 10 images and 356 points
+I20260406 17:31:01.992144  4608 undistorters.cc:164] === Image undistortion ===
+I20260406 17:31:01.994684  4608 undistorters.cc:203] Undistorting image [1/10]
+I20260406 17:31:03.805350  4608 undistorters.cc:203] Undistorting image [2/10]
+I20260406 17:31:03.820768  4608 undistorters.cc:203] Undistorting image [3/10]
+I20260406 17:31:03.821002  4608 undistorters.cc:203] Undistorting image [4/10]
+I20260406 17:31:03.842043  4608 undistorters.cc:203] Undistorting image [5/10]
+I20260406 17:31:05.820179  4608 undistorters.cc:203] Undistorting image [6/10]
+I20260406 17:31:05.920466  4608 undistorters.cc:203] Undistorting image [7/10]
+I20260406 17:31:05.920574  4608 undistorters.cc:203] Undistorting image [8/10]
+I20260406 17:31:05.920623  4608 undistorters.cc:203] Undistorting image [9/10]
+I20260406 17:31:07.116753  4608 undistorters.cc:203] Undistorting image [10/10]
+I20260406 17:31:07.119321  4608 undistorters.cc:211] Writing reconstruction...
+I20260406 17:31:07.144700  4608 undistorters.cc:216] Writing configuration...
+I20260406 17:31:07.146700  4608 undistorters.cc:220] Writing scripts...
+I20260406 17:31:07.148837  4608 timer.cc:90] Elapsed time: 0.086 [minutes]

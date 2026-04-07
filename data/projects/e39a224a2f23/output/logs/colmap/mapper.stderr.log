@@ -1,0 +1,344 @@
+I20260406 22:06:14.468953  9696 incremental_pipeline.cc:265] Loading database
+I20260406 22:06:14.471135  9696 database_cache.cc:72] Loading rigs...
+I20260406 22:06:14.471337  9696 database_cache.cc:82]  1 in 0.000s
+I20260406 22:06:14.471397  9696 database_cache.cc:90] Loading cameras...
+I20260406 22:06:14.471499  9696 database_cache.cc:108]  1 in 0.000s
+I20260406 22:06:14.471546  9696 database_cache.cc:116] Loading frames...
+I20260406 22:06:14.472004  9696 database_cache.cc:126]  48 in 0.000s
+I20260406 22:06:14.472056  9696 database_cache.cc:134] Loading matches...
+I20260406 22:06:14.485557  9696 database_cache.cc:139]  882 in 0.014s
+I20260406 22:06:14.485665  9696 database_cache.cc:147] Loading images...
+I20260406 22:06:14.491661  9696 database_cache.cc:241]  48 in 0.006s (connected 48, loaded 48)
+I20260406 22:06:14.491789  9696 database_cache.cc:255] Loading pose priors...
+I20260406 22:06:14.491870  9696 database_cache.cc:263]  0 in 0.000s
+I20260406 22:06:14.491916  9696 database_cache.cc:271] Building correspondence graph...
+I20260406 22:06:14.563359  9696 database_cache.cc:300]  in 0.071s (ignored 0)
+I20260406 22:06:14.563520  9696 timer.cc:90] Elapsed time: 0.002 [minutes]
+I20260406 22:06:14.567302  9696 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 22:06:18.045883  9696 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 22:06:18.046026  9696 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 22:06:18.047160  9696 incremental_pipeline.cc:341] => Relaxing the initialization constraints.
+I20260406 22:06:18.049425  9696 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 22:06:20.792943  9696 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 22:06:20.793052  9696 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 22:06:20.794163  9696 incremental_pipeline.cc:354] => Relaxing the initialization constraints.
+I20260406 22:06:20.796323  9696 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 22:06:22.997919  9696 incremental_pipeline.cc:381] => No good initial image pair found.
+I20260406 22:06:22.998000  9696 incremental_pipeline.cc:684] Discarding reconstruction due to no initial pair
+I20260406 22:06:22.999022  9696 incremental_pipeline.cc:341] => Relaxing the initialization constraints.
+I20260406 22:06:23.000986  9696 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 22:06:23.817948  9696 incremental_pipeline.cc:401] Registering initial image pair #33 and #25
+I20260406 22:06:23.818822  9696 incremental_pipeline.cc:675] Discarding reconstruction due to bad initial pair
+I20260406 22:06:23.821419  9696 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 22:06:23.835769  9696 incremental_pipeline.cc:401] Registering initial image pair #33 and #5
+I20260406 22:06:23.836710  9696 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 22:06:23.924409  9696 incremental_pipeline.cc:524] Registering image #28 (num_reg_frames=2)
+I20260406 22:06:23.924480  9696 incremental_pipeline.cc:527] => Image sees 31 / 808 points
+W20260406 22:06:23.936009  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.936816  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.936983  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.940636  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.948895  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.949049  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.950040  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.950590  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 22:06:23.954417  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 22:06:23.960935  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.961235  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.961509  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.961610  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.961872  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.962138  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.962243  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.962506  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.962769  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.963031  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.963327  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.963429  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.963852  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.963951  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.964312  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.964748  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.964847  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.965108  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.965394  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.965663  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.965821  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.966085  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.966405  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.966509  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.966933  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.967032  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.967523  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.967626  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.968048  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.968151  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.968421  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.968684  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.968783  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.969211  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.969478  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.969576  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.969874  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.970142  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.970412  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.970515  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.970937  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.971036  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.971564  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.971687  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.971951  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.972222  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.972494  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.972594  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.973016  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 22:06:23.980490  9696 incremental_pipeline.cc:524] Registering image #25 (num_reg_frames=3)
+I20260406 22:06:23.980550  9696 incremental_pipeline.cc:527] => Image sees 32 / 727 points
+W20260406 22:06:23.989228  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.989772  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.989960  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.990851  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.991353  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.991538  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.992029  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.992578  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.992763  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:23.999510  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.000007  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.000183  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.000912  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.001081  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.001896  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.002147  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.002651  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.003102  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 22:06:24.005330  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 22:06:24.010686  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.011078  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.011217  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.011912  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.012054  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.012449  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.012825  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.013195  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.013337  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.013710  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.014081  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.014525  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.014673  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.015285  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.015501  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.016113  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.016251  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.016629  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.017002  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.017153  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.017845  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.017985  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.018947  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.019094  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.019472  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.019848  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.020219  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.020360  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.020732  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.020867  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.021482  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.021621  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.022221  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.022639  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.022778  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.023147  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.023557  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.023934  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.024073  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.024721  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.024860  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.025229  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.025631  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.025769  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.026376  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.026748  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.026885  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.027515  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.027655  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 22:06:24.035339  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 22:06:24.038992  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.039398  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.039559  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.039935  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.040309  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.040729  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.041107  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.041241  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.041658  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.042032  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.042416  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.042558  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.043163  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.043297  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.043715  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.044106  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.044483  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.044620  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.044990  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.045362  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.045740  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.045876  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.046497  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.046640  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.047011  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.047388  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.047763  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.047898  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.048512  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.048650  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.049256  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.049397  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.049855  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.050241  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.050635  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.050774  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.051378  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.051587  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.051964  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.052577  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.052717  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.053086  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.053221  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.053877  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.054015  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.054638  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.055017  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.055152  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.055804  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:24.055942  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 22:06:24.056198  9696 incremental_pipeline.cc:710] Keeping successful reconstruction
+I20260406 22:06:24.062061  9696 incremental_pipeline.cc:377] Finding good initial image pair
+I20260406 22:06:24.649368  9696 incremental_pipeline.cc:401] Registering initial image pair #45 and #6
+I20260406 22:06:24.650926  9696 incremental_pipeline.cc:419] Global bundle adjustment
+I20260406 22:06:24.681698  9696 incremental_pipeline.cc:524] Registering image #2 (num_reg_frames=2)
+I20260406 22:06:24.681758  9696 incremental_pipeline.cc:527] => Image sees 46 / 687 points
+I20260406 22:06:24.717579  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:24.745121  9696 incremental_pipeline.cc:524] Registering image #21 (num_reg_frames=3)
+I20260406 22:06:24.745180  9696 incremental_pipeline.cc:527] => Image sees 72 / 880 points
+I20260406 22:06:24.764675  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:24.801117  9696 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=4)
+I20260406 22:06:24.801175  9696 incremental_pipeline.cc:527] => Image sees 59 / 785 points
+I20260406 22:06:24.889131  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:25.011571  9696 incremental_pipeline.cc:524] Registering image #44 (num_reg_frames=5)
+I20260406 22:06:25.011630  9696 incremental_pipeline.cc:527] => Image sees 64 / 785 points
+I20260406 22:06:25.044232  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:25.237921  9696 incremental_pipeline.cc:524] Registering image #16 (num_reg_frames=6)
+I20260406 22:06:25.238014  9696 incremental_pipeline.cc:527] => Image sees 49 / 731 points
+I20260406 22:06:25.296890  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:25.471703  9696 incremental_pipeline.cc:524] Registering image #48 (num_reg_frames=7)
+I20260406 22:06:25.471793  9696 incremental_pipeline.cc:527] => Image sees 68 / 731 points
+I20260406 22:06:25.512803  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:25.573705  9696 incremental_pipeline.cc:524] Registering image #14 (num_reg_frames=8)
+I20260406 22:06:25.573779  9696 incremental_pipeline.cc:527] => Image sees 60 / 772 points
+I20260406 22:06:25.641373  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:25.935511  9696 incremental_pipeline.cc:524] Registering image #47 (num_reg_frames=9)
+I20260406 22:06:25.935596  9696 incremental_pipeline.cc:527] => Image sees 127 / 772 points
+I20260406 22:06:26.005524  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:26.047577  9696 incremental_pipeline.cc:524] Registering image #4 (num_reg_frames=10)
+I20260406 22:06:26.047659  9696 incremental_pipeline.cc:527] => Image sees 101 / 1008 points
+I20260406 22:06:26.129127  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:26.190895  9696 incremental_pipeline.cc:524] Registering image #42 (num_reg_frames=11)
+I20260406 22:06:26.190976  9696 incremental_pipeline.cc:527] => Image sees 170 / 1008 points
+I20260406 22:06:26.301963  9696 incremental_pipeline.cc:524] Registering image #32 (num_reg_frames=12)
+I20260406 22:06:26.302044  9696 incremental_pipeline.cc:527] => Image sees 142 / 894 points
+I20260406 22:06:26.419268  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:26.537570  9696 incremental_pipeline.cc:524] Registering image #37 (num_reg_frames=13)
+I20260406 22:06:26.537652  9696 incremental_pipeline.cc:527] => Image sees 214 / 894 points
+I20260406 22:06:26.690128  9696 incremental_pipeline.cc:524] Registering image #22 (num_reg_frames=14)
+I20260406 22:06:26.690222  9696 incremental_pipeline.cc:527] => Image sees 180 / 885 points
+I20260406 22:06:27.118169  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:27.298759  9696 incremental_pipeline.cc:524] Registering image #35 (num_reg_frames=15)
+I20260406 22:06:27.298818  9696 incremental_pipeline.cc:527] => Image sees 212 / 885 points
+I20260406 22:06:27.512412  9696 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=16)
+I20260406 22:06:27.512471  9696 incremental_pipeline.cc:527] => Image sees 169 / 928 points
+I20260406 22:06:27.725461  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:27.916089  9696 incremental_pipeline.cc:524] Registering image #18 (num_reg_frames=17)
+I20260406 22:06:27.916150  9696 incremental_pipeline.cc:527] => Image sees 215 / 928 points
+I20260406 22:06:28.163489  9696 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=18)
+I20260406 22:06:28.163548  9696 incremental_pipeline.cc:527] => Image sees 153 / 849 points
+I20260406 22:06:28.400302  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:28.570229  9696 incremental_pipeline.cc:524] Registering image #38 (num_reg_frames=19)
+I20260406 22:06:28.570295  9696 incremental_pipeline.cc:527] => Image sees 194 / 849 points
+I20260406 22:06:28.845771  9696 incremental_pipeline.cc:524] Registering image #3 (num_reg_frames=20)
+I20260406 22:06:28.845845  9696 incremental_pipeline.cc:527] => Image sees 151 / 920 points
+I20260406 22:06:29.126054  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:29.339544  9696 incremental_pipeline.cc:524] Registering image #13 (num_reg_frames=21)
+I20260406 22:06:29.339604  9696 incremental_pipeline.cc:527] => Image sees 204 / 920 points
+I20260406 22:06:29.638636  9696 incremental_pipeline.cc:524] Registering image #1 (num_reg_frames=22)
+I20260406 22:06:29.638706  9696 incremental_pipeline.cc:527] => Image sees 157 / 831 points
+I20260406 22:06:29.948482  9696 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=23)
+I20260406 22:06:29.948542  9696 incremental_pipeline.cc:527] => Image sees 191 / 831 points
+I20260406 22:06:30.280697  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:30.518569  9696 incremental_pipeline.cc:524] Registering image #33 (num_reg_frames=24)
+I20260406 22:06:30.518630  9696 incremental_pipeline.cc:527] => Image sees 162 / 808 points
+I20260406 22:06:30.890106  9696 incremental_pipeline.cc:524] Registering image #28 (num_reg_frames=25)
+I20260406 22:06:30.890175  9696 incremental_pipeline.cc:527] => Image sees 182 / 808 points
+I20260406 22:06:31.300816  9696 incremental_pipeline.cc:524] Registering image #9 (num_reg_frames=26)
+I20260406 22:06:31.300880  9696 incremental_pipeline.cc:527] => Image sees 156 / 826 points
+I20260406 22:06:31.654838  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:32.133403  9696 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=27)
+I20260406 22:06:32.133490  9696 incremental_pipeline.cc:527] => Image sees 211 / 826 points
+I20260406 22:06:32.571368  9696 incremental_pipeline.cc:524] Registering image #17 (num_reg_frames=28)
+I20260406 22:06:32.571429  9696 incremental_pipeline.cc:527] => Image sees 198 / 854 points
+I20260406 22:06:33.008677  9696 incremental_pipeline.cc:524] Registering image #27 (num_reg_frames=29)
+I20260406 22:06:33.008738  9696 incremental_pipeline.cc:527] => Image sees 260 / 854 points
+I20260406 22:06:33.461670  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:33.847206  9696 incremental_pipeline.cc:524] Registering image #39 (num_reg_frames=30)
+I20260406 22:06:33.847274  9696 incremental_pipeline.cc:527] => Image sees 184 / 801 points
+I20260406 22:06:34.296928  9696 incremental_pipeline.cc:524] Registering image #41 (num_reg_frames=31)
+I20260406 22:06:34.297007  9696 incremental_pipeline.cc:527] => Image sees 215 / 801 points
+I20260406 22:06:34.783023  9696 incremental_pipeline.cc:524] Registering image #20 (num_reg_frames=32)
+I20260406 22:06:34.783086  9696 incremental_pipeline.cc:527] => Image sees 205 / 808 points
+I20260406 22:06:35.267329  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:36.078719  9696 incremental_pipeline.cc:524] Registering image #23 (num_reg_frames=33)
+I20260406 22:06:36.078801  9696 incremental_pipeline.cc:527] => Image sees 242 / 808 points
+I20260406 22:06:36.609199  9696 incremental_pipeline.cc:524] Registering image #24 (num_reg_frames=34)
+I20260406 22:06:36.609264  9696 incremental_pipeline.cc:527] => Image sees 209 / 781 points
+I20260406 22:06:37.190175  9696 incremental_pipeline.cc:524] Registering image #40 (num_reg_frames=35)
+I20260406 22:06:37.190236  9696 incremental_pipeline.cc:527] => Image sees 251 / 781 points
+I20260406 22:06:37.798375  9696 incremental_pipeline.cc:524] Registering image #31 (num_reg_frames=36)
+I20260406 22:06:37.798434  9696 incremental_pipeline.cc:527] => Image sees 224 / 877 points
+I20260406 22:06:38.419875  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:39.026992  9696 incremental_pipeline.cc:524] Registering image #36 (num_reg_frames=37)
+I20260406 22:06:39.027053  9696 incremental_pipeline.cc:527] => Image sees 254 / 877 points
+I20260406 22:06:39.701751  9696 incremental_pipeline.cc:524] Registering image #5 (num_reg_frames=38)
+I20260406 22:06:39.701812  9696 incremental_pipeline.cc:527] => Image sees 64 / 727 points
+I20260406 22:06:39.749072  9696 incremental_pipeline.cc:524] Registering image #25 (num_reg_frames=39)
+I20260406 22:06:39.749152  9696 incremental_pipeline.cc:527] => Image sees 70 / 727 points
+I20260406 22:06:39.802360  9696 incremental_pipeline.cc:524] Registering image #34 (num_reg_frames=40)
+I20260406 22:06:39.802444  9696 incremental_pipeline.cc:527] => Image sees 50 / 808 points
+I20260406 22:06:39.841382  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+W20260406 22:06:40.817195  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:40.842985  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:40.957434  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:41.152653  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:41.241732  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:41.266900  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+W20260406 22:06:41.292356  9696 levenberg_marquardt_strategy.cc:123] Linear solver failure. Failed to compute a step: Eigen failure. Unable to perform dense Cholesky factorization.
+I20260406 22:06:42.396840  9696 incremental_pipeline.cc:524] Registering image #11 (num_reg_frames=41)
+I20260406 22:06:42.396901  9696 incremental_pipeline.cc:527] => Image sees 90 / 808 points
+I20260406 22:06:42.445728  9696 incremental_pipeline.cc:524] Registering image #30 (num_reg_frames=42)
+I20260406 22:06:42.445787  9696 incremental_pipeline.cc:527] => Image sees 59 / 660 points
+I20260406 22:06:42.490145  9696 incremental_pipeline.cc:524] Registering image #43 (num_reg_frames=43)
+I20260406 22:06:42.490205  9696 incremental_pipeline.cc:527] => Image sees 79 / 660 points
+I20260406 22:06:42.535110  9696 incremental_pipeline.cc:524] Registering image #46 (num_reg_frames=44)
+I20260406 22:06:42.535186  9696 incremental_pipeline.cc:527] => Image sees 69 / 664 points
+I20260406 22:06:42.583823  9696 incremental_pipeline.cc:524] Registering image #7 (num_reg_frames=45)
+I20260406 22:06:42.583896  9696 incremental_pipeline.cc:527] => Image sees 101 / 664 points
+I20260406 22:06:42.638601  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:44.061185  9696 incremental_pipeline.cc:524] Registering image #29 (num_reg_frames=46)
+I20260406 22:06:44.061244  9696 incremental_pipeline.cc:527] => Image sees 38 / 529 points
+I20260406 22:06:44.099044  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:44.809030  9696 incremental_pipeline.cc:524] Registering image #26 (num_reg_frames=47)
+I20260406 22:06:44.809128  9696 incremental_pipeline.cc:527] => Image sees 131 / 529 points
+I20260406 22:06:44.866631  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:45.609264  9696 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260406 22:06:45.675366  9696 incremental_pipeline.cc:710] Keeping successful reconstruction
+I20260406 22:06:45.699212  9696 timer.cc:90] Elapsed time: 0.519 [minutes]

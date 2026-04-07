@@ -1,0 +1,37 @@
+INFO:     Started server process [4060]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8010 (Press CTRL+C to quit)
+INFO:app.services.engines.factory:Selecting reconstruction engine. requested=colmap configured_colmap_path=C:\Tools\COLMAP\COLMAP.bat fallback_to_mock=False
+INFO:app.services.engines.colmap_engine:Checking COLMAP availability. configured_path=C:\Tools\COLMAP\COLMAP.bat candidates=['C:\\Tools\\COLMAP\\COLMAP.bat', 'C:\\Tools\\COLMAP\\COLMAP.exe', 'colmap', 'colmap.exe', 'colmap.bat']
+INFO:app.services.engines.colmap_engine:Probing COLMAP candidate with '-h': C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.colmap_engine:COLMAP probe succeeded for candidate=C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.colmap_engine:COLMAP detected successfully using candidate=C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.factory:COLMAP detected successfully. binary=C:\Tools\COLMAP\COLMAP.bat
+INFO:app.services.engines.factory:Selected reconstruction engine: colmap (explicit configuration).
+INFO:app.services.engines.colmap_engine:Resolved COLMAP GPU flag for feature_extractor: FeatureExtraction.use_gpu
+INFO:app.services.engines.colmap_engine:Resolved COLMAP GPU flag for exhaustive_matcher: FeatureMatching.use_gpu
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Starting COLMAP dense reconstruction with 24 images. output_dir=data\projects\665366bb0f95\output
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Starting COLMAP stage 'feature_extractor': C:\Tools\COLMAP\COLMAP.bat feature_extractor --database_path data\projects\665366bb0f95\output\workspace\database.db --image_path data\projects\665366bb0f95\images --ImageReader.single_camera 1 --ImageReader.camera_model SIMPLE_RADIAL --FeatureExtraction.use_gpu 0
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | COLMAP stage 'feature_extractor' completed in 16.443s
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Starting COLMAP stage 'exhaustive_matcher': C:\Tools\COLMAP\COLMAP.bat exhaustive_matcher --database_path data\projects\665366bb0f95\output\workspace\database.db --FeatureMatching.use_gpu 0
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | COLMAP stage 'exhaustive_matcher' completed in 11.848s
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Starting COLMAP stage 'mapper': C:\Tools\COLMAP\COLMAP.bat mapper --database_path data\projects\665366bb0f95\output\workspace\database.db --image_path data\projects\665366bb0f95\images --output_path data\projects\665366bb0f95\output\workspace\sparse
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | COLMAP stage 'mapper' completed in 17.601s
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Starting COLMAP stage 'model_converter_txt': C:\Tools\COLMAP\COLMAP.bat model_converter --input_path data\projects\665366bb0f95\output\workspace\sparse\0 --output_path data\projects\665366bb0f95\output\colmap_sparse_txt --output_type TXT
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | COLMAP stage 'model_converter_txt' completed in 0.433s
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Starting COLMAP stage 'model_converter_ply': C:\Tools\COLMAP\COLMAP.bat model_converter --input_path data\projects\665366bb0f95\output\workspace\sparse\0 --output_path data\projects\665366bb0f95\output\665366bb0f95_sparse.ply --output_type PLY
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | COLMAP stage 'model_converter_ply' completed in 0.220s
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Starting COLMAP stage 'model_converter_sparse_ply': C:\Tools\COLMAP\COLMAP.bat model_converter --input_path data\projects\665366bb0f95\output\workspace\sparse\0 --output_path data\projects\665366bb0f95\output\workspace\sparse\0\points3D.ply --output_type PLY
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | COLMAP stage 'model_converter_sparse_ply' completed in 0.602s
+WARNING:app.services.engines.colmap_engine:COLMAP binary 'C:\Tools\COLMAP\COLMAP.bat' reports no CUDA support. Dense reconstruction stages will be skipped.
+WARNING:app.services.engines.colmap_engine:Project 665366bb0f95 | COLMAP no tiene soporte CUDA. Se omitio la reconstruccion densa y se genero una malla aproximada usando solo la reconstruccion sparse.
+WARNING:app.services.engines.colmap_engine:Project 665366bb0f95 | No CUDA detected. Using sparse reconstruction only to generate an approximate mesh.
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Loading sparse point cloud for approximate mesh generation: data\projects\665366bb0f95\output\workspace\sparse\0\points3D.ply (points=777)
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Sparse fallback diagnostics: scipy_available=True attempted_method=convex_hull
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Attempting sparse fallback mesh with method=convex_hull
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Approximate sparse mesh generated successfully. scipy_available=True attempted_method=convex_hull final_method=convex_hull vertices=27 faces=50
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Exporting final mesh to OBJ: data\projects\665366bb0f95\output\665366bb0f95_model.obj
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Exporting final mesh to GLB: data\projects\665366bb0f95\output\665366bb0f95_model.glb
+INFO:app.services.engines.colmap_engine:Validated final GLB mesh successfully. path=data\projects\665366bb0f95\output\665366bb0f95_model.glb vertices=27 faces=50
+INFO:app.services.engines.colmap_engine:Project 665366bb0f95 | Sparse fallback reconstruction completed in 49.733s. registered_images=24 cameras=1 sparse_points=777 mesh_vertices=27 mesh_faces=50 scipy_available=True attempted_method=convex_hull final_method=convex_hull model=data\projects\665366bb0f95\output\665366bb0f95_model.glb

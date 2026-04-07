@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -21,6 +22,11 @@ class BadRequestError(AppError):
     error_code = "bad_request"
 
 
+class AuthenticationError(AppError):
+    status_code = 401
+    error_code = "authentication_error"
+
+
 class ProjectNotFoundError(AppError):
     status_code = 404
     error_code = "project_not_found"
@@ -39,6 +45,21 @@ class StorageError(AppError):
 class ProcessingError(AppError):
     status_code = 500
     error_code = "processing_error"
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        reason_code: str | None = None,
+        current_stage: str | None = None,
+        metadata: dict[str, Any] | None = None,
+        allow_fallback: bool = True,
+    ) -> None:
+        self.reason_code = reason_code
+        self.current_stage = current_stage
+        self.metadata = dict(metadata or {})
+        self.allow_fallback = allow_fallback
+        super().__init__(message)
 
 
 def register_exception_handlers(app: FastAPI) -> None:
