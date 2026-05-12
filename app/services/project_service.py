@@ -1,4 +1,5 @@
 import logging
+import re
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
@@ -29,6 +30,20 @@ class ProjectImageUploadResult:
 
 
 class ProjectService:
+    _GENERIC_PROJECT_NAMES = {
+        "caja",
+        "box",
+        "objeto",
+        "object",
+        "modelo",
+        "model",
+        "proyecto",
+        "untitled",
+        "sin nombre",
+        "proyecto sin nombre",
+    }
+    _GENERIC_NAME_PATTERN = re.compile(r"^proyecto-[a-f0-9]{8,}$")
+
     def __init__(self, storage_service: StorageService, settings) -> None:
         self.storage_service = storage_service
         self.settings = settings
@@ -70,7 +85,25 @@ class ProjectService:
         metadata.output_format = None
         metadata.model_filename = None
         metadata.error_message = None
-        metadata.processing_metadata = None
+        metadata.processing_metadata = (
+            {
+                "current_stage": "uploading",
+                "workflow_stage": "uploading",
+                "stage_status": "completed",
+                "progress": 0.0,
+                "status_message": "Imagenes cargadas y proyecto listo para procesamiento.",
+                "metrics": {
+                    "uploaded_images": save_result.uploaded_count,
+                    "skipped_duplicate_images": save_result.skipped_count,
+                    "total_images": metadata.image_count,
+                },
+                "artifacts": {
+                    "images_dir": str(self.storage_service.get_images_dir(project_id)),
+                },
+            }
+            if save_result.uploaded_count > 0
+            else None
+        )
         metadata.updated_at = self._utc_now()
 
         self.storage_service.save_project_metadata(metadata)
@@ -103,6 +136,7 @@ class ProjectService:
 
         metadata.status = ProjectStatus.PROCESSING
         metadata.output_format = output_format
+        metadata.model_filename = None
         metadata.error_message = None
         metadata.processing_metadata = processing_metadata
         metadata.updated_at = self._utc_now()
@@ -132,6 +166,11 @@ class ProjectService:
         processing_metadata: dict[str, Any] | None = None,
     ) -> ProjectMetadata:
         metadata = self.get_project(project_id)
+        metadata.name = self._resolve_completed_project_name(
+            current_name=metadata.name,
+            project_id=metadata.id,
+            processing_metadata=processing_metadata,
+        )
         metadata.status = ProjectStatus.COMPLETED
         metadata.output_format = output_format
         metadata.model_filename = model_filename
@@ -149,6 +188,7 @@ class ProjectService:
     ) -> ProjectMetadata:
         metadata = self.get_project(project_id)
         metadata.status = ProjectStatus.FAILED
+        metadata.model_filename = None
         metadata.error_message = reason
         metadata.processing_metadata = processing_metadata
         metadata.updated_at = self._utc_now()
@@ -222,6 +262,105 @@ class ProjectService:
 
         output_dir = self.storage_service.get_output_dir(project_id)
         return output_dir.exists() and any(output_dir.iterdir())
+
+    def _resolve_completed_project_name(
+        self,
+        *,
+        current_name: str,
+        project_id: str,
+        processing_metadata: dict[str, Any] | None,
+    ) -> str:
+        if not self._is_generic_project_name(current_name, project_id):
+            return current_name
+
+        inferred_name = self._infer_name_from_processing_metadata(processing_metadata)
+        if inferred_name is None:
+            return current_name
+
+        logger.info(
+            "Project %s renamed from generic label '%s' to '%s' using processing metadata.",
+            project_id,
+            current_name,
+            inferred_name,
+        )
+        return inferred_name
+
+    @classmethod
+    def _is_generic_project_name(cls, name: str, project_id: str) -> bool:
+        normalized = cls._normalize_name(name)
+        if not normalized:
+            return True
+
+        if normalized in cls._GENERIC_PROJECT_NAMES:
+            return True
+
+        if normalized == f"proyecto-{project_id}".lower():
+            return True
+
+        if cls._GENERIC_NAME_PATTERN.fullmatch(normalized):
+            return True
+
+        return False
+
+    @classmethod
+    def _infer_name_from_processing_metadata(
+        cls,
+        processing_metadata: dict[str, Any] | None,
+    ) -> str | None:
+        if not isinstance(processing_metadata, dict):
+            return None
+
+        direct_candidates = [
+            processing_metadata.get("object_display_name"),
+            processing_metadata.get("detected_object_name"),
+            processing_metadata.get("object_name"),
+        ]
+        for raw_candidate in direct_candidates:
+            candidate = cls._normalize_inferred_candidate(raw_candidate)
+            if candidate is not None:
+                return candidate
+
+        forced = processing_metadata.get("forced_presentable_model")
+        if not isinstance(forced, dict):
+            return None
+
+        forced_candidates = [
+            forced.get("display_name"),
+            forced.get("source_glb"),
+            forced.get("source_obj"),
+        ]
+        for raw_candidate in forced_candidates:
+            candidate = cls._normalize_inferred_candidate(raw_candidate)
+            if candidate is not None:
+                return candidate
+        return None
+
+    @classmethod
+    def _normalize_inferred_candidate(cls, raw_candidate: object) -> str | None:
+        text = str(raw_candidate or "").strip()
+        if not text:
+            return None
+
+        stem = Path(text).stem if "/" in text or "\\" in text or "." in text else text
+        normalized = re.sub(r"[_-]+", " ", stem)
+        normalized = re.sub(
+            r"\b(canonical|canonico|modelo?|mesh|reconstruido|reconstruction|output|final)\b",
+            " ",
+            normalized,
+            flags=re.IGNORECASE,
+        )
+        normalized = re.sub(r"\s+", " ", normalized).strip()
+        if not normalized:
+            return None
+
+        candidate = " ".join(word.capitalize() for word in normalized.split(" "))
+        if cls._is_generic_project_name(candidate, project_id=""):
+            return None
+        return candidate
+
+    @staticmethod
+    def _normalize_name(name: str) -> str:
+        return " ".join(str(name or "").strip().lower().split())
 
     @staticmethod
     def _build_upload_message(

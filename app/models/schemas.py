@@ -48,6 +48,7 @@ class ProjectResponse(BaseModel):
     model_download_url: str | None = None
     error_message: str | None = None
     current_stage: str | None = None
+    stage_status: str | None = None
     fallback_used: bool | None = None
     final_model_type: str | None = None
     final_model_path: str | None = None
@@ -86,6 +87,7 @@ class ProjectStatusResponse(BaseModel):
     error_message: str | None = None
     engine: str | None = None
     current_stage: str | None = None
+    stage_status: str | None = None
     progress: float | None = None
     message: str | None = None
     metrics: dict[str, Any] | None = None

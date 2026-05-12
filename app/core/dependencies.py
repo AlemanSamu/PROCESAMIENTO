@@ -43,7 +43,11 @@ def inspect_api_key(
     provided_api_key = x_api_key.strip() if x_api_key and x_api_key.strip() else None
     required = bool(expected_api_key)
     valid = (not required) or (
-        provided_api_key is not None and hmac.compare_digest(provided_api_key, expected_api_key)
+        provided_api_key is not None
+        and hmac.compare_digest(
+            provided_api_key.encode("utf-8"),
+            expected_api_key.encode("utf-8"),
+        )
     )
     return {
         "required": required,

@@ -2,6 +2,7 @@ import ipaddress
 import socket
 from collections import OrderedDict
 from typing import Any
+from urllib.parse import urlparse
 
 from fastapi import Request
 
@@ -26,9 +27,10 @@ def build_health_network_info(request: Request) -> dict[str, Any]:
         advertised_urls.append(_build_base_url(scheme, host, port))
 
     advertised_urls = list(OrderedDict.fromkeys(advertised_urls))
-    preferred_base_url = next(
-        (url for url in advertised_urls if hostname and f"//{hostname}" in url),
-        advertised_urls[0] if advertised_urls else _build_base_url(scheme, observed_host, port),
+    observed_base_url = _build_base_url(scheme, observed_host, port)
+    preferred_base_url = _select_preferred_base_url(
+        observed_base_url=observed_base_url,
+        advertised_urls=advertised_urls,
     )
 
     return {
@@ -36,7 +38,7 @@ def build_health_network_info(request: Request) -> dict[str, Any]:
         "fqdn": fqdn,
         "advertised_urls": advertised_urls,
         "preferred_base_url": preferred_base_url,
-        "observed_base_url": _build_base_url(scheme, observed_host, port),
+        "observed_base_url": observed_base_url,
     }
 
 
@@ -90,6 +92,49 @@ def _build_base_url(scheme: str, host: str, port: int) -> str:
     if port == default_port:
         return f"{scheme}://{host}"
     return f"{scheme}://{host}:{port}"
+
+
+def _select_preferred_base_url(
+    *,
+    observed_base_url: str,
+    advertised_urls: list[str],
+) -> str:
+    if not advertised_urls:
+        return observed_base_url
+
+    observed_host = _host_from_url(observed_base_url)
+    if observed_host and not _is_loopback_host(observed_host):
+        return observed_base_url
+
+    for url in advertised_urls:
+        host = _host_from_url(url)
+        if host and _is_private_or_routable_lan_ipv4(host):
+            return url
+
+    for url in advertised_urls:
+        host = _host_from_url(url)
+        if host and not _is_loopback_host(host):
+            return url
+
+    return advertised_urls[0]
+
+
+def _host_from_url(value: str) -> str:
+    try:
+        parsed = urlparse(value)
+    except ValueError:
+        return ""
+    return parsed.hostname or ""
+
+
+def _is_loopback_host(host: str) -> bool:
+    normalized = host.strip().lower()
+    if normalized in {"localhost", "::1"}:
+        return True
+    try:
+        return ipaddress.ip_address(normalized).is_loopback
+    except ValueError:
+        return False
 
 
 def _safe_hostname(value: str | None, fallback: str) -> str:

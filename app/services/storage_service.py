@@ -222,6 +222,7 @@ class StorageService:
         temp_dir.mkdir(parents=True, exist_ok=True)
         temp_path = temp_dir / f"{uuid.uuid4().hex}{extension}.upload"
         digest = hashlib.sha256()
+        bytes_written = 0
 
         try:
             with temp_path.open("wb") as buffer:
@@ -231,6 +232,14 @@ class StorageService:
                         break
                     digest.update(chunk)
                     buffer.write(chunk)
+                    bytes_written += len(chunk)
+            if bytes_written <= 0:
+                temp_path.unlink(missing_ok=True)
+                raise BadRequestError(
+                    f"La imagen '{original_name}' esta vacia."
+                )
+        except BadRequestError:
+            raise
         except Exception as exc:
             temp_path.unlink(missing_ok=True)
             raise StorageError(f"No se pudo procesar imagen '{original_name}'.") from exc

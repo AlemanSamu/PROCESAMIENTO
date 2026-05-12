@@ -54,11 +54,13 @@ class ProcessingError(AppError):
         current_stage: str | None = None,
         metadata: dict[str, Any] | None = None,
         allow_fallback: bool = True,
+        retryable: bool | None = None,
     ) -> None:
         self.reason_code = reason_code
         self.current_stage = current_stage
         self.metadata = dict(metadata or {})
         self.allow_fallback = allow_fallback
+        self.retryable = retryable
         super().__init__(message)
 
 
@@ -72,9 +74,23 @@ def register_exception_handlers(app: FastAPI) -> None:
 
     @app.exception_handler(RequestValidationError)
     async def validation_error_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
+        details = exc.errors()
+        if details:
+            first_error = details[0]
+            location = ".".join(str(item) for item in first_error.get("loc", []))
+            message = first_error.get("msg", "Solicitud invalida.")
+            detail_message = f"{location}: {message}" if location else str(message)
+        else:
+            detail_message = "Solicitud invalida."
         return JSONResponse(
             status_code=422,
-            content={"error": {"code": "validation_error", "message": str(exc)}},
+            content={
+                "error": {
+                    "code": "validation_error",
+                    "message": detail_message,
+                    "details": details,
+                }
+            },
         )
 
     @app.exception_handler(Exception)

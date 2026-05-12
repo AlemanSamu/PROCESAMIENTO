@@ -1,0 +1,75 @@
+# =========================
+# Environment and secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Python virtualenv / cache
+# =========================
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Local runtime artifacts
+# =========================
+data/projects/
+data/experiments/
+
+.tmp_*/
+.tmp*.json
+
+uvicorn*.log
+*.stderr.log
+*.stdout.log
+*.log
+
+# =========================
+# 3D / COLMAP artifacts
+# =========================
+*.obj
+*.ply
+*.glb
+*.gltf
+*.mtl
+
+tmp_pipeline_downloads/
+temp/
+output/
+
+# =========================
+# Flutter / Dart generated
+# =========================
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.dart_tool/
+build/
+
+flutter_integration/.dart_tool/
+flutter_integration/build/
+flutter_integration/.flutter-plugins-dependencies
+
+# =========================
+# IDE / editors
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS junk
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Node / web leftovers
+# =========================
+node_modules/

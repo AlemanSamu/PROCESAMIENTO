@@ -1,4 +1,6 @@
+import json
 import logging
+from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, Depends, File, UploadFile, status
@@ -16,15 +18,33 @@ from app.models.schemas import (
 )
 from app.services.processing_service import ProcessingService
 from app.services.project_service import ProjectService
+from config import get_settings
 
 router = APIRouter(prefix="/projects", tags=["projects"], dependencies=[Depends(require_api_key)])
 logger = logging.getLogger(__name__)
 
 
+def _normalized_api_prefix() -> str:
+    raw_prefix = str(get_settings().api_prefix or "").strip()
+    if not raw_prefix:
+        return ""
+    if not raw_prefix.startswith("/"):
+        raw_prefix = f"/{raw_prefix}"
+    return raw_prefix.rstrip("/")
+
+
+def _build_model_download_url(project_id: str) -> str:
+    prefix = _normalized_api_prefix()
+    if prefix:
+        return f"{prefix}/projects/{project_id}/model"
+    return f"/projects/{project_id}/model"
+
+
 def _to_project_response(metadata) -> ProjectResponse:
+    model_filename = metadata.model_filename if metadata.status == ProjectStatus.COMPLETED else None
     model_download_url = None
     if metadata.status == ProjectStatus.COMPLETED and metadata.model_filename:
-        model_download_url = f"/projects/{metadata.id}/model"
+        model_download_url = _build_model_download_url(metadata.id)
 
     status_details = _build_status_details(metadata)
 
@@ -36,10 +56,11 @@ def _to_project_response(metadata) -> ProjectResponse:
         updated_at=metadata.updated_at,
         image_count=metadata.image_count,
         output_format=metadata.output_format,
-        model_filename=metadata.model_filename,
+        model_filename=model_filename,
         model_download_url=model_download_url,
         error_message=metadata.error_message,
         current_stage=status_details["current_stage"],
+        stage_status=status_details["stage_status"],
         fallback_used=status_details["fallback_used"],
         final_model_type=status_details["final_model_type"],
         final_model_path=status_details["final_model_path"],
@@ -66,7 +87,28 @@ def _build_status_details(metadata) -> dict[str, Any]:
     if not current_stage and metadata.status == ProjectStatus.FAILED:
         current_stage = "failed"
 
+    stage_status = processing_metadata.get("stage_status")
+    if not stage_status:
+        if metadata.status == ProjectStatus.PROCESSING:
+            stage_status = "running"
+        elif metadata.status == ProjectStatus.COMPLETED:
+            stage_status = "completed"
+        elif metadata.status == ProjectStatus.FAILED:
+            stage_status = "failed"
+        else:
+            stage_status = "idle"
+
     message = processing_metadata.get("status_message") or metadata.error_message
+    if metadata.status == ProjectStatus.FAILED and metadata.error_message:
+        normalized_message = str(message or "").strip().lower()
+        if normalized_message in {
+            "",
+            "procesamiento fallido.",
+            "processing failed.",
+            "failed",
+            "error",
+        }:
+            message = metadata.error_message
     if not message and metadata.status == ProjectStatus.COMPLETED:
         message = "Reconstruccion completada."
     if not message and metadata.status == ProjectStatus.PROCESSING:
@@ -88,10 +130,14 @@ def _build_status_details(metadata) -> dict[str, Any]:
     if not final_model_type and final_model_path:
         suffix = str(final_model_path).rsplit('.', 1)
         final_model_type = suffix[-1].lower() if len(suffix) > 1 else None
+    if metadata.status != ProjectStatus.COMPLETED:
+        final_model_path = None
+        final_model_type = None
 
     return {
         "engine": processing_metadata.get("engine") or processing_metadata.get("engine_requested"),
         "current_stage": current_stage,
+        "stage_status": stage_status,
         "progress": progress,
         "message": message,
         "metrics": metrics,
@@ -108,6 +154,101 @@ def _build_status_details(metadata) -> dict[str, Any]:
             or processing_metadata.get("meshing_method")
         ),
     }
+
+
+def _build_result_payload(metadata) -> dict[str, Any]:
+    status_details = _build_status_details(metadata)
+    processing_metadata = metadata.processing_metadata or {}
+    artifacts = processing_metadata.get("artifacts")
+    if not isinstance(artifacts, dict):
+        artifacts = {}
+    preprocessing_summary = processing_metadata.get("preprocessing")
+    if not isinstance(preprocessing_summary, dict):
+        preprocessing_summary = _load_json_artifact(artifacts.get("preprocessing_manifest"))
+    fallback_report = processing_metadata.get("fallback_report")
+    if not isinstance(fallback_report, dict):
+        fallback_report = _load_json_artifact(artifacts.get("fallback_report"))
+    quality_report = processing_metadata.get("quality_report")
+    if not isinstance(quality_report, dict):
+        quality_report = _load_json_artifact(artifacts.get("quality_report"))
+    warnings = _collect_result_warnings(processing_metadata, preprocessing_summary, fallback_report, quality_report)
+    model_download_url = None
+    if metadata.status == ProjectStatus.COMPLETED and metadata.model_filename:
+        model_download_url = _build_model_download_url(metadata.id)
+
+    return {
+        "project_id": metadata.id,
+        "status": metadata.status,
+        "engine": status_details["engine"],
+        "current_stage": status_details["current_stage"],
+        "workflow_stage": processing_metadata.get("workflow_stage"),
+        "output_format": metadata.output_format,
+        "model_download_url": model_download_url,
+        "fallback_used": status_details["fallback_used"],
+        "error_message": metadata.error_message,
+        "metrics": status_details["metrics"],
+        "preprocessing_summary": preprocessing_summary,
+        "fallback_report": fallback_report,
+        "quality_report": quality_report,
+        "artifact_paths": artifacts,
+        "warnings": warnings,
+        "recommended_next_action": _recommended_next_action(metadata.status, status_details["fallback_used"], warnings),
+        "artifacts": {
+            **artifacts,
+            "model_filename": metadata.model_filename,
+            "final_model_path": status_details["final_model_path"],
+            "final_model_type": status_details["final_model_type"],
+        },
+    }
+
+
+def _load_json_artifact(raw_path: object) -> dict[str, Any] | None:
+    if raw_path is None:
+        return None
+    try:
+        path = Path(str(raw_path))
+        if not path.exists() or not path.is_file():
+            return None
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
+def _collect_result_warnings(
+    processing_metadata: dict[str, Any],
+    preprocessing_summary: dict[str, Any] | None,
+    fallback_report: dict[str, Any] | None,
+    quality_report: dict[str, Any] | None,
+) -> list[str]:
+    warnings: list[str] = []
+    metadata_warnings = processing_metadata.get("warnings")
+    if isinstance(metadata_warnings, list):
+        warnings.extend(str(item) for item in metadata_warnings if item)
+    if fallback_report:
+        warnings.append("fallback_academico_usado")
+    if preprocessing_summary:
+        metrics = preprocessing_summary.get("metrics") if isinstance(preprocessing_summary.get("metrics"), dict) else {}
+        warning_count = metrics.get("warning_images") or preprocessing_summary.get("warning_images")
+        if isinstance(warning_count, int) and warning_count > 0:
+            warnings.append(f"preprocesamiento_con_advertencias:{warning_count}")
+    if quality_report:
+        quality_classification = str(quality_report.get("quality_classification") or "").strip().lower()
+        if quality_classification:
+            warnings.append(f"quality_classification:{quality_classification}")
+    return sorted(set(warnings))
+
+
+def _recommended_next_action(status: ProjectStatus, fallback_used: bool, warnings: list[str]) -> str:
+    if status == ProjectStatus.FAILED:
+        return "Revisar logs y capturar mas imagenes con mejor overlap, nitidez e iluminacion."
+    if fallback_used:
+        return "Usar el modelo como evidencia minima y recapturar dataset para intentar COLMAP real."
+    if warnings:
+        return "Revisar advertencias de preprocesamiento antes de usar el resultado como evidencia final."
+    if status == ProjectStatus.COMPLETED:
+        return "Validar visualmente el modelo y anexar reportes JSON al informe."
+    return "Esperar finalizacion del procesamiento."
 
 
 @router.get("", response_model=list[ProjectResponse])
@@ -168,9 +309,10 @@ def get_project_status(
     project_service: ProjectService = Depends(get_project_service),
 ) -> ProjectStatusResponse:
     metadata = project_service.get_project(project_id)
+    model_filename = metadata.model_filename if metadata.status == ProjectStatus.COMPLETED else None
     model_download_url = None
     if metadata.status == ProjectStatus.COMPLETED and metadata.model_filename:
-        model_download_url = f"/projects/{project_id}/model"
+        model_download_url = _build_model_download_url(project_id)
 
     status_details = _build_status_details(metadata)
 
@@ -179,11 +321,12 @@ def get_project_status(
         status=metadata.status,
         image_count=metadata.image_count,
         output_format=metadata.output_format,
-        model_filename=metadata.model_filename,
+        model_filename=model_filename,
         model_download_url=model_download_url,
         error_message=metadata.error_message,
         engine=status_details["engine"],
         current_stage=status_details["current_stage"],
+        stage_status=status_details["stage_status"],
         progress=status_details["progress"],
         message=status_details["message"],
         metrics=status_details["metrics"],
@@ -193,6 +336,15 @@ def get_project_status(
         method_used=status_details["method_used"],
         processing_metadata=metadata.processing_metadata,
     )
+
+
+@router.get("/{project_id}/result")
+def get_project_result(
+    project_id: str,
+    project_service: ProjectService = Depends(get_project_service),
+) -> dict[str, Any]:
+    metadata = project_service.get_project(project_id)
+    return _build_result_payload(metadata)
 
 
 @router.get("/{project_id}/model")
