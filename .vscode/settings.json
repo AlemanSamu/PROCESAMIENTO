@@ -2,5 +2,7 @@
   "python.defaultInterpreterPath": "${userHome}\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
   "python.analysis.extraPaths": [
     "${workspaceFolder}"
-  ]
+  ],
+  "dart.flutterSdkPath": "C:\\flutter\\flutter",
+  "dart.projectSearchDepth": 3
 }

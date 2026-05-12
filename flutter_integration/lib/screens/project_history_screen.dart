@@ -65,11 +65,12 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
 
     try {
       final projects = await widget.apiService.getProjects();
+      final enrichedProjects = await _enrichProjectsWithResults(projects);
       if (!mounted) {
         return;
       }
       setState(() {
-        _projects = projects;
+        _projects = enrichedProjects;
       });
     } catch (e) {
       if (!mounted) {
@@ -86,6 +87,28 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  Future<List<ProjectModel>> _enrichProjectsWithResults(
+    List<ProjectModel> projects,
+  ) async {
+    if (projects.isEmpty) {
+      return projects;
+    }
+
+    final futures = projects.map((project) async {
+      if (!project.status.isTerminal) {
+        return project;
+      }
+      try {
+        final result = await widget.apiService.getProjectResult(project.id);
+        return project.mergeWith(result);
+      } catch (_) {
+        return project;
+      }
+    });
+
+    return Future.wait(futures);
   }
 
   Future<void> _createProject() async {
@@ -147,8 +170,16 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
   }
 
   Future<void> _uploadImages(ProjectModel project) async {
+    if (project.status == ProjectStatus.processing) {
+      _showInfo(
+        'El proyecto esta procesando. Espera a que termine para subir mas imagenes.',
+      );
+      return;
+    }
+
     final selected = await _imagePicker.pickMultiImage(imageQuality: 85);
     if (selected.isEmpty) {
+      _showInfo('No seleccionaste imagenes.');
       return;
     }
 
@@ -165,13 +196,22 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
       if (!mounted) {
         return;
       }
-      _showInfo('Subidas ${result.uploadedCount} imagenes');
+      final skippedCount = paths.length - result.uploadedCount;
+      if (result.uploadedCount == 0 && skippedCount > 0) {
+        _showInfo(
+          'No se agregaron imagenes nuevas. $skippedCount fueron omitidas por duplicadas.',
+        );
+      } else {
+        _showInfo(
+          'Subidas ${result.uploadedCount} imagenes. Total en proyecto: ${result.totalImages}.',
+        );
+      }
       await _loadProjects();
     } catch (e) {
       if (!mounted) {
         return;
       }
-      _showError(e.toString());
+      _showError(_mapFriendlyActionError(e.toString(), action: 'upload'));
     } finally {
       if (!mounted) {
         return;
@@ -183,6 +223,17 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
   }
 
   Future<void> _startProcess(ProjectModel project) async {
+    if (project.status == ProjectStatus.processing) {
+      _showInfo('Este proyecto ya esta en procesamiento.');
+      return;
+    }
+    if (project.imageCount <= 0) {
+      _showError(
+        'Primero sube imagenes al proyecto antes de iniciar el procesamiento.',
+      );
+      return;
+    }
+
     setState(() {
       _busyProjectId = project.id;
     });
@@ -199,7 +250,7 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
       if (!mounted) {
         return;
       }
-      _showError(e.toString());
+      _showError(_mapFriendlyActionError(e.toString(), action: 'process'));
     } finally {
       if (!mounted) {
         return;
@@ -351,5 +402,34 @@ class _ProjectHistoryScreenState extends State<ProjectHistoryScreen> {
         backgroundColor: Colors.redAccent,
       ),
     );
+  }
+
+  String _mapFriendlyActionError(String rawMessage, {required String action}) {
+    final normalized = rawMessage.trim();
+    final lower = normalized.toLowerCase();
+
+    if (lower.contains('api key')) {
+      return 'API key invalida o faltante. Verifica la configuracion del backend.';
+    }
+    if (lower.contains('timeout')) {
+      return 'El backend tardó demasiado en responder. Intenta nuevamente.';
+    }
+    if (lower.contains('error de conexion') ||
+        lower.contains('socket') ||
+        lower.contains('clientexception')) {
+      return 'No se pudo conectar con el backend. Revisa URL, red y servidor.';
+    }
+    if (lower.contains('primero debes cargar imagenes')) {
+      return 'Este proyecto no tiene imagenes. Sube imagenes y vuelve a procesar.';
+    }
+    if (lower.contains('ya se encuentra en procesamiento') ||
+        lower.contains('ya tiene un proceso en ejecucion')) {
+      return 'El proyecto ya esta procesando. Espera a que termine.';
+    }
+    if (action == 'upload' && lower.contains('formato de imagen no soportado')) {
+      return 'Hay archivos con formato no soportado. Usa JPG, JPEG o PNG.';
+    }
+
+    return normalized;
   }
 }

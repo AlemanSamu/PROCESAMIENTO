@@ -337,24 +337,68 @@ class _HealthResultCard extends StatelessWidget {
 
     return Card(
       color: backgroundColor,
-      child: ListTile(
-        leading: Icon(icon, color: accentColor),
-        title: Text(result.message),
-        subtitle: Text(
-          switch (result.status) {
-            HealthCheckStatus.connected =>
-              'El backend respondio correctamente en /health.',
-            HealthCheckStatus.unauthorized =>
-              'El backend es alcanzable, pero la API key es incorrecta o falta.',
-            HealthCheckStatus.timeout =>
-              'El backend no respondio dentro del tiempo esperado.',
-            HealthCheckStatus.invalidUrl =>
-              'Corrige la URL antes de guardarla o probarla.',
-            HealthCheckStatus.connectionError =>
-              'No fue posible establecer la conexion con el backend.',
-          },
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: accentColor),
+                const SizedBox(width: 8),
+                Expanded(child: Text(result.message)),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              switch (result.status) {
+                HealthCheckStatus.connected =>
+                  'El backend respondió correctamente en /health.',
+                HealthCheckStatus.unauthorized =>
+                  'El backend es alcanzable, pero la API key es incorrecta o falta.',
+                HealthCheckStatus.timeout =>
+                  'El backend no respondió dentro del tiempo esperado.',
+                HealthCheckStatus.invalidUrl =>
+                  'Corrige la URL antes de guardarla o probarla.',
+                HealthCheckStatus.connectionError =>
+                  'No fue posible establecer la conexión con el backend.',
+              },
+            ),
+            if (result.isConnected) ...[
+              const SizedBox(height: 10),
+              _detailLine('Motor backend', result.engine ?? 'sin reporte'),
+              _detailLine('Perfil reportado', result.profile ?? 'sin reporte'),
+              _detailLine('COLMAP disponible', _formatBool(result.colmapAvailable)),
+              _detailLine('GPU disponible', _formatBool(result.gpuAvailable)),
+              _detailLine('COLMAP usa GPU', _formatBool(result.colmapUseGpu)),
+              _detailLine(
+                'Dense stages habilitadas',
+                _formatBool(result.colmapEnableDense),
+              ),
+              _detailLine(
+                'Dense requerido',
+                _formatBool(result.colmapRequireDense),
+              ),
+              if ((result.preferredBaseUrl ?? '').isNotEmpty)
+                _detailLine('Base URL sugerida', result.preferredBaseUrl!),
+            ],
+          ],
         ),
       ),
     );
+  }
+
+  Widget _detailLine(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Text('$label: $value'),
+    );
+  }
+
+  String _formatBool(bool? value) {
+    if (value == null) {
+      return 'sin reporte';
+    }
+    return value ? 'sí' : 'no';
   }
 }

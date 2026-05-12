@@ -5,18 +5,21 @@ import 'package:http/http.dart' as http;
 
 class LocalProcessingClient {
   LocalProcessingClient({
-    required this.baseUrl,
+    required String baseUrl,
+    this.apiKey,
     http.Client? httpClient,
-  }) : _httpClient = httpClient ?? http.Client();
+  })  : baseUrl = _normalizeBaseUrl(baseUrl),
+        _httpClient = httpClient ?? http.Client();
 
   final String baseUrl;
+  final String? apiKey;
   final http.Client _httpClient;
 
   Future<Map<String, dynamic>> createProject({String? name}) async {
     final uri = Uri.parse('$baseUrl/projects');
     final response = await _httpClient.post(
       uri,
-      headers: {'Content-Type': 'application/json'},
+      headers: _headers(jsonContentType: true),
       body: jsonEncode({'name': name}),
     );
     return _decodeJson(response);
@@ -28,6 +31,7 @@ class LocalProcessingClient {
   }) async {
     final uri = Uri.parse('$baseUrl/projects/$projectId/images');
     final request = http.MultipartRequest('POST', uri);
+    request.headers.addAll(_headers());
 
     for (final path in imagePaths) {
       request.files.add(await http.MultipartFile.fromPath('files', path));
@@ -45,7 +49,7 @@ class LocalProcessingClient {
     final uri = Uri.parse('$baseUrl/projects/$projectId/process');
     final response = await _httpClient.post(
       uri,
-      headers: {'Content-Type': 'application/json'},
+      headers: _headers(jsonContentType: true),
       body: jsonEncode({'output_format': outputFormat}),
     );
     return _decodeJson(response);
@@ -53,7 +57,7 @@ class LocalProcessingClient {
 
   Future<Map<String, dynamic>> getProjectStatus(String projectId) async {
     final uri = Uri.parse('$baseUrl/projects/$projectId/status');
-    final response = await _httpClient.get(uri);
+    final response = await _httpClient.get(uri, headers: _headers());
     return _decodeJson(response);
   }
 
@@ -66,8 +70,7 @@ class LocalProcessingClient {
   }
 
   Map<String, dynamic> _decodeJson(http.Response response) {
-    final body = response.body.isEmpty ? '{}' : response.body;
-    final decoded = jsonDecode(body) as Map<String, dynamic>;
+    final decoded = _safeDecodeBody(response.body);
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       final message = decoded['error']?['message']?.toString() ?? 'HTTP error ${response.statusCode}';
@@ -75,5 +78,45 @@ class LocalProcessingClient {
     }
 
     return decoded;
+  }
+
+  Map<String, String> _headers({bool jsonContentType = false}) {
+    final headers = <String, String>{};
+    if (jsonContentType) {
+      headers['Content-Type'] = 'application/json';
+    }
+    final normalizedApiKey = _normalizeApiKey(apiKey);
+    if (normalizedApiKey != null) {
+      headers['X-API-Key'] = normalizedApiKey;
+    }
+    return headers;
+  }
+
+  static Map<String, dynamic> _safeDecodeBody(String body) {
+    final trimmed = body.trim();
+    if (trimmed.isEmpty) {
+      return <String, dynamic>{};
+    }
+    final decoded = jsonDecode(trimmed);
+    if (decoded is Map<String, dynamic>) {
+      return decoded;
+    }
+    return <String, dynamic>{'data': decoded};
+  }
+
+  static String _normalizeBaseUrl(String value) {
+    final trimmed = value.trim();
+    if (trimmed.endsWith('/')) {
+      return trimmed.substring(0, trimmed.length - 1);
+    }
+    return trimmed;
+  }
+
+  static String? _normalizeApiKey(String? value) {
+    final trimmed = (value ?? '').trim();
+    if (trimmed.isEmpty) {
+      return null;
+    }
+    return trimmed;
   }
 }

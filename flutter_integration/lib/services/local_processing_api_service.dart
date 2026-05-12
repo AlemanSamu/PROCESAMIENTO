@@ -47,6 +47,10 @@ class LocalProcessingApiService {
     return _delegate.getProjectStatus(projectId);
   }
 
+  Future<ProjectStatusResult> getProjectResult(String projectId) {
+    return _delegate.getProjectResult(projectId);
+  }
+
   Uri modelUrl(String projectId) {
     return _delegate.getModelUri(projectId);
   }

@@ -1,8 +1,8 @@
-# Integracion Flutter con Backend Local
+# Integración Flutter con Backend Local
 
-Esta carpeta contiene una primera version funcional del cliente Flutter para consumir el backend local FastAPI.
+Esta carpeta contiene la app Flutter que consume el backend local FastAPI para crear proyectos, procesar imágenes y mostrar resultados técnicos de reconstrucción.
 
-## Arquitectura propuesta
+## Estructura
 
 ```text
 lib/
@@ -32,9 +32,17 @@ lib/
 4. Pantalla de estado con polling automatico.
 5. Historial de proyectos.
 6. Visor 3D del modelo final.
-7. Manejo de loading, errores y estados vacios.
+7. Consumo de `GET /projects/{id}/result` con:
+   - `quality_report`
+   - `preprocessing_summary`
+   - `fallback_report`
+   - `artifact_paths`
+   - `warnings`
+   - `recommended_next_action`
+8. Detalles técnicos (cámaras, puntos 3D, tiempo, perfil, GPU, rutas de reportes).
+9. Manejo de loading, errores y estados vacíos.
 
-## Dependencias recomendadas
+## Dependencias
 
 Agrega en `pubspec.yaml`:
 
@@ -47,15 +55,48 @@ dependencies:
   model_viewer_plus: ^1.9.3
 ```
 
-## Configuracion de URL del backend
+## Ejecutar la app
 
-Edita `lib/config/local_backend_config.dart` con la IP LAN del PC:
+```powershell
+cd C:\GRADO\PROYECTO\PROCESAMIENTO\flutter_integration
+flutter pub get
+flutter run
+```
+
+## Configuración de IP / backend
+
+Tienes dos opciones:
+
+1. Definir valor por defecto en `lib/config/local_backend_config.dart`.
+2. Cambiar URL/API key desde la pantalla **Configuración del backend** en la app.
+
+También puedes usar `dart-define`:
+
+```powershell
+flutter run --dart-define=LOCAL_BACKEND_URL=http://192.168.1.100:8000 --dart-define=LOCAL_BACKEND_API_KEY=TU_API_KEY
+```
+
+Si editas código, ejemplo:
 
 ```dart
 static const String baseUrl = 'http://192.168.1.100:8000';
 ```
 
-## Android: permitir trafico HTTP local
+## Conectar con backend local
+
+1. Levanta FastAPI en el PC:
+
+```powershell
+cd C:\GRADO\PROYECTO\PROCESAMIENTO
+.\.venv\Scripts\Activate.ps1
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+2. En Flutter abre **Configuración del backend**.
+3. Ingresa URL (`http://IP_DEL_PC:8000`) y API key si aplica.
+4. Usa **Probar conexión** y confirma `/health`.
+
+## Android: permitir tráfico HTTP local
 
 En `android/app/src/main/AndroidManifest.xml`:
 
@@ -76,5 +117,32 @@ android:usesCleartextTraffic="true"
 1. Crear proyecto.
 2. Subir imagenes.
 3. Iniciar procesamiento.
-4. Revisar estado hasta `Completed`.
-5. Abrir visor 3D.
+4. Revisar estado y clasificación:
+   - `success_real`
+   - `success_sparse_only`
+   - `fallback_completed`
+   - `failed`
+5. Abrir visor 3D cuando hay GLB.
+6. Si el resultado es OBJ, revisar ruta/descarga y recomendaciones técnicas.
+
+## Interpretar resultados
+
+- `success_real`: reconstrucción real completada con COLMAP.
+- `success_sparse_only`: reconstrucción real parcial basada en sparse.
+- `fallback_completed`: modelo aproximado por fallback académico.
+- `failed`: no se obtuvo modelo usable.
+
+La pantalla de estado incluye recomendaciones del backend para reintentar con `quality` o capturar más fotos.
+
+## Flutter analyze y tests
+
+```powershell
+flutter analyze
+flutter test
+```
+
+## Generar APK
+
+```powershell
+flutter build apk --release
+```

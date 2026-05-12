@@ -29,20 +29,45 @@ class HealthCheckResult {
     required this.status,
     required this.message,
     this.statusCode,
+    this.healthPayload,
   });
 
   final HealthCheckStatus status;
   final String message;
   final int? statusCode;
+  final Map<String, dynamic>? healthPayload;
 
   bool get isConnected => status == HealthCheckStatus.connected;
+  String? get engine => healthPayload?['engine']?.toString();
+  String? get profile => healthPayload?['profile']?.toString();
+  bool? get colmapUseGpu => _toNullableBool(healthPayload?['colmap']?['use_gpu']);
+  bool? get colmapEnableDense =>
+      _toNullableBool(healthPayload?['colmap']?['enable_dense_stages']);
+  bool? get colmapRequireDense =>
+      _toNullableBool(healthPayload?['colmap']?['require_dense_reconstruction']);
+  bool? get colmapAvailable => _toNullableBool(
+        healthPayload?['colmap_available'] ??
+            healthPayload?['colmap']?['available'] ??
+            healthPayload?['capabilities']?['colmap_available'],
+      );
+  bool? get gpuAvailable => _toNullableBool(
+        healthPayload?['gpu_available'] ??
+            healthPayload?['colmap']?['gpu_available'] ??
+            healthPayload?['capabilities']?['gpu_available'],
+      );
+  String? get preferredBaseUrl =>
+      healthPayload?['network']?['preferred_base_url']?.toString();
 
-  factory HealthCheckResult.connected({int? statusCode}) {
+  factory HealthCheckResult.connected({
+    int? statusCode,
+    Map<String, dynamic>? healthPayload,
+  }) {
     final suffix = statusCode == null ? '' : ' (HTTP $statusCode)';
     return HealthCheckResult(
       status: HealthCheckStatus.connected,
       message: 'Conectado$suffix',
       statusCode: statusCode,
+      healthPayload: healthPayload,
     );
   }
 
@@ -207,7 +232,10 @@ class LocalApiService {
             return HealthCheckResult.unauthorized(statusCode: 401);
           }
         }
-        return HealthCheckResult.connected(statusCode: response.statusCode);
+        return HealthCheckResult.connected(
+          statusCode: response.statusCode,
+          healthPayload: decoded is Map<String, dynamic> ? decoded : null,
+        );
       }
 
       return HealthCheckResult.connectionError(
@@ -325,6 +353,16 @@ class LocalApiService {
     return _guardRequest('GET /projects/$projectId/status', () async {
       final response = await _client.get(
         _uri('/projects/$projectId/status'),
+        headers: _headers(),
+      );
+      return ProjectModel.fromJson(_decodeMap(response));
+    });
+  }
+
+  Future<ProjectModel> getProjectResult(String projectId) {
+    return _guardRequest('GET /projects/$projectId/result', () async {
+      final response = await _client.get(
+        _uri('/projects/$projectId/result'),
         headers: _headers(),
       );
       return ProjectModel.fromJson(_decodeMap(response));
@@ -606,6 +644,10 @@ class LocalApiService {
     String message = 'Error HTTP $statusCode';
     if (statusCode == 401) {
       message = 'API key incorrecta o faltante.';
+    } else if (statusCode == 409) {
+      message = 'Estado del proyecto invalido para esta operacion.';
+    } else if (statusCode == 422) {
+      message = 'Solicitud invalida. Revisa los datos enviados.';
     }
     if (decoded is Map<String, dynamic>) {
       final error = decoded['error'];
@@ -671,4 +713,21 @@ class LocalApiService {
       debugPrint('[LocalApiService] $message');
     }
   }
+}
+
+bool? _toNullableBool(dynamic value) {
+  if (value == null) {
+    return null;
+  }
+  if (value is bool) {
+    return value;
+  }
+  final normalized = value.toString().trim().toLowerCase();
+  if (normalized.isEmpty) {
+    return null;
+  }
+  return normalized == 'true' ||
+      normalized == '1' ||
+      normalized == 'yes' ||
+      normalized == 'ok';
 }
