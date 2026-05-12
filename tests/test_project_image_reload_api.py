@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from fastapi import UploadFile
 
 from app.api.routes.projects import upload_images
+from app.core.errors import BadRequestError
 from app.models.schemas import OutputFormat, ProjectStatus
 from app.services.project_service import ProjectService
 from app.services.storage_service import StorageService
@@ -130,6 +131,14 @@ class ProjectImageReloadEndpointTests(unittest.TestCase):
         self.assertEqual(metadata.image_count, 1)
         self.assertEqual(len(self.storage_service.list_image_files(project_id)), 1)
         self.assertEqual(list(output_dir.iterdir()), [])
+
+    def test_upload_rejects_empty_image_files(self) -> None:
+        project_id = "demo-empty-upload"
+
+        with self.assertRaises(BadRequestError) as context:
+            self._call_upload(project_id, [("empty.jpg", b"")])
+
+        self.assertIn("esta vacia", str(context.exception).lower())
 
     def _call_upload(self, project_id: str, files: list[tuple[str, bytes]]):
         upload_files = [

@@ -33,8 +33,8 @@ def _request_json(method: str, url: str, payload: dict | None = None, headers: d
         raise RuntimeError(f"No se pudo conectar con {url}: {exc}") from exc
 
 
-def _request_binary(url: str) -> tuple[bytes, dict]:
-    request = urllib.request.Request(url=url, method="GET")
+def _request_binary(url: str, headers: dict | None = None) -> tuple[bytes, dict]:
+    request = urllib.request.Request(url=url, method="GET", headers=headers or {})
     try:
         with urllib.request.urlopen(request, timeout=60) as response:
             return response.read(), dict(response.headers.items())
@@ -65,16 +65,18 @@ def _build_multipart(files: list[Path]) -> tuple[bytes, str]:
     return bytes(body), f"multipart/form-data; boundary={boundary}"
 
 
-def _upload_images(base_url: str, project_id: str, images: list[Path]) -> dict:
+def _upload_images(base_url: str, project_id: str, images: list[Path], headers: dict | None = None) -> dict:
     body, content_type = _build_multipart(images)
+    request_headers = {
+        "Accept": "application/json",
+        "Content-Type": content_type,
+        **(headers or {}),
+    }
     request = urllib.request.Request(
         url=f"{base_url}/projects/{project_id}/images",
         data=body,
         method="POST",
-        headers={
-            "Accept": "application/json",
-            "Content-Type": content_type,
-        },
+        headers=request_headers,
     )
     try:
         with urllib.request.urlopen(request, timeout=300) as response:
@@ -145,12 +147,18 @@ def _collect_images(images_dir: Path, limit: int | None = None) -> list[Path]:
     return valid_images
 
 
-def _wait_for_completion(base_url: str, project_id: str, timeout_seconds: int, poll_interval: float) -> dict:
+def _wait_for_completion(
+    base_url: str,
+    project_id: str,
+    timeout_seconds: int,
+    poll_interval: float,
+    headers: dict | None = None,
+) -> dict:
     deadline = time.time() + timeout_seconds
     last_signature = None
 
     while time.time() < deadline:
-        status_payload = _request_json("GET", f"{base_url}/projects/{project_id}/status")
+        status_payload = _request_json("GET", f"{base_url}/projects/{project_id}/status", headers=headers)
         signature = (
             status_payload.get("status"),
             status_payload.get("current_stage"),
@@ -188,40 +196,54 @@ def main() -> int:
     parser.add_argument("--timeout-seconds", type=int, default=1800, help="Timeout maximo de espera.")
     parser.add_argument("--poll-interval", type=float, default=5.0, help="Segundos entre consultas a /status.")
     parser.add_argument("--max-images", type=int, help="Limita el numero de imagenes subidas para la prueba.")
+    parser.add_argument("--api-key", help="API key para enviar en el header X-API-Key.")
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parents[1]
     images_dir = Path(args.images_dir).resolve() if args.images_dir else _discover_images_dir(repo_root)
     images = _collect_images(images_dir, limit=args.max_images)
     project_name = args.project_name or f"colmap-real-e2e-{int(time.time())}"
+    request_headers = {"X-API-Key": args.api_key} if args.api_key else None
 
     print(f"[info] using dataset: {images_dir}")
     print(f"[info] images selected: {len(images)}")
 
-    health = _request_json("GET", f"{args.base_url}/health")
+    health = _request_json("GET", f"{args.base_url}/health", headers=request_headers)
     print(f"[health] {json.dumps(health, ensure_ascii=False)}")
     if health.get("engine") != "colmap":
         raise RuntimeError(
             f"El backend no reporta engine=colmap en /health. Respuesta actual: {health}"
         )
 
-    created = _request_json("POST", f"{args.base_url}/projects", {"name": project_name})
+    created = _request_json(
+        "POST",
+        f"{args.base_url}/projects",
+        {"name": project_name},
+        headers=request_headers,
+    )
     project_id = created["id"]
     print(f"[create] project_id={project_id} name={created.get('name')}")
 
-    uploaded = _upload_images(args.base_url, project_id, images)
+    uploaded = _upload_images(args.base_url, project_id, images, headers=request_headers)
     print(f"[upload] uploaded_count={uploaded.get('uploaded_count')} total_images={uploaded.get('total_images')}")
 
     started = _request_json(
         "POST",
         f"{args.base_url}/projects/{project_id}/process",
         {"output_format": args.output_format},
+        headers=request_headers,
     )
     print(f"[process] engine={started.get('engine')} message={started.get('message')}")
     if started.get("engine") != "colmap":
         raise RuntimeError(f"El proceso no arranco con COLMAP: {started}")
 
-    final_status = _wait_for_completion(args.base_url, project_id, args.timeout_seconds, args.poll_interval)
+    final_status = _wait_for_completion(
+        args.base_url,
+        project_id,
+        args.timeout_seconds,
+        args.poll_interval,
+        headers=request_headers,
+    )
     print(f"[final-status] {json.dumps(final_status, ensure_ascii=False)}")
 
     if final_status.get("status") != "completed":
@@ -240,7 +262,7 @@ def main() -> int:
     if not model_url:
         raise RuntimeError("/status no devolvio model_download_url al completar el proceso.")
 
-    downloaded, headers = _request_binary(f"{args.base_url}{model_url}")
+    downloaded, headers = _request_binary(f"{args.base_url}{model_url}", headers=request_headers)
     print(f"[download] bytes={len(downloaded)} content_type={headers.get('Content-Type')}")
     if not downloaded:
         raise RuntimeError("El endpoint /model devolvio un archivo vacio.")

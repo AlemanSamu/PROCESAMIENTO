@@ -12,6 +12,11 @@ from app.core.errors import AuthenticationError
 
 
 class ApiKeyDependencyTests(unittest.TestCase):
+    def test_normalized_api_prefix_supports_values_with_or_without_slashes(self) -> None:
+        self.assertEqual(app_main._normalized_api_prefix("api/v1"), "/api/v1")
+        self.assertEqual(app_main._normalized_api_prefix("/api/v1/"), "/api/v1")
+        self.assertEqual(app_main._normalized_api_prefix(""), "")
+
     def test_inspect_api_key_is_optional_when_backend_has_no_configured_key(self) -> None:
         result = inspect_api_key(
             x_api_key=None,
@@ -33,6 +38,11 @@ class ApiKeyDependencyTests(unittest.TestCase):
     def test_require_api_key_accepts_matching_header(self) -> None:
         with patch("app.core.dependencies.get_settings", return_value=SimpleNamespace(api_key="secret")):
             require_api_key(x_api_key="secret")
+
+    def test_require_api_key_rejects_non_ascii_key_without_server_error(self) -> None:
+        with patch("app.core.dependencies.get_settings", return_value=SimpleNamespace(api_key="contrasena")):
+            with self.assertRaises(AuthenticationError):
+                require_api_key(x_api_key="contra\u00f1a")
 
     def test_projects_router_declares_api_key_dependency(self) -> None:
         dependency_names = [
@@ -68,7 +78,15 @@ class HealthEndpointTests(unittest.TestCase):
         return Request(scope)
 
     def test_health_reports_network_and_auth_metadata(self) -> None:
-        fake_settings = SimpleNamespace(api_key="secret", storage_root=Path("data/projects"))
+        fake_settings = SimpleNamespace(
+            api_key="secret",
+            storage_root=Path("data/projects"),
+            colmap_use_gpu=False,
+            colmap_gpu_mode="auto",
+            colmap_gpu_probe_timeout_seconds=3,
+            colmap_enable_dense_stages=True,
+            colmap_require_dense_reconstruction=False,
+        )
         fake_network = {
             "hostname": "backend-pc",
             "fqdn": "backend-pc.local",
@@ -86,6 +104,11 @@ class HealthEndpointTests(unittest.TestCase):
 
         self.assertEqual(payload["status"], "ok")
         self.assertEqual(payload["engine"], "colmap")
+        self.assertFalse(payload["colmap"]["use_gpu"])
+        self.assertEqual(payload["colmap"]["gpu_mode"], "auto")
+        self.assertEqual(payload["colmap"]["gpu_probe_timeout_seconds"], 3)
+        self.assertTrue(payload["colmap"]["enable_dense_stages"])
+        self.assertFalse(payload["colmap"]["require_dense_reconstruction"])
         self.assertEqual(payload["network"]["preferred_base_url"], "http://backend-pc:8000")
         self.assertTrue(payload["auth"]["required"])
         self.assertEqual(payload["auth"]["header_name"], "X-API-Key")
